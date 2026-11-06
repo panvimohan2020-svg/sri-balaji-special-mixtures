@@ -1,0 +1,12 @@
+{
+  "name": "sri-balaji-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sri Balaji Wholesale Snacks Platform",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "frontend": "npm --prefix frontend run dev",
+    "backend": "python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload"
+  }
+}

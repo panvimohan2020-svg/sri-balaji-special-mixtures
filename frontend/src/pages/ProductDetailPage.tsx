@@ -6,19 +6,19 @@ import {
   MessageCircle, 
   ShieldCheck, 
   Flame, 
-  Layers, 
   Check, 
-  Sparkles,
   Info,
   Package,
   Plus,
-  Minus
+  Minus,
+  QrCode
 } from 'lucide-react';
 import { initialProducts, initialBusinessSettings } from '../data/initialData';
-import { ProductVariant } from '../types';
+import type { ProductVariant } from '../types';
 import { useCartStore } from '../store/useCartStore';
 import { generateSingleProductInquiryUrl } from '../utils/whatsapp';
 import { ProductCard } from '../components/common/ProductCard';
+import { ProductQRModal } from '../components/common/ProductQRModal';
 
 export const ProductDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -34,6 +34,7 @@ export const ProductDetailPage: React.FC = () => {
     product ? (isWholesaleMode ? product.minimum_order_qty : 1) : 1
   );
   const [added, setAdded] = useState(false);
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 
   // If product not found
   if (!product) {
@@ -76,8 +77,8 @@ export const ProductDetailPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
       
-      {/* Back Link */}
-      <div>
+      {/* Back Link & QR Code trigger */}
+      <div className="flex items-center justify-between">
         <Link
           to="/catalog"
           className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-crimson-800 hover:text-crimson-900 transition-colors"
@@ -85,6 +86,15 @@ export const ProductDetailPage: React.FC = () => {
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Snack Catalogue</span>
         </Link>
+
+        <button
+          type="button"
+          onClick={() => setIsQRModalOpen(true)}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-cream-border bg-white hover:bg-cream-warm text-xs font-bold text-spice transition-colors shadow-sm"
+        >
+          <QrCode className="w-4 h-4 text-brand-700" />
+          <span>Packaging QR Code</span>
+        </button>
       </div>
 
       {/* Main Product Showcase */}
@@ -319,7 +329,13 @@ export const ProductDetailPage: React.FC = () => {
         </section>
       )}
 
+      {/* Product QR Code Modal */}
+      <ProductQRModal
+        product={product}
+        isOpen={isQRModalOpen}
+        onClose={() => setIsQRModalOpen(false)}
+      />
+
     </div>
   );
 };
-

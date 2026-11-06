@@ -158,6 +158,18 @@ app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads"
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
+@app.get("/", tags=["Root"])
+def root():
+    return {
+        "brand": "Sri Balaji – Premium Wholesale Snacks",
+        "status": "online",
+        "api_documentation": f"{settings.API_V1_STR}/docs",
+        "health": "/api/health",
+        "frontend": "http://localhost:5173",
+        "message": "Welcome to Sri Balaji API. Visit /api/v1/docs to explore endpoints."
+    }
+
+
 @app.get("/api/health", tags=["Health"])
 def healthcheck():
     return {

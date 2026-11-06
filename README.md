@@ -76,3 +76,4 @@ Run the comprehensive test suite verifying health, categories, products, setting
 ```powershell
 python backend/tests/test_api.py
 ```
+
