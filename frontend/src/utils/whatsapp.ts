@@ -1,10 +1,10 @@
-import { CartItem } from '../types';
+import type { CartItem } from '../types';
 
 export interface WhatsAppOrderDetails {
   customerName: string;
   businessName?: string;
   phoneNumber: string;
-  deliveryAddress: string;
+  deliveryAddress?: string;
   city: string;
   notes?: string;
   items: CartItem[];
@@ -12,6 +12,14 @@ export interface WhatsAppOrderDetails {
   totalWeightKg: number;
   isWholesale: boolean;
   storeWhatsAppNumber: string;
+}
+
+function sanitizeWhatsAppPhone(phone: string): string {
+  let cleaned = phone.replace(/[^0-9]/g, '');
+  if (cleaned.length === 10) {
+    cleaned = `91${cleaned}`;
+  }
+  return cleaned;
 }
 
 export function generateWhatsAppOrderUrl(details: WhatsAppOrderDetails): string {
@@ -30,6 +38,7 @@ export function generateWhatsAppOrderUrl(details: WhatsAppOrderDetails): string 
   } = details;
 
   const header = `🛍️ *NEW ${isWholesale ? 'WHOLESALE' : 'RETAIL'} ORDER ENQUIRY – SRI BALAJI*`;
+  const locationTag = `📍 *Paralakhemundi, Gajapati, Odisha*`;
   const divider = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
   
   const customerInfo = [
@@ -52,11 +61,11 @@ export function generateWhatsAppOrderUrl(details: WhatsAppOrderDetails): string 
     notes ? `📝 *Special Instructions:* ${notes.trim()}` : null
   ].filter(Boolean).join('\n');
 
-  const footer = `*(Please review and share availability, batch dispatch dates, and transport options)*`;
+  const footer = `*(Please review availability and dispatch timeline from Paralakhemundi unit)*`;
 
-  const fullMessage = `${header}\n${divider}\n${customerInfo}\n${divider}\n*SELECTED PRODUCTS:*\n\n${itemsList}\n${divider}\n${summary}\n${divider}\n${footer}`;
+  const fullMessage = `${header}\n${locationTag}\n${divider}\n${customerInfo}\n${divider}\n*SELECTED PRODUCTS:*\n\n${itemsList}\n${divider}\n${summary}\n${divider}\n${footer}`;
 
-  const cleanPhone = storeWhatsAppNumber.replace(/[^0-9]/g, '');
+  const cleanPhone = sanitizeWhatsAppPhone(storeWhatsAppNumber);
   const encodedText = encodeURIComponent(fullMessage);
 
   return `https://wa.me/${cleanPhone}?text=${encodedText}`;
@@ -67,8 +76,7 @@ export function generateSingleProductInquiryUrl(
   weightLabel: string,
   storeWhatsAppNumber: string
 ): string {
-  const message = `Namaste Sri Balaji team, I would like to inquire about bulk/wholesale availability and pricing for:\n\n*Product:* ${productName}\n*Weight/Size:* ${weightLabel}\n\nPlease share your current rate card and minimum dispatch volume.`;
-  const cleanPhone = storeWhatsAppNumber.replace(/[^0-9]/g, '');
+  const message = `Namaste Sri Balaji team (Paralakhemundi), I would like to inquire about wholesale availability and pricing for:\n\n*Product:* ${productName}\n*Weight/Size:* ${weightLabel}\n\nPlease share your current rate card and minimum dispatch volume.`;
+  const cleanPhone = sanitizeWhatsAppPhone(storeWhatsAppNumber);
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
 }
-

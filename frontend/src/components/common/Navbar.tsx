@@ -6,12 +6,11 @@ import {
   Phone, 
   Menu, 
   X, 
-  Layers, 
   Search, 
-  Store, 
-  CheckCircle2 
+  Store 
 } from 'lucide-react';
-import { useCartStore } from '../../store/useCartStore';
+import { InstagramIcon } from './InstagramIcon';
+import { useCartStore, type CartState } from '../../store/useCartStore';
 import { initialBusinessSettings } from '../../data/initialData';
 
 export const Navbar: React.FC = () => {
@@ -27,8 +26,8 @@ export const Navbar: React.FC = () => {
     { name: 'Snack Catalogue', path: '/catalog' },
     { name: 'Smart Bundles', path: '/bundles' },
     { name: 'Wholesale B2B', path: '/wholesale' },
-    { name: 'Our Story', path: '/about' },
-    { name: 'Contact & Location', path: '/contact' },
+    { name: 'Our Story (30 Yrs)', path: '/about' },
+    { name: 'Contact & Store', path: '/contact' },
   ];
 
   const isActive = (path: string) => {
@@ -43,28 +42,47 @@ export const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-2">
             <span className="bg-gold-500 text-spice-dark text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
-              Wholesale Direct
+              {initialBusinessSettings.years_in_business} Years of Heritage
             </span>
-            <span className="hidden sm:inline">Fresh batch manufacturing with pure edible oils &amp; spices.</span>
-            <span className="sm:hidden">Wholesale &amp; Bulk Snacks</span>
+            <span className="hidden sm:inline font-semibold">
+              "{initialBusinessSettings.tagline}" • Fresh Wholesale Savouries from Paralakhemundi, Odisha
+            </span>
+            <span className="sm:hidden font-semibold">
+              Wholesale Snacks • Paralakhemundi
+            </span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <a 
-              href={`tel:${initialBusinessSettings.contact_number.replace(/\s+/g, '')}`} 
+              href="tel:9437135342" 
               className="flex items-center gap-1.5 hover:text-gold-300 transition-colors"
+              title="Call Sales Office"
             >
               <Phone className="w-3.5 h-3.5 text-gold-400" />
-              <span>{initialBusinessSettings.contact_number}</span>
+              <span>9437135342</span>
             </a>
+
             <a 
-              href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to inquire about wholesale snack supplies.')}`}
+              href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to inquire about wholesale snacks.')}`}
               target="_blank" 
               rel="noopener noreferrer"
               className="hidden md:flex items-center gap-1.5 text-gold-300 hover:text-white transition-colors"
+              title="WhatsApp Ordering Hotline"
             >
               <MessageCircle className="w-3.5 h-3.5" />
-              <span>WhatsApp Hotline</span>
+              <span>WhatsApp: 9861789602</span>
             </a>
+
+            {initialBusinessSettings.instagram_url && (
+              <a 
+                href={initialBusinessSettings.instagram_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-300 hover:text-pink-100 transition-colors p-0.5"
+                title="Follow @sri_balaji_special_mixtures on Instagram"
+              >
+                <InstagramIcon className="w-3.5 h-3.5" />
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -83,7 +101,7 @@ export const Navbar: React.FC = () => {
                 SRI BALAJI
               </span>
               <span className="text-[11px] font-semibold text-brand-700 uppercase tracking-widest">
-                Wholesale Snacks
+                Wholesale Snacks • Paralakhemundi
               </span>
             </div>
           </Link>
@@ -96,7 +114,7 @@ export const Navbar: React.FC = () => {
                 to={link.path}
                 className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
                   isActive(link.path)
-                    ? 'text-crimson-800 bg-crimson-50 shadow-sm'
+                    ? 'text-crimson-800 bg-crimson-50 shadow-sm font-bold'
                     : 'text-spice hover:text-crimson-700 hover:bg-cream-surface'
                 }`}
               >
@@ -209,12 +227,26 @@ export const Navbar: React.FC = () => {
               className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-sm"
             >
               <MessageCircle className="w-5 h-5" />
-              <span>Inquire via WhatsApp</span>
+              <span>Inquire on WhatsApp (9861789602)</span>
             </a>
+
+            <div className="flex items-center justify-between pt-1 text-xs text-spice-muted">
+              <span>Call: 9437135342 / 7735333542</span>
+              {initialBusinessSettings.instagram_url && (
+                <a
+                  href={initialBusinessSettings.instagram_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-pink-700 font-bold hover:underline flex items-center gap-1"
+                >
+                  <InstagramIcon className="w-3.5 h-3.5" />
+                  <span>Instagram</span>
+                </a>
+              )}
+            </div>
           </div>
         </div>
       )}
     </header>
   );
 };
-

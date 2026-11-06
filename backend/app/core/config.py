@@ -17,12 +17,15 @@ try:
         UPLOAD_DIR: str = os.getenv("UPLOAD_DIR", os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "uploads"))
         BACKEND_CORS_ORIGINS: str = os.getenv("BACKEND_CORS_ORIGINS", "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173")
 
-        DEFAULT_WHATSAPP_NUMBER: str = os.getenv("DEFAULT_WHATSAPP_NUMBER", "919876543210")
-        DEFAULT_CONTACT_PHONE: str = os.getenv("DEFAULT_CONTACT_PHONE", "+91 98765 43210")
-        DEFAULT_STORE_ADDRESS: str = os.getenv("DEFAULT_STORE_ADDRESS", "Wholesale Food Market, [ENTER COMPLETE ADDRESS]")
-        DEFAULT_STORE_CITY: str = os.getenv("DEFAULT_STORE_CITY", "[ENTER CITY]")
-        DEFAULT_STORE_STATE: str = os.getenv("DEFAULT_STORE_STATE", "[ENTER STATE]")
-        DEFAULT_STORE_PIN: str = os.getenv("DEFAULT_STORE_PIN", "[ENTER PIN CODE]")
+        DEFAULT_WHATSAPP_NUMBER: str = os.getenv("DEFAULT_WHATSAPP_NUMBER", "9861789602")
+        DEFAULT_CONTACT_PHONE: str = os.getenv("DEFAULT_CONTACT_PHONE", "9437135342, 7735333542")
+        DEFAULT_STORE_ADDRESS: str = os.getenv("DEFAULT_STORE_ADDRESS", "Gandhi School Road, Near Post Office")
+        DEFAULT_STORE_CITY: str = os.getenv("DEFAULT_STORE_CITY", "Paralakhemundi")
+        DEFAULT_STORE_STATE: str = os.getenv("DEFAULT_STORE_STATE", "Odisha")
+        DEFAULT_STORE_PIN: str = os.getenv("DEFAULT_STORE_PIN", "761200")
+        DEFAULT_OWNER_NAME: str = os.getenv("DEFAULT_OWNER_NAME", "Adari Krishna Rao (Father) & Adari Dilleshwar Rao (Son)")
+        DEFAULT_TAGLINE: str = os.getenv("DEFAULT_TAGLINE", "Taste the Tradition.")
+        DEFAULT_INSTAGRAM: str = os.getenv("DEFAULT_INSTAGRAM", "https://www.instagram.com/sri_balaji_special_mixtures?utm_source=ig_web_button_share_sheet&cplk=ZDNlZDc0MzIxNw==")
 
         @property
         def cors_origins(self) -> List[str]:
@@ -48,12 +51,15 @@ except Exception:
         UPLOAD_DIR: str = os.getenv("UPLOAD_DIR", os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "uploads"))
         BACKEND_CORS_ORIGINS: str = os.getenv("BACKEND_CORS_ORIGINS", "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173")
 
-        DEFAULT_WHATSAPP_NUMBER: str = os.getenv("DEFAULT_WHATSAPP_NUMBER", "919876543210")
-        DEFAULT_CONTACT_PHONE: str = os.getenv("DEFAULT_CONTACT_PHONE", "+91 98765 43210")
-        DEFAULT_STORE_ADDRESS: str = os.getenv("DEFAULT_STORE_ADDRESS", "Wholesale Food Market, [ENTER COMPLETE ADDRESS]")
-        DEFAULT_STORE_CITY: str = os.getenv("DEFAULT_STORE_CITY", "[ENTER CITY]")
-        DEFAULT_STORE_STATE: str = os.getenv("DEFAULT_STORE_STATE", "[ENTER STATE]")
-        DEFAULT_STORE_PIN: str = os.getenv("DEFAULT_STORE_PIN", "[ENTER PIN CODE]")
+        DEFAULT_WHATSAPP_NUMBER: str = os.getenv("DEFAULT_WHATSAPP_NUMBER", "9861789602")
+        DEFAULT_CONTACT_PHONE: str = os.getenv("DEFAULT_CONTACT_PHONE", "9437135342, 7735333542")
+        DEFAULT_STORE_ADDRESS: str = os.getenv("DEFAULT_STORE_ADDRESS", "Gandhi School Road, Near Post Office")
+        DEFAULT_STORE_CITY: str = os.getenv("DEFAULT_STORE_CITY", "Paralakhemundi")
+        DEFAULT_STORE_STATE: str = os.getenv("DEFAULT_STORE_STATE", "Odisha")
+        DEFAULT_STORE_PIN: str = os.getenv("DEFAULT_STORE_PIN", "761200")
+        DEFAULT_OWNER_NAME: str = os.getenv("DEFAULT_OWNER_NAME", "Adari Krishna Rao (Father) & Adari Dilleshwar Rao (Son)")
+        DEFAULT_TAGLINE: str = os.getenv("DEFAULT_TAGLINE", "Taste the Tradition.")
+        DEFAULT_INSTAGRAM: str = os.getenv("DEFAULT_INSTAGRAM", "https://www.instagram.com/sri_balaji_special_mixtures?utm_source=ig_web_button_share_sheet&cplk=ZDNlZDc0MzIxNw==")
 
         @property
         def cors_origins(self) -> List[str]:

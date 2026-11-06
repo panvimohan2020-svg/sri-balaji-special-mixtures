@@ -1,14 +1,17 @@
 import React from 'react';
 import { 
   ShieldCheck, 
-  Sparkles, 
-  Layers, 
-  Award, 
-  Clock, 
   Heart, 
   Flame, 
-  CheckCircle2 
+  Layers, 
+  Users, 
+  MapPin, 
+  Phone, 
+  MessageCircle, 
+  Award,
+  Sparkles
 } from 'lucide-react';
+import { InstagramIcon } from '../components/common/InstagramIcon';
 import { initialBusinessSettings } from '../data/initialData';
 
 export const AboutPage: React.FC = () => {
@@ -18,15 +21,55 @@ export const AboutPage: React.FC = () => {
       {/* Brand Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-crimson-100 text-crimson-900 border border-crimson-300 text-xs font-bold">
-          <Heart className="w-4 h-4 text-crimson-700" />
-          <span>The Heritage of Authentic Crunch</span>
+          <Sparkles className="w-4 h-4 text-crimson-700" />
+          <span>30 Years of Heritage ({initialBusinessSettings.years_in_business} Years)</span>
         </div>
         <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-crimson-900 tracking-tight">
-          Crafting Pure &amp; Crispy Savouries for Sri Balaji
+          Taste the Tradition with Sri Balaji
         </h1>
-        <p className="text-sm sm:text-base text-spice-muted leading-relaxed">
-          {initialBusinessSettings.business_description}
+        <p className="text-base sm:text-lg text-spice-dark font-medium leading-relaxed">
+          "{initialBusinessSettings.business_description}"
         </p>
+      </div>
+
+      {/* Leadership: Father & Son */}
+      <div className="bg-gradient-to-r from-cream-surface via-white to-cream-surface p-8 sm:p-10 rounded-3xl border border-cream-border shadow-soft">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-100 text-gold-900 text-xs font-bold border border-gold-300">
+            <Users className="w-4 h-4 text-gold-800" />
+            <span>Family Leadership &amp; Heritage</span>
+          </div>
+
+          <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-spice-dark">
+            Founded &amp; Managed by the Adari Family
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+            <div className="p-6 rounded-2xl bg-white border border-cream-border shadow-soft text-center space-y-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-brand-700 block">
+                Founder &amp; Mentor
+              </span>
+              <h3 className="font-display font-bold text-xl text-crimson-900">
+                Adari Krishna Rao
+              </h3>
+              <p className="text-xs text-spice-muted">
+                Father • 30 years of authentic recipe mastery, traditional frying expertise, and spice consistency.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white border border-cream-border shadow-soft text-center space-y-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-brand-700 block">
+                Operations &amp; Growth
+              </span>
+              <h3 className="font-display font-bold text-xl text-crimson-900">
+                Adari Dilleshwar Rao
+              </h3>
+              <p className="text-xs text-spice-muted">
+                Son • Wholesale trade distribution, hygienic modern packaging, and customer satisfaction.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Story & Philosophy Grid */}
@@ -34,40 +77,54 @@ export const AboutPage: React.FC = () => {
         
         <div className="lg:col-span-6 space-y-6">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-700">
-            Our Business Journey
+            Rooted in Paralakhemundi, Odisha
           </span>
           <h2 className="font-display font-extrabold text-3xl text-spice-dark">
-            Rooted in Tradition, Perfected for Modern Scale
+            Three Decades of Uncompromised Crunch &amp; Purity
           </h2>
           <p className="text-sm text-spice-muted leading-relaxed">
-            Sri Balaji was established with an uncompromising mission: to make wholesale snacks that taste like they were freshly fried in a traditional home kitchen, without cutting corners on oil quality or ingredient purity.
+            Since its inception 30 years ago on Gandhi School Road in Paralakhemundi, <strong>Sri Balaji</strong> has earned a cherished reputation among retailers, tea stalls, grocery merchants, and families for its unmatched freshness and traditional taste.
           </p>
           <p className="text-sm text-spice-muted leading-relaxed">
-            Over {initialBusinessSettings.years_in_business} years of dedicated service in the wholesale savouries sector, we have built relationships with kirana stores, regional distributors, and families across South India.
+            Our mixtures and chips are fried in fresh batches with top-grade refined cooking oils and hand-selected spices. We believe that great taste comes only when you respect traditional recipes and practice strict cleanliness.
           </p>
 
           <div className="grid grid-cols-2 gap-4 pt-4 border-t border-cream-border text-xs sm:text-sm">
             <div className="p-4 rounded-xl bg-cream-surface border border-cream-border">
               <span className="font-display font-bold text-2xl text-crimson-900 block">
-                {initialBusinessSettings.years_in_business}
+                30+ Years
               </span>
-              <span className="text-spice-muted font-medium">Years of Experience</span>
+              <span className="text-spice-muted font-medium">Business Experience</span>
             </div>
 
             <div className="p-4 rounded-xl bg-cream-surface border border-cream-border">
               <span className="font-display font-bold text-2xl text-crimson-900 block">
-                100%
+                100% Purity
               </span>
               <span className="text-spice-muted font-medium">Refined Edible Oils</span>
             </div>
           </div>
+
+          {initialBusinessSettings.instagram_url && (
+            <div className="pt-2">
+              <a
+                href={initialBusinessSettings.instagram_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-gradient-to-r from-purple-700 via-pink-600 to-amber-600 text-white font-bold text-xs sm:text-sm shadow-md hover:opacity-95 transition-opacity"
+              >
+                <InstagramIcon className="w-4 h-4" />
+                <span>Follow @sri_balaji_special_mixtures on Instagram</span>
+              </a>
+            </div>
+          )}
         </div>
 
         <div className="lg:col-span-6">
           <div className="rounded-3xl overflow-hidden border-2 border-gold-300 shadow-elevated bg-cream-surface">
             <img
               src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
-              alt="Sri Balaji Snack Preparation"
+              alt="Sri Balaji Authentic Snacks Preparation"
               className="w-full h-96 object-cover object-center"
             />
           </div>
@@ -79,13 +136,13 @@ export const AboutPage: React.FC = () => {
       <section className="bg-white p-8 sm:p-12 rounded-3xl border border-cream-border shadow-soft space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
-            Quality Control
+            Quality Assurance
           </span>
           <h2 className="font-display font-extrabold text-3xl text-spice-dark">
-            Our Food Safety &amp; Hygiene Standards
+            Our Quality, Hygiene &amp; Packaging Standards
           </h2>
           <p className="text-xs sm:text-sm text-spice-muted">
-            We follow strict operational protocols to ensure every batch meets verifiable hygiene benchmarks.
+            Delivering consistency across every package dispatched from our Paralakhemundi unit.
           </p>
         </div>
 
@@ -108,7 +165,7 @@ export const AboutPage: React.FC = () => {
               <ShieldCheck className="w-5 h-5 text-crimson-700" />
             </div>
             <h3 className="font-display font-bold text-base text-spice-dark">
-              Hygiene &amp; Safety
+              Hygiene &amp; Cleanliness
             </h3>
             <p className="text-xs text-spice-muted leading-relaxed">
               {initialBusinessSettings.hygiene_standards}
@@ -120,7 +177,7 @@ export const AboutPage: React.FC = () => {
               <Layers className="w-5 h-5 text-emerald-700" />
             </div>
             <h3 className="font-display font-bold text-base text-spice-dark">
-              Moisture-Barrier Packaging
+              Moisture-Barrier Pack
             </h3>
             <p className="text-xs text-spice-muted leading-relaxed">
               {initialBusinessSettings.packaging_method}
@@ -130,23 +187,31 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Brand Values */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-        <div className="p-6 rounded-2xl bg-cream-surface border border-cream-border space-y-2">
-          <h3 className="font-display font-bold text-lg text-crimson-900">Zero Compromise on Freshness</h3>
-          <p className="text-xs text-spice-muted">No prolonged warehousing. Products leave the plant immediately upon cooling and seal packing.</p>
+      {/* Address & Direct Connection */}
+      <div className="p-8 rounded-3xl bg-cream-surface border-2 border-cream-border shadow-soft flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="space-y-2 text-center md:text-left">
+          <span className="text-xs font-bold text-brand-700 uppercase tracking-widest block">
+            Visit Our Manufacturing &amp; Wholesale Store
+          </span>
+          <h3 className="font-display font-bold text-2xl text-spice-dark">
+            {initialBusinessSettings.address}, {initialBusinessSettings.city}
+          </h3>
+          <p className="text-xs text-spice-muted">
+            Gajapati, Odisha, India - {initialBusinessSettings.pin_code} • Phone: +91 94371 35342 / +91 77353 33542
+          </p>
         </div>
-        <div className="p-6 rounded-2xl bg-cream-surface border border-cream-border space-y-2">
-          <h3 className="font-display font-bold text-lg text-crimson-900">Transparent Sourcing</h3>
-          <p className="text-xs text-spice-muted">Selected farm potatoes, authentic raw bananas, and grade-A Bengal gram with zero adulterants.</p>
-        </div>
-        <div className="p-6 rounded-2xl bg-cream-surface border border-cream-border space-y-2">
-          <h3 className="font-display font-bold text-lg text-crimson-900">Truth in Information</h3>
-          <p className="text-xs text-spice-muted">We display verified certifications and ingredients only. No inflated claims or unverified awards.</p>
-        </div>
+
+        <a
+          href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to inquire about wholesale snacks.')}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm shadow-md shrink-0"
+        >
+          <MessageCircle className="w-5 h-5" />
+          <span>Chat on WhatsApp (9861789602)</span>
+        </a>
       </div>
 
     </div>
   );
 };
-

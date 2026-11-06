@@ -34,23 +34,30 @@ def init_db():
         # 2. Business Settings
         default_settings = {
             "business_name": "Sri Balaji",
-            "owner_name": "[ENTER OWNER NAME]",
+            "owner_name": "Adari Krishna Rao (Father) & Adari Dilleshwar Rao (Son)",
+            "father_name": "Adari Krishna Rao",
+            "son_name": "Adari Dilleshwar Rao",
             "category": "Wholesale Snacks / Food Products",
-            "contact_number": settings.DEFAULT_CONTACT_PHONE,
-            "whatsapp_number": settings.DEFAULT_WHATSAPP_NUMBER,
-            "address": settings.DEFAULT_STORE_ADDRESS,
-            "city": settings.DEFAULT_STORE_CITY,
-            "state": settings.DEFAULT_STORE_STATE,
-            "pin_code": settings.DEFAULT_STORE_PIN,
-            "business_hours": "Monday – Saturday: 9:00 AM – 8:00 PM",
-            "years_in_business": "15+",
-            "fssai_number": "",  # Placeholder until verified
-            "wholesale_locations": "Telangana, Andhra Pradesh, and South Indian regional distributor hubs.",
-            "payment_methods": "UPI, Bank NEFT/RTGS, Cheque (approved trade accounts), Cash on Dispatch."
+            "contact_number": "9437135342, 7735333542",
+            "whatsapp_number": "9861789602",
+            "address": "Gandhi School Road, Near Post Office",
+            "city": "Paralakhemundi",
+            "state": "Odisha",
+            "pin_code": "761200",
+            "years_in_business": "30 years",
+            "business_description": "Sri Balaji offers a variety of fresh, tasty, and crispy snacks, including mixtures, chips, and more. We focus on good quality, hygiene, great taste, and customer satisfaction.",
+            "tagline": "Taste the Tradition.",
+            "instagram_url": "https://www.instagram.com/sri_balaji_special_mixtures?utm_source=ig_web_button_share_sheet&cplk=ZDNlZDc0MzIxNw==",
+            "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Gandhi+School+Road+Near+Post+Office+Paralakhemundi+Gajapati+Odisha+761200",
+            "wholesale_locations": "Paralakhemundi, Gajapati, Odisha and neighbouring regional distributor hubs.",
+            "payment_methods": "UPI, Bank Transfer (NEFT/RTGS), Cash on Dispatch."
         }
         for k, v in default_settings.items():
-            if not db.query(BusinessSetting).filter(BusinessSetting.key == k).first():
+            record = db.query(BusinessSetting).filter(BusinessSetting.key == k).first()
+            if not record:
                 db.add(BusinessSetting(key=k, value=v))
+            else:
+                record.value = v
 
         # 3. Seed initial Categories & Products if empty
         if db.query(Category).count() == 0:

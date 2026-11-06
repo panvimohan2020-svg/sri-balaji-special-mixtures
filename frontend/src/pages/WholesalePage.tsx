@@ -4,12 +4,13 @@ import {
   Truck, 
   ShieldCheck, 
   MessageCircle, 
-  Layers, 
-  CheckCircle2, 
   Send,
   Building2,
-  PackageCheck
+  PackageCheck,
+  CheckCircle2,
+  Phone
 } from 'lucide-react';
+import { InstagramIcon } from '../components/common/InstagramIcon';
 import { initialBusinessSettings } from '../data/initialData';
 
 export const WholesalePage: React.FC = () => {
@@ -17,9 +18,8 @@ export const WholesalePage: React.FC = () => {
     contactName: '',
     businessName: '',
     phone: '',
-    email: '',
-    city: '',
-    state: '',
+    city: 'Paralakhemundi',
+    state: 'Odisha',
     monthlyVolume: '50kg - 100kg',
     message: ''
   });
@@ -45,13 +45,13 @@ export const WholesalePage: React.FC = () => {
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold">
           <Store className="w-4 h-4 text-amber-700" />
-          <span>B2B Wholesale &amp; Bulk Distribution</span>
+          <span>B2B Wholesale &amp; Bulk Distribution • 30 Years Heritage</span>
         </div>
         <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-crimson-900 tracking-tight">
-          Partner with Sri Balaji for Factory-Direct Snacks
+          Partner with Sri Balaji for Factory-Direct Savouries
         </h1>
         <p className="text-sm sm:text-base text-spice-muted leading-relaxed">
-          Supplying grocery stores, retail kiranas, supermarkets, corporate canteens, and distribution houses with authentic South Indian savouries, special mixtures, and potato wafers.
+          Supplying grocery stores, retail kiranas, supermarkets, event caterers, and distribution houses with authentic fresh mixtures and chips from Paralakhemundi, Odisha.
         </p>
       </div>
 
@@ -62,9 +62,9 @@ export const WholesalePage: React.FC = () => {
           <div className="w-12 h-12 rounded-xl bg-crimson-50 text-crimson-800 flex items-center justify-center font-bold">
             <Store className="w-6 h-6" />
           </div>
-          <h3 className="font-display font-bold text-lg text-spice-dark">Competitive Margins</h3>
+          <h3 className="font-display font-bold text-lg text-spice-dark">High Retail Margins</h3>
           <p className="text-xs text-spice-muted leading-relaxed">
-            Direct-from-plant pricing allows retail vendors and distributors to maximize profit margins while delivering high customer value.
+            Direct manufacturer wholesale rates allow Kirana stores and distributors in Odisha to maximize profit margins while retaining repeat customer trust.
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export const WholesalePage: React.FC = () => {
           </div>
           <h3 className="font-display font-bold text-lg text-spice-dark">Flexible Packaging</h3>
           <p className="text-xs text-spice-muted leading-relaxed">
-            Supplied in retail pouches (100g, 250g, 500g, 1kg) or bulk sacks (5kg, 10kg) suited for counter display or loose weight sales.
+            Supplied in retail packets (100g, 250g, 500g, 1kg) or bulk cartons (5kg, 10kg) suited for counter display or loose weight sales.
           </p>
         </div>
 
@@ -82,9 +82,9 @@ export const WholesalePage: React.FC = () => {
           <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold">
             <ShieldCheck className="w-6 h-6" />
           </div>
-          <h3 className="font-display font-bold text-lg text-spice-dark">Fresh Batch Assurance</h3>
+          <h3 className="font-display font-bold text-lg text-spice-dark">30 Years Batch Consistency</h3>
           <p className="text-xs text-spice-muted leading-relaxed">
-            Fried only upon order scheduling. Zero old stock or stale inventory passing through your retail counters.
+            Time-tested recipes by Adari Krishna Rao ensuring consistent crispness, oil quality, and authentic taste in every batch.
           </p>
         </div>
 
@@ -92,9 +92,9 @@ export const WholesalePage: React.FC = () => {
           <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold">
             <Truck className="w-6 h-6" />
           </div>
-          <h3 className="font-display font-bold text-lg text-spice-dark">Reliable Logistics</h3>
+          <h3 className="font-display font-bold text-lg text-spice-dark">Reliable Road Dispatch</h3>
           <p className="text-xs text-spice-muted leading-relaxed">
-            Daily dispatches via regional road transport networks across {initialBusinessSettings.wholesale_locations}.
+            Dispatches across Gajapati, Odisha and regional road transport networks with heavy transit cartons.
           </p>
         </div>
 
@@ -110,7 +110,7 @@ export const WholesalePage: React.FC = () => {
               Request Wholesale Quotation &amp; Samples
             </h2>
             <p className="text-xs sm:text-sm text-spice-muted mt-1">
-              Submit your store requirements below. Our wholesale manager will respond with the latest price card and MOQ terms.
+              Submit your shop requirements below. Our wholesale desk in Paralakhemundi will share the latest rate card and MOQ terms.
             </p>
           </div>
 
@@ -141,20 +141,20 @@ export const WholesalePage: React.FC = () => {
                     required
                     value={formData.contactName}
                     onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                    placeholder="e.g. Suresh Patel"
+                    placeholder="e.g. Ramesh Sahoo"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
                   />
                 </div>
 
                 <div>
                   <label className="block font-bold text-spice-dark mb-1">
-                    Store / Firm / Company Name
+                    Store / Firm Name
                   </label>
                   <input
                     type="text"
                     value={formData.businessName}
                     onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                    placeholder="e.g. Patel Supermarket"
+                    placeholder="e.g. Sahoo Kirana Store"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
                   />
                 </div>
@@ -170,26 +170,11 @@ export const WholesalePage: React.FC = () => {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="e.g. 9876543210"
+                    placeholder="e.g. 9437135342"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
                   />
                 </div>
 
-                <div>
-                  <label className="block font-bold text-spice-dark mb-1">
-                    Email Address (Optional)
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="e.g. store@example.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block font-bold text-spice-dark mb-1">
                     City / Town <span className="text-crimson-700">*</span>
@@ -199,20 +184,7 @@ export const WholesalePage: React.FC = () => {
                     required
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    placeholder="e.g. Hyderabad"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-bold text-spice-dark mb-1">
-                    State
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.state}
-                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                    placeholder="e.g. Telangana"
+                    placeholder="e.g. Paralakhemundi / Berhampur"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
                   />
                 </div>
@@ -237,13 +209,13 @@ export const WholesalePage: React.FC = () => {
 
               <div>
                 <label className="block font-bold text-spice-dark mb-1">
-                  Specific Snacks or Queries
+                  Specific Snack Requirements
                 </label>
                 <textarea
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="e.g. Interested in Madras Mixture and Potato Chips in 250g pouches; request sample consignment"
+                  placeholder="e.g. Inquiring for Sri Balaji Special Mixture & Salted Chips in 250g packets"
                   className="w-full px-3.5 py-2 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none resize-none"
                 />
               </div>
@@ -253,7 +225,7 @@ export const WholesalePage: React.FC = () => {
                 className="w-full py-3.5 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm font-bold flex items-center justify-center gap-2 shadow-elevated transition-all"
               >
                 <Send className="w-4 h-4 text-gold-300" />
-                <span>Submit Wholesale Request</span>
+                <span>Submit Wholesale Request via WhatsApp</span>
               </button>
             </form>
           )}
@@ -264,11 +236,11 @@ export const WholesalePage: React.FC = () => {
         <div className="lg:col-span-5 space-y-6">
           <div className="p-6 sm:p-8 rounded-3xl bg-cream-surface border-2 border-cream-border shadow-soft space-y-5">
             <h3 className="font-display font-bold text-xl text-spice-dark">
-              Wholesale Desk Helpline
+              Direct Wholesale Desk
             </h3>
             
             <p className="text-xs text-spice-muted leading-relaxed">
-              Prefer speaking with our dispatch manager directly? We welcome shop owners and distribution agents for phone consultations and factory visits.
+              Connect directly with Adari Krishna Rao &amp; Adari Dilleshwar Rao for wholesale inquiries, volume pricing, and sample packets.
             </p>
 
             <div className="space-y-3 pt-2 text-xs">
@@ -280,27 +252,42 @@ export const WholesalePage: React.FC = () => {
               >
                 <MessageCircle className="w-5 h-5 shrink-0" />
                 <div className="text-left">
-                  <span className="block text-xs">Chat on WhatsApp</span>
+                  <span className="block text-xs">WhatsApp Hotline: 9861789602</span>
                   <span className="block text-[11px] font-normal text-emerald-100">Instant quotation support</span>
                 </div>
               </a>
 
               <a
-                href={`tel:${initialBusinessSettings.contact_number.replace(/\s+/g, '')}`}
+                href="tel:9437135342"
                 className="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-cream-border hover:bg-cream-warm text-spice font-bold transition-all shadow-sm"
               >
-                <Building2 className="w-5 h-5 text-crimson-800 shrink-0" />
+                <Phone className="w-5 h-5 text-crimson-800 shrink-0" />
                 <div className="text-left">
-                  <span className="block text-xs">Direct Factory Line</span>
-                  <span className="block text-[11px] font-normal text-spice-muted">{initialBusinessSettings.contact_number}</span>
+                  <span className="block text-xs">Primary Call: +91 94371 35342</span>
+                  <span className="block text-[11px] font-normal text-spice-muted">Alternate: +91 77353 33542</span>
                 </div>
               </a>
+
+              {initialBusinessSettings.instagram_url && (
+                <a
+                  href={initialBusinessSettings.instagram_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-cream-border hover:bg-cream-warm text-spice font-bold transition-all shadow-sm"
+                >
+                  <InstagramIcon className="w-5 h-5 text-pink-700 shrink-0" />
+                  <div className="text-left">
+                    <span className="block text-xs">Instagram: @sri_balaji_special_mixtures</span>
+                    <span className="block text-[11px] font-normal text-spice-muted">Follow our official page</span>
+                  </div>
+                </a>
+              )}
             </div>
 
             <div className="p-4 rounded-xl bg-white border border-cream-border space-y-2 text-xs">
-              <span className="font-bold text-spice-dark block">Payment &amp; Credit Terms:</span>
+              <span className="font-bold text-spice-dark block">Location:</span>
               <p className="text-[11px] text-spice-muted leading-relaxed">
-                Initial trial orders are dispatched against advance UPI or NEFT transfer. Repeat trade accounts can access scheduled weekly settlement terms upon trade verification.
+                Gandhi School Road, Near Post Office, Paralakhemundi, Gajapati, Odisha - 761200
               </p>
             </div>
           </div>
@@ -311,4 +298,3 @@ export const WholesalePage: React.FC = () => {
     </div>
   );
 };
-

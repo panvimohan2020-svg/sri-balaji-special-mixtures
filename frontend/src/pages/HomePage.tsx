@@ -6,14 +6,13 @@ import {
   MessageCircle, 
   ShieldCheck, 
   Truck, 
-  Flame, 
-  CheckCircle, 
-  Layers, 
+  Store, 
   MapPin, 
   Phone,
-  Store,
-  ChevronRight
+  ChevronRight,
+  Heart
 } from 'lucide-react';
+import { InstagramIcon } from '../components/common/InstagramIcon';
 import { initialCategories, initialProducts, initialBundles, initialBusinessSettings } from '../data/initialData';
 import { TasteDiscovery } from '../components/home/TasteDiscovery';
 import { ProductCard } from '../components/common/ProductCard';
@@ -38,19 +37,19 @@ export const HomePage: React.FC = () => {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-crimson-100/80 border border-crimson-300 text-crimson-900 text-xs sm:text-sm font-bold shadow-sm">
                 <Sparkles className="w-4 h-4 text-crimson-700" />
-                <span>Premier Wholesale Snacks Manufacturer</span>
+                <span>30 Years of Tradition • Paralakhemundi, Odisha</span>
               </div>
 
-              {/* Catchy Headline */}
+              {/* Catchy Headline featuring official Tagline */}
               <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-spice-dark tracking-tight leading-[1.15]">
-                Freshly Fried. <br />
-                <span className="text-crimson-800">Unmatched Crispness.</span> <br />
+                Taste the Tradition. <br />
+                <span className="text-crimson-800">Fresh &amp; Crispy Savouries.</span> <br />
                 Wholesale Value.
               </h1>
 
               {/* Short Brand Introduction */}
               <p className="text-base sm:text-lg text-spice-muted max-w-2xl leading-relaxed">
-                Welcome to <strong>Sri Balaji</strong>. We prepare authentic South Indian mixtures, golden potato &amp; banana wafers, and traditional savouries in fresh batches using pure edible oils and time-tested recipes.
+                {initialBusinessSettings.business_description} Serving grocery stores, kirana shops, and families across Odisha for 30 proud years.
               </p>
 
               {/* CTAs */}
@@ -59,7 +58,7 @@ export const HomePage: React.FC = () => {
                   to="/catalog"
                   className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm font-bold text-sm sm:text-base shadow-elevated hover:shadow-glow transition-all transform hover:-translate-y-0.5"
                 >
-                  <span>Explore Products</span>
+                  <span>Explore Snacks</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
@@ -70,7 +69,7 @@ export const HomePage: React.FC = () => {
                   className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm sm:text-base shadow-soft hover:shadow-md transition-all"
                 >
                   <MessageCircle className="w-5 h-5 text-white" />
-                  <span>Order on WhatsApp</span>
+                  <span>WhatsApp (9861789602)</span>
                 </a>
               </div>
 
@@ -81,8 +80,8 @@ export const HomePage: React.FC = () => {
                     <ShieldCheck className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-bold block text-spice-dark">100% Quality Oil</span>
-                    <span className="text-[11px] text-spice-muted">No re-used oils</span>
+                    <span className="font-bold block text-spice-dark">30 Years Purity</span>
+                    <span className="text-[11px] text-spice-muted">Since 1990s</span>
                   </div>
                 </div>
 
@@ -91,8 +90,8 @@ export const HomePage: React.FC = () => {
                     <Store className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-bold block text-spice-dark">Wholesale Tiers</span>
-                    <span className="text-[11px] text-spice-muted">Kirana &amp; B2B rates</span>
+                    <span className="font-bold block text-spice-dark">Kirana Margins</span>
+                    <span className="text-[11px] text-spice-muted">Wholesale pricing</span>
                   </div>
                 </div>
 
@@ -101,7 +100,7 @@ export const HomePage: React.FC = () => {
                     <Truck className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-bold block text-spice-dark">Fresh Batch</span>
+                    <span className="font-bold block text-spice-dark">Fresh Batches</span>
                     <span className="text-[11px] text-spice-muted">Daily dispatches</span>
                   </div>
                 </div>
@@ -119,7 +118,7 @@ export const HomePage: React.FC = () => {
                 <div className="relative rounded-2xl overflow-hidden shadow-elevated border-2 border-gold-300 bg-white">
                   <img
                     src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
-                    alt="Authentic Sri Balaji Mixture"
+                    alt="Authentic Sri Balaji Special Mixture"
                     className="w-full h-80 sm:h-96 object-cover object-center transform hover:scale-105 transition-transform duration-700"
                   />
                   
@@ -127,10 +126,10 @@ export const HomePage: React.FC = () => {
                   <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-4 rounded-xl border border-cream-border shadow-elevated flex items-center justify-between">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-crimson-800">
-                        Signature Preparation
+                        Signature 30-Year Recipe
                       </span>
                       <h4 className="font-display font-bold text-spice-dark text-sm sm:text-base">
-                        Special Madras Royal Mixture
+                        Sri Balaji Special Mixture
                       </h4>
                       <p className="text-xs text-spice-muted">
                         Cashews, Peanuts, Crispy Sev &amp; Curry Leaves
@@ -138,7 +137,7 @@ export const HomePage: React.FC = () => {
                     </div>
 
                     <Link 
-                      to="/product/special-madras-royal-mixture"
+                      to="/product/sri-balaji-special-royal-mixture"
                       className="p-2.5 rounded-xl bg-crimson-800 text-cream-warm hover:bg-crimson-900 transition-colors shadow-sm"
                       title="View Details"
                     >
@@ -211,7 +210,7 @@ export const HomePage: React.FC = () => {
               Customer Favorites
             </span>
             <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-spice-dark mt-1">
-              Popular &amp; High-Demand Snacks
+              Popular &amp; High-Demand Savouries
             </h2>
           </div>
           <Link
@@ -312,7 +311,7 @@ export const HomePage: React.FC = () => {
               Why Retailers &amp; Families Choose Us
             </h2>
             <p className="text-sm text-spice-muted">
-              We combine traditional South Indian recipe authenticity with standardized wholesale quality control.
+              30 years of authenticity founded by Adari Krishna Rao and Adari Dilleshwar Rao in Paralakhemundi, Odisha.
             </p>
           </div>
 
@@ -323,10 +322,10 @@ export const HomePage: React.FC = () => {
                 ✨
               </div>
               <h3 className="font-display font-bold text-lg text-spice-dark">
-                Always Fresh &amp; Crispy
+                30 Years Tradition
               </h3>
               <p className="text-xs text-spice-muted leading-relaxed">
-                We manufacture in rolling daily cycles so our snacks reach retail counters and consumers at peak crispness without stale inventory lag.
+                Time-honoured South Indian and Odia recipes passed down through generations, ensuring uncompromised authentic flavor.
               </p>
             </div>
 
@@ -335,10 +334,10 @@ export const HomePage: React.FC = () => {
                 🛡️
               </div>
               <h3 className="font-display font-bold text-lg text-spice-dark">
-                Pure Edible Oils
+                Purity &amp; Hygiene
               </h3>
               <p className="text-xs text-spice-muted leading-relaxed">
-                Strict adherence to fresh groundnut and sunflower cooking mediums with temperature monitors. Zero adulteration and zero burnt oil reuse.
+                Fried only in clean refined edible oils with automated temperature regulation. Zero reuse of stale oils.
               </p>
             </div>
 
@@ -347,10 +346,10 @@ export const HomePage: React.FC = () => {
                 🏪
               </div>
               <h3 className="font-display font-bold text-lg text-spice-dark">
-                Wholesale Margin Value
+                Wholesale Profitability
               </h3>
               <p className="text-xs text-spice-muted leading-relaxed">
-                Direct factory wholesale rates providing healthy profit margins for Kirana shops, supermarkets, canteen caterers, and distribution agents.
+                Direct factory wholesale rates providing high profit margins for Kirana shops, supermarkets, and catering businesses.
               </p>
             </div>
 
@@ -359,10 +358,10 @@ export const HomePage: React.FC = () => {
                 📦
               </div>
               <h3 className="font-display font-bold text-lg text-spice-dark">
-                Durable Food-Grade Pack
+                Fresh Batch Delivery
               </h3>
               <p className="text-xs text-spice-muted leading-relaxed">
-                High-barrier nitrogen-flushed pouches and heavy corrugated outer cartons ensuring minimal breakage during road and rail logistics.
+                Airtight moisture-barrier pouches and heavy transit cartons ensuring zero breakage and lasting crispness.
               </p>
             </div>
 
@@ -378,51 +377,64 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs font-bold border border-gold-400/30">
                 <MapPin className="w-3.5 h-3.5 text-gold-400" />
-                <span>Factory &amp; Wholesale Office</span>
+                <span>Paralakhemundi, Gajapati, Odisha</span>
               </div>
               <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-white">
-                Visit Us or Order Your Bulk Consignment
+                Visit Our Manufacturing Store or Place a Bulk Order
               </h2>
               <p className="text-sm sm:text-base text-cream-surface/90 max-w-2xl leading-relaxed">
-                Located at {initialBusinessSettings.address}, {initialBusinessSettings.city}. Open Monday to Saturday. Connect directly with our dispatch desk for custom weight requirements, bulk supply tenders, and samples.
+                Located at {initialBusinessSettings.address}, {initialBusinessSettings.city}, Gajapati, Odisha - {initialBusinessSettings.pin_code}. Managed by Adari Krishna Rao &amp; Adari Dilleshwar Rao.
               </p>
+              
               <div className="flex flex-wrap items-center gap-4 pt-2 text-sm">
                 <a
-                  href={`tel:${initialBusinessSettings.contact_number.replace(/\s+/g, '')}`}
+                  href="tel:9437135342"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-crimson-900 font-bold hover:bg-gold-100 transition-colors shadow-sm"
                 >
                   <Phone className="w-4 h-4 text-crimson-800" />
-                  <span>Call {initialBusinessSettings.contact_number}</span>
+                  <span>Call: 9437135342</span>
                 </a>
 
                 <a
-                  href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to visit the manufacturing unit or request a wholesale sample.')}`}
+                  href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to place a wholesale order for snacks.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition-colors shadow-sm"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  <span>Chat on WhatsApp</span>
+                  <span>WhatsApp: 9861789602</span>
                 </a>
+
+                {initialBusinessSettings.instagram_url && (
+                  <a
+                    href={initialBusinessSettings.instagram_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-colors"
+                  >
+                    <InstagramIcon className="w-4 h-4" />
+                    <span>Instagram</span>
+                  </a>
+                )}
               </div>
             </div>
 
             <div className="lg:col-span-4 bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-xs space-y-3">
               <h4 className="font-display font-bold text-gold-300 text-base">
-                Operating Hours &amp; Logistics
+                Business &amp; Supply Details
               </h4>
               <p className="text-cream-surface/80">
-                <strong>Timings:</strong> {initialBusinessSettings.business_hours}
+                <strong>Owners:</strong> Adari Krishna Rao &amp; Adari Dilleshwar Rao
               </p>
               <p className="text-cream-surface/80">
-                <strong>Dispatch Locations:</strong> {initialBusinessSettings.wholesale_locations}
+                <strong>Experience:</strong> 30 Years (Since 1990s)
+              </p>
+              <p className="text-cream-surface/80">
+                <strong>Address:</strong> {initialBusinessSettings.address}, {initialBusinessSettings.city}, Odisha - {initialBusinessSettings.pin_code}
               </p>
               <p className="text-cream-surface/80">
                 <strong>Payment Methods:</strong> {initialBusinessSettings.payment_methods}
               </p>
-              <div className="pt-2 border-t border-white/10 text-gold-200">
-                ⭐ Genuine verified wholesale manufacturer.
-              </div>
             </div>
 
           </div>
@@ -432,4 +444,3 @@ export const HomePage: React.FC = () => {
     </div>
   );
 };
-

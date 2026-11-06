@@ -42,3 +42,4 @@ async def upload_product_image(
         "image_url": f"/uploads/{filename}",
         "status": "uploaded"
     }
+
