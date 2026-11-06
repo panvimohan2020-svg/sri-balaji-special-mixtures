@@ -150,3 +150,4 @@ export const ProductQRModal: React.FC<ProductQRModalProps> = ({
     </dialog>
   );
 };
+

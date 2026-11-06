@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { MessageCircle, X, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
+import { MessageCircle, X, AlertCircle } from 'lucide-react';
 import { useCartStore } from '../../store/useCartStore';
 import { initialBusinessSettings } from '../../data/initialData';
 import { generateWhatsAppOrderUrl } from '../../utils/whatsapp';
+import { apiService } from '../../services/api';
 
 interface WhatsAppCheckoutModalProps {
   isOpen: boolean;
@@ -26,6 +27,24 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [notes, setNotes] = useState('');
   const [formError, setFormError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  // Pre-fill customer details from past session if available
+  useEffect(() => {
+    const savedCustomer = localStorage.getItem('sri_balaji_last_customer');
+    if (savedCustomer) {
+      try {
+        const parsed = JSON.parse(savedCustomer);
+        if (parsed.customerName) setCustomerName(parsed.customerName);
+        if (parsed.businessName) setBusinessName(parsed.businessName);
+        if (parsed.phoneNumber) setPhoneNumber(parsed.phoneNumber);
+        if (parsed.city) setCity(parsed.city);
+        if (parsed.deliveryAddress) setDeliveryAddress(parsed.deliveryAddress);
+      } catch {
+        // Ignore parse error
+      }
+    }
+  }, []);
 
   // Handle native dialog showModal / close according to modern-web-guidance
   useEffect(() => {
@@ -43,7 +62,7 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
     }
   }, [isOpen]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!customerName.trim() || !phoneNumber.trim() || !city.trim()) {
       setFormError('Please enter your name, phone number, and delivery city.');
@@ -51,7 +70,55 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
     }
 
     setFormError('');
+    setSubmitting(true);
 
+    // Save customer details for frictionless repeat ordering
+    localStorage.setItem(
+      'sri_balaji_last_customer',
+      JSON.stringify({ customerName, businessName, phoneNumber, city, deliveryAddress })
+    );
+
+    // Prepare order payload
+    const orderPayload = {
+      customer_name: customerName.trim(),
+      business_name: isWholesaleMode ? businessName.trim() : undefined,
+      phone_number: phoneNumber.trim(),
+      whatsapp_number: phoneNumber.trim(),
+      order_type: isWholesaleMode ? 'WHOLESALE' : 'RETAIL',
+      delivery_address: deliveryAddress.trim() || undefined,
+      city: city.trim(),
+      notes: notes.trim() || undefined,
+      total_estimated_amount: totalAmount,
+      total_estimated_weight_kg: totalWeightKg,
+      items: items.map(item => ({
+        product_name: item.productName,
+        weight_label: item.weightLabel,
+        unit_price: item.unitPrice,
+        quantity: item.quantity,
+        subtotal: item.unitPrice * item.quantity
+      }))
+    };
+
+    // 1. Submit to Backend API (async, non-blocking)
+    try {
+      const orderResult = await apiService.submitOrder(orderPayload);
+      
+      // Save to local past orders list for Quick Reorder feature
+      const existingHistory = JSON.parse(localStorage.getItem('sri_balaji_order_history') || '[]');
+      const newEntry = {
+        orderNumber: orderResult?.order_number || `SB-${Date.now().toString().slice(-6)}`,
+        date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+        items: [...items],
+        totalAmount,
+        totalWeightKg,
+        isWholesale: isWholesaleMode
+      };
+      localStorage.setItem('sri_balaji_order_history', JSON.stringify([newEntry, ...existingHistory.slice(0, 9)]));
+    } catch {
+      // Offline fallback
+    }
+
+    // 2. Generate WhatsApp URL
     const whatsappUrl = generateWhatsAppOrderUrl({
       customerName,
       businessName: isWholesaleMode ? businessName : undefined,
@@ -66,10 +133,10 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
       storeWhatsAppNumber: initialBusinessSettings.whatsapp_number
     });
 
-    // Open WhatsApp in new tab
+    // 3. Open WhatsApp in new tab
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    
-    // Close modal
+
+    setSubmitting(false);
     onClose();
   };
 
@@ -231,7 +298,7 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
 
         {/* Notice regarding order confirmation */}
         <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-[11px] leading-relaxed">
-          <strong>Important Note:</strong> Clicking below generates a structured quotation on WhatsApp. The order is finalized only after stock and transport confirmation with Sri Balaji.
+          <strong>Important Note:</strong> Clicking below records your request and generates a structured quotation on WhatsApp. The order is confirmed only after stock and delivery verification with Sri Balaji.
         </div>
 
         {/* Buttons */}
@@ -246,10 +313,11 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
 
           <button
             type="submit"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold transition-all shadow-md text-xs sm:text-sm"
+            disabled={submitting}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold transition-all shadow-md text-xs sm:text-sm disabled:opacity-50"
           >
             <MessageCircle className="w-4 h-4" />
-            <span>Send Enquiry to WhatsApp</span>
+            <span>{submitting ? 'Preparing Quotation...' : 'Send Enquiry to WhatsApp'}</span>
           </button>
         </div>
 
@@ -257,4 +325,3 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
     </dialog>
   );
 };
-

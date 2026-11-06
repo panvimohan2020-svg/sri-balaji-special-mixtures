@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ShoppingBag, 
@@ -9,11 +9,14 @@ import {
   ArrowRight, 
   Store, 
   ShieldCheck, 
-  Package, 
-  Scale 
+  Scale,
+  RotateCcw,
+  Clock,
+  History
 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { WhatsAppCheckoutModal } from '../components/cart/WhatsAppCheckoutModal';
+import type { CartItem } from '../types';
 
 export const CartPage: React.FC = () => {
   const { 
@@ -28,34 +31,105 @@ export const CartPage: React.FC = () => {
   } = useCartStore();
 
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
+  const [orderHistory, setOrderHistory] = useState<any[]>([]);
+
+  useEffect(() => {
+    try {
+      const history = JSON.parse(localStorage.getItem('sri_balaji_order_history') || '[]');
+      if (Array.isArray(history)) {
+        setOrderHistory(history);
+      }
+    } catch {
+      // Ignore
+    }
+  }, []);
 
   const totalAmount = getTotalAmount();
   const totalWeightKg = getTotalWeightKg();
   const totalItemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
+  const handleQuickReorder = (pastOrder: any) => {
+    clearCart();
+    // Re-populate store items from past order
+    useCartStore.setState({
+      items: pastOrder.items.map((i: CartItem) => ({ ...i })),
+      isWholesaleMode: pastOrder.isWholesale ?? true
+    });
+  };
+
   if (items.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-6">
-        <div className="w-20 h-20 mx-auto rounded-3xl bg-cream-surface border-2 border-cream-border flex items-center justify-center text-crimson-800 shadow-soft">
-          <ShoppingBag className="w-10 h-10" />
+      <div className="max-w-4xl mx-auto px-4 py-16 space-y-10">
+        <div className="text-center space-y-4">
+          <div className="w-20 h-20 mx-auto rounded-3xl bg-cream-surface border-2 border-cream-border flex items-center justify-center text-crimson-800 shadow-soft">
+            <ShoppingBag className="w-10 h-10" />
+          </div>
+          <div className="space-y-2">
+            <h1 className="font-display font-extrabold text-3xl text-spice-dark">
+              Your Cart is Empty
+            </h1>
+            <p className="text-sm text-spice-muted max-w-md mx-auto leading-relaxed">
+              You haven't added any snacks yet. Explore our crispy mixtures, potato chips, and traditional savouries to build your order.
+            </p>
+          </div>
+          <div className="pt-2">
+            <Link
+              to="/catalog"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm font-bold text-sm shadow-elevated transition-all"
+            >
+              <span>Explore Snack Catalogue</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
-        <div className="space-y-2">
-          <h1 className="font-display font-extrabold text-3xl text-spice-dark">
-            Your Cart is Empty
-          </h1>
-          <p className="text-sm text-spice-muted max-w-md mx-auto leading-relaxed">
-            You haven't added any snacks yet. Explore our crispy mixtures, potato chips, and traditional savouries to build your order.
-          </p>
-        </div>
-        <div className="pt-2">
-          <Link
-            to="/catalog"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm font-bold text-sm shadow-elevated transition-all"
-          >
-            <span>Explore Snack Catalogue</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+
+        {/* Quick Reorder History for returning wholesale buyers */}
+        {orderHistory.length > 0 && (
+          <div className="p-6 rounded-3xl bg-white border border-cream-border shadow-soft space-y-4">
+            <div className="flex items-center gap-2.5 pb-3 border-b border-cream-border">
+              <History className="w-5 h-5 text-crimson-800" />
+              <div>
+                <h3 className="font-display font-bold text-lg text-spice-dark">
+                  Recent Orders &amp; Quick Reordering
+                </h3>
+                <p className="text-xs text-spice-muted">
+                  Reorder your regular wholesale batch with one click.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              {orderHistory.map((past, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 rounded-2xl bg-cream-surface border border-cream-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 font-bold text-spice-dark">
+                      <span>Order #{past.orderNumber}</span>
+                      <span className="text-[10px] text-spice-muted font-normal">• {past.date}</span>
+                    </div>
+                    <div className="text-spice-muted line-clamp-1">
+                      {past.items.map((i: any) => `${i.productName} (${i.weightLabel} x ${i.quantity})`).join(', ')}
+                    </div>
+                    <div className="text-[11px] font-semibold text-brand-700">
+                      Total: ₹{past.totalAmount.toLocaleString('en-IN')} ({past.totalWeightKg} kg)
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleQuickReorder(past)}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm font-bold shrink-0 transition-colors shadow-sm"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5 text-gold-300" />
+                    <span>Reorder This Batch</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -198,6 +272,37 @@ export const CartPage: React.FC = () => {
               </div>
             );
           })}
+
+          {/* Quick Reorder History drawer under cart items */}
+          {orderHistory.length > 0 && (
+            <div className="p-5 rounded-2xl bg-cream-warm border border-cream-border space-y-3">
+              <span className="text-xs font-bold text-spice-dark flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-brand-700" />
+                <span>Previously Inquired Orders</span>
+              </span>
+              <div className="flex gap-3 overflow-x-auto pb-1 no-scrollbar text-xs">
+                {orderHistory.slice(0, 3).map((past, idx) => (
+                  <div key={idx} className="bg-white p-3 rounded-xl border border-cream-border shrink-0 min-w-[220px] space-y-2">
+                    <div className="flex justify-between items-baseline font-bold text-spice-dark">
+                      <span>#{past.orderNumber}</span>
+                      <span className="text-[10px] text-spice-muted">{past.date}</span>
+                    </div>
+                    <p className="text-[11px] text-spice-muted line-clamp-1">
+                      {past.items.length} items • ₹{past.totalAmount}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => handleQuickReorder(past)}
+                      className="w-full py-1.5 bg-cream-surface hover:bg-cream-border text-spice-dark font-bold rounded-lg text-[11px] flex items-center justify-center gap-1 transition-colors"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      <span>Load This Batch</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Right: Order Summary Card */}
@@ -286,4 +391,3 @@ export const CartPage: React.FC = () => {
     </div>
   );
 };
-
