@@ -17,3 +17,4 @@ Write-Host "  - Website and PWA:  http://localhost:5173" -ForegroundColor White
 Write-Host "  - Backend API:      http://127.0.0.1:8000" -ForegroundColor White
 Write-Host "  - API Swagger Docs: http://127.0.0.1:8000/api/v1/docs" -ForegroundColor White
 Write-Host "====================================================" -ForegroundColor DarkYellow
+
