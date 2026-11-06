@@ -117,8 +117,8 @@ export const HomePage: React.FC = () => {
 
                 <div className="relative rounded-2xl overflow-hidden shadow-elevated border-2 border-gold-300 bg-white">
                   <img
-                    src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
-                    alt="Authentic Sri Balaji Special Mixture"
+                    src="/images/brand/master-banner.png"
+                    alt="Authentic Sri Balaji Special Mixtures Collection"
                     className="w-full h-80 sm:h-96 object-cover object-center transform hover:scale-105 transition-transform duration-700"
                   />
                   
@@ -129,15 +129,15 @@ export const HomePage: React.FC = () => {
                         Signature 30-Year Recipe
                       </span>
                       <h4 className="font-display font-bold text-spice-dark text-sm sm:text-base">
-                        Sri Balaji Special Mixture
+                        Sri Balaji Special Mixtures
                       </h4>
                       <p className="text-xs text-spice-muted">
-                        Cashews, Peanuts, Crispy Sev &amp; Curry Leaves
+                        Onion Mixture, Kar Kar Murrukulu &amp; Peanuts Pakodi
                       </p>
                     </div>
 
                     <Link 
-                      to="/product/sri-balaji-special-royal-mixture"
+                      to="/product/onion-mixture"
                       className="p-2.5 rounded-xl bg-crimson-800 text-cream-warm hover:bg-crimson-900 transition-colors shadow-sm"
                       title="View Details"
                     >

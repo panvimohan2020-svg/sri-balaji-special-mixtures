@@ -121,16 +121,83 @@ export const AboutPage: React.FC = () => {
         </div>
 
         <div className="lg:col-span-6">
-          <div className="rounded-3xl overflow-hidden border-2 border-gold-300 shadow-elevated bg-cream-surface">
+          <div className="rounded-3xl overflow-hidden border-2 border-gold-300 shadow-elevated bg-cream-surface group">
             <img
-              src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"
-              alt="Sri Balaji Authentic Snacks Preparation"
-              className="w-full h-96 object-cover object-center"
+              src="/images/brand/founders-adari-family.png"
+              alt="Sri Balaji Founders: Adari Krishna Rao & Adari Dilleshwar Rao"
+              className="w-full h-auto object-cover object-center group-hover:scale-102 transition-transform duration-500"
             />
+            <div className="p-4 bg-white/95 border-t border-cream-border text-center">
+              <p className="font-display font-bold text-sm text-crimson-900">
+                Adari Krishna Rao &amp; Adari Dilleshwar Rao
+              </p>
+              <p className="text-xs text-spice-muted">
+                Authentic Taste, Personally Guaranteed • Gandhi School Road, Paralakhemundi
+              </p>
+            </div>
           </div>
         </div>
 
       </div>
+
+      {/* Real Visual Heritage & Brand Posters */}
+      <section className="space-y-6">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
+            Authentic Brand Journey
+          </span>
+          <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-spice-dark">
+            From Our Kitchen to Every Wholesale Shelf
+          </h2>
+          <p className="text-xs sm:text-sm text-spice-muted">
+            Original photographs capturing 30 years of trust, local Paralakhemundi heritage, and handcrafted snacks.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="rounded-2xl overflow-hidden border border-cream-border shadow-soft bg-white group">
+            <div className="aspect-[4/3] overflow-hidden bg-cream-surface">
+              <img
+                src="/images/brand/paralakhemundi-pride.png"
+                alt="Sri Balaji Paralakhemundi Heritage"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-4">
+              <h4 className="font-display font-bold text-sm text-spice-dark">Proudly Made in Paralakhemundi</h4>
+              <p className="text-xs text-spice-muted mt-1">Our historic roots on Gandhi School Road, Gajapati district, Odisha.</p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden border border-cream-border shadow-soft bg-white group">
+            <div className="aspect-[4/3] overflow-hidden bg-cream-surface">
+              <img
+                src="/images/brand/seven-flavors-lineup.png"
+                alt="Sri Balaji 7 Flavors Lineup"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-4">
+              <h4 className="font-display font-bold text-sm text-spice-dark">Seven Signature Flavors</h4>
+              <p className="text-xs text-spice-muted mt-1">Onion Mixture, Chuda Mixture, Mong Dal, Boondi, Murrukulu &amp; more.</p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden border border-cream-border shadow-soft bg-white group sm:col-span-2 lg:col-span-1">
+            <div className="aspect-[4/3] overflow-hidden bg-cream-surface">
+              <img
+                src="/images/brand/wholesale-counter.png"
+                alt="Sri Balaji Wholesale Counter"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-4">
+              <h4 className="font-display font-bold text-sm text-spice-dark">Authentic Wholesale Storefront</h4>
+              <p className="text-xs text-spice-muted mt-1">Supplying fresh transparent bulk packets to local shops &amp; retailers.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Food Preparation & Hygiene Standards */}
       <section className="bg-white p-8 sm:p-12 rounded-3xl border border-cream-border shadow-soft space-y-8">

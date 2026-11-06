@@ -189,7 +189,7 @@ export const CartPage: React.FC = () => {
                 <div className="flex items-center gap-4">
                   <div className="w-20 h-20 rounded-xl bg-cream-surface overflow-hidden shrink-0 border border-cream-border">
                     <img
-                      src={item.imageUrl || 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=300&q=80'}
+                      src={item.imageUrl || '/images/products/onion-mixture.png'}
                       alt={item.productName}
                       className="w-full h-full object-cover"
                     />

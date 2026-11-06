@@ -290,6 +290,23 @@ export const WholesalePage: React.FC = () => {
                 Gandhi School Road, Near Post Office, Paralakhemundi, Gajapati, Odisha - 761200
               </p>
             </div>
+
+            {/* Authentic Wholesale Store Counter Photo */}
+            <div className="rounded-2xl overflow-hidden border border-cream-border shadow-soft bg-white">
+              <img
+                src="/images/brand/wholesale-counter.png"
+                alt="Sri Balaji Wholesale Store Counter with Founders"
+                className="w-full h-auto object-cover"
+              />
+              <div className="p-3 bg-white text-center">
+                <span className="text-[11px] font-bold text-crimson-900 block">
+                  Wholesale Counter &amp; Direct Supplies
+                </span>
+                <span className="text-[10px] text-spice-muted">
+                  Fresh transparent wholesale packets ready for dispatch
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 

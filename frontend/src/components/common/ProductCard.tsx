@@ -25,7 +25,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     ? (selectedVariant.wholesale_price || selectedVariant.retail_price)
     : (selectedVariant.retail_price || selectedVariant.wholesale_price);
 
-  const primaryImage = product.images?.[0]?.image_url || 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80';
+  const primaryImage = product.images?.[0]?.image_url || '/images/products/onion-mixture.png';
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -49,8 +49,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="group relative bg-white rounded-2xl border border-cream-border overflow-hidden shadow-soft hover:shadow-elevated transition-all duration-300 flex flex-col justify-between">
       
-      {/* Top Image Section */}
-      <div className="relative aspect-[4/3] bg-cream-surface overflow-hidden">
+      {/* Top Image Section - 1:1 Square aspect ratio perfectly preserves original authentic packaging */}
+      <div className="relative aspect-square bg-cream-surface overflow-hidden">
         <Link to={`/product/${product.slug}`} className="block w-full h-full">
           <img
             src={primaryImage}

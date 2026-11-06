@@ -104,7 +104,7 @@ export const ProductDetailPage: React.FC = () => {
         <div className="lg:col-span-6 space-y-4">
           <div className="relative aspect-square rounded-3xl overflow-hidden bg-cream-surface border-2 border-cream-border shadow-elevated">
             <img
-              src={product.images?.[0]?.image_url || 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80'}
+              src={product.images?.[0]?.image_url || '/images/products/onion-mixture.png'}
               alt={product.name}
               className="w-full h-full object-cover object-center"
             />

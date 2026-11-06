@@ -61,74 +61,8 @@ def init_db():
 
         # 3. Seed initial Categories & Products if empty
         if db.query(Category).count() == 0:
-            cat_mixtures = Category(
-                id="cat-1",
-                name="Mixtures",
-                slug="mixtures",
-                description="Signature crunchy savouries made with fried sev, boondi, roasted peanuts, and cashews.",
-                image_url="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80",
-                display_order=1
-            )
-            cat_chips = Category(
-                id="cat-2",
-                name="Chips & Wafers",
-                slug="chips",
-                description="Thinly sliced, golden-crisp potato and raw banana chips.",
-                image_url="https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=600&q=80",
-                display_order=2
-            )
-            cat_traditional = Category(
-                id="cat-3",
-                name="Traditional Snacks",
-                slug="traditional-snacks",
-                description="Time-honoured South Indian savouries including Murukku and Ribbon Pakoda.",
-                image_url="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80",
-                display_order=3
-            )
-            db.add_all([cat_mixtures, cat_chips, cat_traditional])
-            db.flush()
-
-            # Seed Products
-            p1 = Product(
-                id="prod-1",
-                category_id="cat-1",
-                name="Special Madras Royal Mixture",
-                slug="special-madras-royal-mixture",
-                description="Our signature blend of crispy besan sev, spicy kara boondi, roasted peanuts, split cashews, and curry leaves.",
-                food_classification="VEGETARIAN",
-                spice_level="MEDIUM",
-                taste_profiles="Crunchy,Spicy,Traditional",
-                ingredients="Gram flour, Rice flour, Refined vegetable oil, Groundnuts, Cashews, Curry leaves, Chilli powder, Salt, Asafoetida.",
-                allergen_info="Contains Tree Nuts (Cashews) and Peanuts.",
-                minimum_order_qty=2,
-                is_featured=True
-            )
-            p2 = Product(
-                id="prod-2",
-                category_id="cat-2",
-                name="Classic Salted Golden Potato Chips",
-                slug="classic-salted-golden-potato-chips",
-                description="Thinly sliced farm potatoes kettle fried to golden crispness, lightly seasoned with rock salt.",
-                food_classification="VEGETARIAN",
-                spice_level="MILD",
-                taste_profiles="Crunchy,Salty",
-                ingredients="Potatoes, Edible vegetable oil, Rock salt.",
-                minimum_order_qty=5,
-                is_featured=True
-            )
-            db.add_all([p1, p2])
-            db.flush()
-
-            # Variants
-            db.add(ProductVariant(product_id="prod-1", weight_label="250g", weight_in_grams=250, retail_price=95, wholesale_price=75))
-            db.add(ProductVariant(product_id="prod-1", weight_label="1kg", weight_in_grams=1000, retail_price=360, wholesale_price=280))
-            db.add(ProductVariant(product_id="prod-2", weight_label="250g", weight_in_grams=250, retail_price=110, wholesale_price=80))
-
-            # Images
-            db.add(ProductImage(product_id="prod-1", image_url="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80", is_primary=True))
-            db.add(ProductImage(product_id="prod-2", image_url="https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=800&q=80", is_primary=True))
-
-        db.commit()
+            import seed_data
+            seed_data.reseed()
     finally:
         db.close()
 
