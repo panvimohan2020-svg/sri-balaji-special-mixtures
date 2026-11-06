@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: sribalaji_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: sribalaji
+      POSTGRES_PASSWORD: balaji_secure_password_2026
+      POSTGRES_DB: sribalaji_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sribalaji_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://sribalaji:balaji_secure_password_2026@db:5432/sribalaji_db
+      SECRET_KEY: sribalaji-production-secret-token-key-2026
+      BACKEND_CORS_ORIGINS: "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173"
+    depends_on:
+      - db
+    volumes:
+      - ./backend/uploads:/app/uploads
+
+volumes:
+  postgres_data:

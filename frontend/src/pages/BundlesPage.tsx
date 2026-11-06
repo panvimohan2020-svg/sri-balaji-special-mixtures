@@ -1,0 +1,79 @@
+import React from 'react';
+import { Sparkles, MessageCircle, ShoppingBag, ArrowRight } from 'lucide-react';
+import { initialBundles, initialBusinessSettings } from '../data/initialData';
+
+export const BundlesPage: React.FC = () => {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-12">
+      
+      {/* Header */}
+      <div className="text-center max-w-2xl mx-auto space-y-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-100 text-gold-800 text-xs font-bold border border-gold-300">
+          <Sparkles className="w-3.5 h-3.5 text-gold-700" />
+          <span>Curated Snack Combinations</span>
+        </div>
+        <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-crimson-900 tracking-tight">
+          Smart Snack Bundles &amp; Combos
+        </h1>
+        <p className="text-sm text-spice-muted leading-relaxed">
+          Conveniently curated assortments featuring our top-moving mixtures, chips, and savouries. Ideal for retail store trial packs and family celebrations.
+        </p>
+      </div>
+
+      {/* Bundles Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {initialBundles.map((bundle) => (
+          <div
+            key={bundle.id}
+            className="rounded-3xl bg-white border border-cream-border overflow-hidden shadow-soft hover:shadow-elevated transition-all flex flex-col justify-between"
+          >
+            <div className="aspect-[16/10] bg-cream-surface relative overflow-hidden">
+              <img
+                src={bundle.image_url}
+                alt={bundle.name}
+                className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute top-4 right-4 bg-crimson-800 text-cream-warm text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                Assorted Box
+              </div>
+            </div>
+
+            <div className="p-6 flex flex-col flex-grow justify-between gap-6">
+              <div>
+                <h3 className="font-display font-bold text-xl text-spice-dark">
+                  {bundle.name}
+                </h3>
+                <p className="mt-2 text-xs sm:text-sm text-spice-muted leading-relaxed">
+                  {bundle.description}
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-cream-border flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-spice-muted uppercase font-bold block">
+                    Fixed Combo Price
+                  </span>
+                  <span className="font-display font-extrabold text-2xl text-crimson-900">
+                    ₹{bundle.bundle_price}
+                  </span>
+                </div>
+
+                <a
+                  href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent(`Namaste Sri Balaji! I would like to order the snack bundle: ${bundle.name} (Price: ₹${bundle.bundle_price}). Please share dispatch details.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm text-xs font-bold transition-all shadow-soft"
+                >
+                  <MessageCircle className="w-4 h-4 text-gold-300" />
+                  <span>Order on WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  );
+};
+

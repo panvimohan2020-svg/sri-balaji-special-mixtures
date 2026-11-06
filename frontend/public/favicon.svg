@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE8E8" />
+      <stop offset="30%" stop-color="#E5B826" />
+      <stop offset="70%" stop-color="#C99818" />
+      <stop offset="100%" stop-color="#7D5715" />
+    </linearGradient>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9B1C1C" />
+      <stop offset="80%" stop-color="#771D1D" />
+      <stop offset="100%" stop-color="#551212" />
+    </radialGradient>
+  </defs>
+  <!-- Background Circle with Royal Border -->
+  <circle cx="256" cy="256" r="246" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="12"/>
+  <circle cx="256" cy="256" r="230" fill="none" stroke="#FAF0C3" stroke-width="2" stroke-dasharray="6,4"/>
+  
+  <!-- Traditional Snack Kadai / Bowl Motifs -->
+  <path d="M120 280 C130 360, 382 360, 392 280 Z" fill="#E5B826" stroke="#FAF0C3" stroke-width="4"/>
+  <path d="M100 270 Q256 295 412 270" stroke="#FFFDF9" stroke-width="6" fill="none" stroke-linecap="round"/>
+  
+  <!-- Crisp Snack Sprinkles / Murukku / Chips silhouette -->
+  <circle cx="210" cy="235" r="14" fill="#FAF0C3" opacity="0.9"/>
+  <circle cx="256" cy="210" r="18" fill="#F5E397"/>
+  <circle cx="302" cy="235" r="14" fill="#FAF0C3" opacity="0.9"/>
+  <path d="M170 245 Q200 200 230 245" stroke="#E5B826" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M280 245 Q310 200 340 245" stroke="#E5B826" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- Base Stand -->
+  <path d="M200 355 L312 355 L296 385 L216 385 Z" fill="#C99818"/>
+  
+  <!-- Royal Text: SRI BALAJI -->
+  <text x="256" y="145" font-family="'Cinzel', 'Playfair Display', serif" font-size="44" font-weight="800" fill="#FFFDF9" text-anchor="middle" letter-spacing="4">SRI BALAJI</text>
+  <text x="256" y="175" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600" fill="#FAF0C3" text-anchor="middle" letter-spacing="6">WHOLESALE SNACKS</text>
+  
+  <text x="256" y="445" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700" fill="#E5B826" text-anchor="middle" letter-spacing="3">FRESH • CRISPY • PURE</text>
+</svg>
