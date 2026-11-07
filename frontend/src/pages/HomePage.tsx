@@ -26,7 +26,6 @@ import { initialCategories, initialProducts, initialBundles, initialBusinessSett
 import { TasteDiscovery } from '../components/home/TasteDiscovery';
 import { ProductCard } from '../components/common/ProductCard';
 import { ReviewsSection } from '../components/common/ReviewsSection';
-import { CommercialSpotlight } from '../components/home/CommercialSpotlight';
 
 export const HomePage: React.FC = () => {
   const featuredProducts = initialProducts.filter(p => p.is_featured);
@@ -317,11 +316,6 @@ export const HomePage: React.FC = () => {
           ))}
         </div>
       </section>
-
-
-      {/* 5.5 COMMERCIAL SPOTLIGHT & 3D ANIMATED MASCOT */}
-      <CommercialSpotlight />
-
 
       {/* 6. WHOLESALE B2B ADVANTAGE & COMPARISON */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
