@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, VolumeX } from 'lucide-react';
 
 export const CinematicIntro: React.FC = () => {
   // Check sessionStorage on initial evaluation; also allow ?intro=true in URL to test anytime
@@ -18,6 +18,9 @@ export const CinematicIntro: React.FC = () => {
   });
 
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [hasInteracted, setHasInteracted] = useState<boolean>(false);
+
   const mainVideoRef = useRef<HTMLVideoElement>(null);
 
   // Dismiss and reveal homepage smoothly
@@ -49,10 +52,21 @@ export const CinematicIntro: React.FC = () => {
       } catch {}
       setIsFadingOut(false);
       setIsVisible(true);
+      setHasInteracted(true);
     };
 
     window.addEventListener('sri-balaji-replay-intro', handleReplay);
     return () => window.removeEventListener('sri-balaji-replay-intro', handleReplay);
+  }, []);
+
+  const unmuteSound = useCallback(() => {
+    const video = mainVideoRef.current;
+    if (video) {
+      video.muted = false;
+      video.volume = 1.0;
+      setIsMuted(false);
+      setHasInteracted(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -73,46 +87,53 @@ export const CinematicIntro: React.FC = () => {
     video.playsInline = true;
     video.preload = 'auto';
     video.volume = 1.0;
-    video.muted = false;
 
-    // Automatic silent unmute listener on first user interaction if browser initially restricts audio
-    const silentUnmute = () => {
-      if (video && video.muted) {
-        video.muted = false;
-        video.volume = 1.0;
-      }
-      removeInteractionListeners();
-    };
-
-    const interactionEvents = ['pointerdown', 'touchstart', 'click', 'keydown'];
-    const removeInteractionListeners = () => {
-      interactionEvents.forEach((evt) => {
-        window.removeEventListener(evt, silentUnmute);
-      });
-    };
-
-    interactionEvents.forEach((evt) => {
-      window.addEventListener(evt, silentUnmute, { passive: true, once: true });
-    });
-
-    // Attempt direct autoplay with sound
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // If browser autoplay policy requires prior gesture for audio,
-        // play muted immediately so video starts with zero delay or freeze,
-        // and silentUnmute will restore sound on the first touch/click
-        video.muted = true;
-        video.play().catch(() => {});
-      });
+    // Check if user already activated this window/tab
+    const userAlreadyActive = (navigator as any).userActivation?.hasBeenActive;
+    if (userAlreadyActive || hasInteracted) {
+      video.muted = false;
+      setIsMuted(false);
+    } else {
+      video.muted = false;
     }
+
+    // Play safely without uncaught rejection
+    const startPlayback = async () => {
+      try {
+        await video.play();
+        if (video) {
+          setIsMuted(video.muted);
+        }
+      } catch {
+        // Autoplay policy prevented unmuted audio: start muted with zero lag/freeze
+        if (video) {
+          video.muted = true;
+          setIsMuted(true);
+          video.play().catch(() => {});
+        }
+      }
+    };
+
+    startPlayback();
+
+    // Universal interaction listener to immediately unmute
+    const handleActivation = () => {
+      unmuteSound();
+    };
+
+    const events = ['pointerdown', 'touchstart', 'click', 'keydown'];
+    events.forEach((evt) => {
+      window.addEventListener(evt, handleActivation, { passive: true });
+    });
 
     return () => {
       clearTimeout(safetyTimeout);
-      removeInteractionListeners();
+      events.forEach((evt) => {
+        window.removeEventListener(evt, handleActivation);
+      });
       document.body.style.overflow = originalOverflow;
     };
-  }, [isVisible, dismissIntro]);
+  }, [isVisible, dismissIntro, unmuteSound, hasInteracted]);
 
   if (!isVisible) return null;
 
@@ -121,7 +142,8 @@ export const CinematicIntro: React.FC = () => {
       role="dialog"
       aria-modal="true"
       aria-label="Sri Balaji Brand Introduction"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#070204] select-none transition-opacity duration-600 ease-out overflow-hidden ${
+      onClick={unmuteSound}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#070204] select-none transition-opacity duration-600 ease-out overflow-hidden cursor-pointer ${
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
@@ -129,7 +151,25 @@ export const CinematicIntro: React.FC = () => {
       <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-red-900/15 rounded-full blur-3xl pointer-events-none" />
 
-      {/* TOP CONTROLS: Clean Skip Intro Button Only */}
+      {/* TOP-LEFT: Discreet pill shown ONLY if browser muted the audio — clicking unmutes */}
+      {isMuted && (
+        <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-30 pointer-events-auto animate-pulse">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              unmuteSound();
+            }}
+            aria-label="Unmute intro audio"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/95 hover:bg-amber-400 text-plum-950 font-black text-xs uppercase tracking-wider shadow-xl transition-all transform active:scale-95"
+          >
+            <VolumeX className="w-3.5 h-3.5" />
+            <span>Tap for Sound 🔊</span>
+          </button>
+        </div>
+      )}
+
+      {/* TOP-RIGHT: Clean Skip Intro Button */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 pointer-events-auto">
         <button
           type="button"
