@@ -84,6 +84,17 @@ export default {
           500: '#F96C25',
         },
 
+        // Luxury Maximalist Jewel Tone System
+        jewel: {
+          goldLight: '#F9E596',
+          gold: '#D4AF37',
+          goldDark: '#AA8222',
+          emerald: '#0D3B2E',
+          sapphire: '#0F1D3D',
+          ruby: '#4A0E1A',
+          plum: '#2A1132',
+        },
+
         // Backward compatibility mappings
         brand: {
           50: '#FAF4F7',
@@ -137,8 +148,11 @@ export default {
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        serif: ['"Marcellus"', '"Playfair Display"', 'Georgia', 'serif'],
         display: ['"Cinzel"', '"Playfair Display"', 'serif'],
+        cinzel: ['"Cinzel"', 'serif'],
+        script: ['"Great Vibes"', 'cursive'],
+        marcellus: ['"Marcellus"', 'serif'],
       },
       boxShadow: {
         'soft': '0 4px 20px -2px rgba(53, 19, 38, 0.07)',
