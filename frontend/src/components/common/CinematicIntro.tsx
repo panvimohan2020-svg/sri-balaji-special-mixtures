@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ArrowRight, VolumeX } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export const CinematicIntro: React.FC = () => {
   // Check sessionStorage on initial evaluation; also allow ?intro=true in URL to test anytime
@@ -18,9 +18,6 @@ export const CinematicIntro: React.FC = () => {
   });
 
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
-  const [hasInteracted, setHasInteracted] = useState<boolean>(false);
-
   const mainVideoRef = useRef<HTMLVideoElement>(null);
 
   // Dismiss and reveal homepage smoothly
@@ -52,20 +49,17 @@ export const CinematicIntro: React.FC = () => {
       } catch {}
       setIsFadingOut(false);
       setIsVisible(true);
-      setHasInteracted(true);
     };
 
     window.addEventListener('sri-balaji-replay-intro', handleReplay);
     return () => window.removeEventListener('sri-balaji-replay-intro', handleReplay);
   }, []);
 
-  const unmuteSound = useCallback(() => {
+  const triggerUnmute = useCallback(() => {
     const video = mainVideoRef.current;
     if (video) {
       video.muted = false;
       video.volume = 1.0;
-      setIsMuted(false);
-      setHasInteracted(true);
     }
   }, []);
 
@@ -87,53 +81,42 @@ export const CinematicIntro: React.FC = () => {
     video.playsInline = true;
     video.preload = 'auto';
     video.volume = 1.0;
+    video.muted = false;
 
-    // Check if user already activated this window/tab
-    const userAlreadyActive = (navigator as any).userActivation?.hasBeenActive;
-    if (userAlreadyActive || hasInteracted) {
-      video.muted = false;
-      setIsMuted(false);
-    } else {
-      video.muted = false;
-    }
-
-    // Play safely without uncaught rejection
+    // Attempt direct simultaneous unmuted playback
     const startPlayback = async () => {
       try {
+        video.muted = false;
+        video.volume = 1.0;
         await video.play();
-        if (video) {
-          setIsMuted(video.muted);
-        }
       } catch {
-        // Autoplay policy prevented unmuted audio: start muted with zero lag/freeze
-        if (video) {
-          video.muted = true;
-          setIsMuted(true);
-          video.play().catch(() => {});
-        }
+        // Fallback if browser environment restricts unmuted autoplay prior to user interaction
+        video.muted = true;
+        await video.play().catch(() => {});
+
+        // Unmute immediately on any screen interaction
+        const events = ['pointerdown', 'touchstart', 'mousedown', 'keydown', 'scroll', 'click'];
+        const onInteraction = () => {
+          if (video) {
+            video.muted = false;
+            video.volume = 1.0;
+          }
+          events.forEach((evt) => window.removeEventListener(evt, onInteraction));
+        };
+
+        events.forEach((evt) => {
+          window.addEventListener(evt, onInteraction, { passive: true, once: true });
+        });
       }
     };
 
     startPlayback();
 
-    // Universal interaction listener to immediately unmute
-    const handleActivation = () => {
-      unmuteSound();
-    };
-
-    const events = ['pointerdown', 'touchstart', 'click', 'keydown'];
-    events.forEach((evt) => {
-      window.addEventListener(evt, handleActivation, { passive: true });
-    });
-
     return () => {
       clearTimeout(safetyTimeout);
-      events.forEach((evt) => {
-        window.removeEventListener(evt, handleActivation);
-      });
       document.body.style.overflow = originalOverflow;
     };
-  }, [isVisible, dismissIntro, unmuteSound, hasInteracted]);
+  }, [isVisible, dismissIntro]);
 
   if (!isVisible) return null;
 
@@ -142,7 +125,7 @@ export const CinematicIntro: React.FC = () => {
       role="dialog"
       aria-modal="true"
       aria-label="Sri Balaji Brand Introduction"
-      onClick={unmuteSound}
+      onClick={triggerUnmute}
       className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#070204] select-none transition-opacity duration-600 ease-out overflow-hidden cursor-pointer ${
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
@@ -151,25 +134,7 @@ export const CinematicIntro: React.FC = () => {
       <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-red-900/15 rounded-full blur-3xl pointer-events-none" />
 
-      {/* TOP-LEFT: Discreet pill shown ONLY if browser muted the audio — clicking unmutes */}
-      {isMuted && (
-        <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-30 pointer-events-auto animate-pulse">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              unmuteSound();
-            }}
-            aria-label="Unmute intro audio"
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/95 hover:bg-amber-400 text-plum-950 font-black text-xs uppercase tracking-wider shadow-xl transition-all transform active:scale-95"
-          >
-            <VolumeX className="w-3.5 h-3.5" />
-            <span>Tap for Sound 🔊</span>
-          </button>
-        </div>
-      )}
-
-      {/* TOP-RIGHT: Clean Skip Intro Button */}
+      {/* TOP-RIGHT: Clean Skip Intro Button (No Sound Buttons) */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 pointer-events-auto">
         <button
           type="button"
@@ -192,6 +157,7 @@ export const CinematicIntro: React.FC = () => {
           src="/videos/sri-balaji-intro.mp4"
           poster="/videos/sri-balaji-intro-poster.jpg"
           playsInline
+          autoPlay
           preload="auto"
           onEnded={() => dismissIntro()}
           onError={() => dismissIntro()}
