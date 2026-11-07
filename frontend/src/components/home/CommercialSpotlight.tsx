@@ -180,19 +180,14 @@ export const CommercialSpotlight: React.FC = () => {
 
           </div>
 
-          {/* Right Column: 9:16 Cinematic Video Player Mockup */}
-          <div className="lg:col-span-6 flex justify-center">
+          {/* Right Column: 16:9 Cinematic Video Player */}
+          <div className="lg:col-span-6 flex justify-center w-full">
             
-            {/* Mobile / Smartphone Device Mockup Container */}
-            <div className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[9/16] rounded-[36px] p-3 bg-gradient-to-b from-amber-400/40 via-plum-800 to-plum-950 shadow-2xl border-4 border-turmeric/40">
+            {/* Cinematic Theater Screen Frame */}
+            <div className="relative w-full max-w-lg lg:max-w-xl aspect-video rounded-3xl p-2.5 sm:p-3 bg-gradient-to-b from-amber-400/40 via-plum-800 to-plum-950 shadow-2xl border-2 border-turmeric/50 group">
               
-              {/* Screen Notch / Speaker Bar */}
-              <div className="absolute top-5 left-1/2 -translate-x-1/2 w-20 h-4 bg-plum-950/80 rounded-full z-20 flex items-center justify-center">
-                <div className="w-2.5 h-2.5 rounded-full bg-white/30" />
-              </div>
-
               {/* Video Player Box */}
-              <div className="relative w-full h-full rounded-[28px] overflow-hidden bg-black shadow-inner">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-black shadow-inner">
                 <video
                   ref={videoRef}
                   src="/videos/sri-balaji-commercial.mp4"
@@ -206,9 +201,9 @@ export const CommercialSpotlight: React.FC = () => {
                 />
 
                 {/* Floating Top Controls */}
-                <div className="absolute top-8 left-3 right-3 flex items-center justify-between z-10 pointer-events-auto">
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-auto">
                   <div className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] font-bold text-turmeric-300">
-                    Sri Balaji 15s Spot
+                    Sri Balaji 15s Commercial
                   </div>
 
                   <button
@@ -279,7 +274,7 @@ export const CommercialSpotlight: React.FC = () => {
       {/* FULLSCREEN / ENLARGED COMMERCIAL MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative w-full max-w-md aspect-[9/16] bg-black rounded-3xl overflow-hidden shadow-2xl border border-turmeric/40">
+          <div className="relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border-2 border-turmeric/50">
             
             {/* Close Button */}
             <button
