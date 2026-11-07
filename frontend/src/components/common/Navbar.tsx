@@ -8,7 +8,8 @@ import {
   Heart,
   Store,
   Phone,
-  ChevronRight
+  ChevronRight,
+  Play
 } from 'lucide-react';
 import { AnnouncementBar } from './AnnouncementBar';
 import { BrandLogo } from './BrandLogo';
@@ -100,6 +101,17 @@ export const Navbar: React.FC = () => {
                 <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${isWholesaleMode ? 'bg-turmeric text-plum-900' : 'bg-peach-100 text-chilli-700'}`}>
                   {isWholesaleMode ? 'Active' : 'Switch'}
                 </span>
+              </button>
+
+              {/* Watch Intro Button */}
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event('sri-balaji-replay-intro'))}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-plum-950 bg-turmeric-400/20 hover:bg-turmeric/30 border border-turmeric/40 transition-all shadow-xs"
+                title="Play 4K Cinematic Introduction"
+              >
+                <Play className="w-3.5 h-3.5 fill-current text-turmeric-600" />
+                <span className="font-extrabold text-plum-900">Watch Intro</span>
               </button>
 
               {/* Search Trigger */}
