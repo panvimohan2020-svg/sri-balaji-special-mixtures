@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowRight, Volume2, VolumeX, Play, Sparkles } from 'lucide-react';
+import { ArrowRight, Volume2, VolumeX, Play } from 'lucide-react';
 
 export const CinematicIntro: React.FC = () => {
   // Check sessionStorage on initial evaluation
@@ -13,9 +13,8 @@ export const CinematicIntro: React.FC = () => {
   });
 
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
   const [autoplayBlocked, setAutoplayBlocked] = useState<boolean>(false);
-  const [progress, setProgress] = useState<number>(0);
 
   const mainVideoRef = useRef<HTMLVideoElement>(null);
   const bgVideoRef = useRef<HTMLVideoElement>(null);
@@ -59,71 +58,88 @@ export const CinematicIntro: React.FC = () => {
       dismissIntro();
     }, 12000);
 
-    // Initial autoplay attempt
+    // Initial autoplay setup with sound on
     video.playsInline = true;
     video.preload = 'auto';
-
-    // Try unmuted autoplay first
+    video.volume = 1.0;
     video.muted = false;
+
+    let isCleanedUp = false;
+    const cleanupFns: (() => void)[] = [];
+
+    const autoUnlockSound = () => {
+      if (video && video.muted) {
+        video.muted = false;
+        video.volume = 1.0;
+        if (!isCleanedUp) setIsMuted(false);
+      }
+      cleanupFns.forEach((fn) => fn());
+      cleanupFns.length = 0;
+    };
+
+    // Listen on any mouse movement, touch, pointer, scroll, or key to auto-unmute immediately
+    const interactionEvents = [
+      'mousemove',
+      'pointermove',
+      'pointerdown',
+      'mousedown',
+      'touchstart',
+      'wheel',
+      'scroll',
+      'keydown',
+      'click',
+    ];
+
+    interactionEvents.forEach((evt) => {
+      const handler = () => autoUnlockSound();
+      window.addEventListener(evt, handler, { passive: true, once: true });
+      cleanupFns.push(() => window.removeEventListener(evt, handler));
+    });
+
+    // Attempt unmuted autoplay directly
     const playPromise = video.play();
 
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          setIsMuted(false);
-          setAutoplayBlocked(false);
-          if (bgVideoRef.current) {
-            bgVideoRef.current.play().catch(() => {});
+          if (!isCleanedUp) {
+            setIsMuted(false);
+            setAutoplayBlocked(false);
+            if (bgVideoRef.current) {
+              bgVideoRef.current.play().catch(() => {});
+            }
           }
         })
         .catch(() => {
-          // Autoplay with sound prevented by browser policy
+          // Autoplay with sound prevented by browser policy prior to gesture
           // Fallback: Start muted immediately so video plays without black screen
           video.muted = true;
-          setIsMuted(true);
+          if (!isCleanedUp) setIsMuted(true);
 
           video
             .play()
             .then(() => {
-              setAutoplayBlocked(false);
-              if (bgVideoRef.current) {
-                bgVideoRef.current.play().catch(() => {});
+              if (!isCleanedUp) {
+                setAutoplayBlocked(false);
+                if (bgVideoRef.current) {
+                  bgVideoRef.current.play().catch(() => {});
+                }
               }
             })
             .catch(() => {
               // Both unmuted and muted autoplay blocked (strict mobile power-saving)
-              setAutoplayBlocked(true);
+              if (!isCleanedUp) setAutoplayBlocked(true);
             });
-
-          // Listen for first user touch or click to instantly unlock sound
-          const unlockSound = () => {
-            if (video && video.muted) {
-              video.muted = false;
-              setIsMuted(false);
-            }
-            window.removeEventListener('click', unlockSound);
-            window.removeEventListener('touchstart', unlockSound);
-            window.removeEventListener('scroll', unlockSound);
-          };
-
-          window.addEventListener('click', unlockSound, { passive: true, once: true });
-          window.addEventListener('touchstart', unlockSound, { passive: true, once: true });
-          window.addEventListener('scroll', unlockSound, { passive: true, once: true });
         });
     }
 
     return () => {
+      isCleanedUp = true;
       clearTimeout(safetyTimeout);
+      cleanupFns.forEach((fn) => fn());
       document.body.style.overflow = originalOverflow;
     };
   }, [isVisible]);
-
-  const handleTimeUpdate = () => {
-    if (!mainVideoRef.current) return;
-    const current = mainVideoRef.current.currentTime;
-    const total = mainVideoRef.current.duration || 10;
-    setProgress((current / total) * 100);
-  };
 
   const handleVideoEnded = () => {
     dismissIntro();
@@ -146,6 +162,7 @@ export const CinematicIntro: React.FC = () => {
     e.stopPropagation();
     if (!mainVideoRef.current) return;
     mainVideoRef.current.muted = false;
+    mainVideoRef.current.volume = 1.0;
     mainVideoRef.current
       .play()
       .then(() => {
@@ -172,7 +189,7 @@ export const CinematicIntro: React.FC = () => {
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      {/* 1. SOFTLY BLURRED AMBIENT VIDEO BACKDROP (ELIMINATES MOBILE BLACK BARS) */}
+      {/* 1. SOFTLY BLURRED AMBIENT VIDEO BACKDROP (SEAMLESSLY FILLS AMBIENT PERIPHERY) */}
       <video
         ref={bgVideoRef}
         src="/videos/sri-balaji-intro.mp4"
@@ -226,53 +243,42 @@ export const CinematicIntro: React.FC = () => {
         </button>
       </div>
 
-      {/* 3. FOREGROUND MAIN VIDEO (100% UNTOUCHED, CENTERED & SHARP) */}
-      <div className="relative z-20 w-full h-full max-w-7xl max-h-screen p-4 sm:p-8 flex items-center justify-center">
-        <div className="relative w-full aspect-video max-h-[85vh] sm:max-h-[90vh] flex items-center justify-center">
-          <video
-            ref={mainVideoRef}
-            src="/videos/sri-balaji-intro.mp4"
-            poster="/videos/sri-balaji-intro-poster.jpg"
-            playsInline
-            preload="auto"
-            onTimeUpdate={handleTimeUpdate}
-            onEnded={handleVideoEnded}
-            onError={handleVideoError}
-            onClick={toggleSound}
-            className="w-full h-full object-contain drop-shadow-2xl cursor-pointer rounded-xl sm:rounded-2xl"
-          />
-
-          {/* Autoplay Blocked Manual Play Button */}
-          {autoplayBlocked && (
-            <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/60 backdrop-blur-xs rounded-xl sm:rounded-2xl">
-              <button
-                type="button"
-                onClick={handleManualPlay}
-                className="flex flex-col items-center gap-3 p-6 sm:p-8 rounded-3xl bg-black/80 border-2 border-amber-400 text-white shadow-2xl hover:scale-105 transition-transform"
-              >
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-plum-950 flex items-center justify-center shadow-glow">
-                  <Play className="w-8 h-8 sm:w-10 sm:h-10 fill-current translate-x-0.5" />
-                </div>
-                <div className="text-center">
-                  <span className="font-display font-extrabold text-base sm:text-lg text-white block">
-                    Play Sri Balaji Intro
-                  </span>
-                  <span className="text-xs text-amber-300 font-semibold block mt-0.5">
-                    Click to Start with Sound
-                  </span>
-                </div>
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* 4. SUBTLE GOLDEN TIMELINE BAR AT VERY BOTTOM */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10 z-30">
-        <div
-          className="h-full bg-gradient-to-r from-amber-500 via-amber-300 to-amber-400 transition-all duration-150 ease-linear shadow-glow"
-          style={{ width: `${progress}%` }}
+      {/* 3. FOREGROUND MAIN VIDEO (FULL SCREEN, EDGES UNCUT) */}
+      <div className="relative z-20 w-full h-full flex items-center justify-center overflow-hidden">
+        <video
+          ref={mainVideoRef}
+          src="/videos/sri-balaji-intro.mp4"
+          poster="/videos/sri-balaji-intro-poster.jpg"
+          playsInline
+          preload="auto"
+          onEnded={handleVideoEnded}
+          onError={handleVideoError}
+          onClick={toggleSound}
+          className="w-full h-full object-contain cursor-pointer"
         />
+
+        {/* Autoplay Blocked Manual Play Button */}
+        {autoplayBlocked && (
+          <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/60 backdrop-blur-xs">
+            <button
+              type="button"
+              onClick={handleManualPlay}
+              className="flex flex-col items-center gap-3 p-6 sm:p-8 rounded-3xl bg-black/80 border-2 border-amber-400 text-white shadow-2xl hover:scale-105 transition-transform"
+            >
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-plum-950 flex items-center justify-center shadow-glow">
+                <Play className="w-8 h-8 sm:w-10 sm:h-10 fill-current translate-x-0.5" />
+              </div>
+              <div className="text-center">
+                <span className="font-display font-extrabold text-base sm:text-lg text-white block">
+                  Play Sri Balaji Intro
+                </span>
+                <span className="text-xs text-amber-300 font-semibold block mt-0.5">
+                  Click to Start with Sound
+                </span>
+              </div>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
