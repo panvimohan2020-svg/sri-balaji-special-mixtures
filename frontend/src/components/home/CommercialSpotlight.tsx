@@ -1,89 +1,83 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Play, 
-  Pause, 
-  Volume2, 
-  VolumeX, 
-  Sparkles, 
-  ArrowRight, 
-  Maximize2, 
-  X, 
-  RotateCcw,
-  Film
-} from 'lucide-react';
+import { Sparkles, ArrowRight, Maximize2, X } from 'lucide-react';
 
 export const CommercialSpotlight: React.FC = () => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [hasEnded, setHasEnded] = useState<boolean>(false);
-
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
-  // Auto-play video and auto-turn on volume when user scrolls down to this section
   useEffect(() => {
-    const currentVideo = videoRef.current;
-    if (!currentVideo) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    // Track user gesture to satisfy browser autoplay audio policy
-    let hasInteracted = false;
-    const registerInteraction = () => {
-      hasInteracted = true;
+    // Ensure audio and video attributes are optimized for cross-browser iOS/Android/Desktop
+    video.playsInline = true;
+    video.preload = 'auto';
+
+    let hasUnlockedAudio = false;
+
+    // Attempt to start audio playback seamlessly
+    const attemptUnmutedPlayback = () => {
+      video.muted = false;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            hasUnlockedAudio = true;
+          })
+          .catch(() => {
+            // Reliable Fallback: If unmuted autoplay is gated before full user gesture,
+            // play muted immediately to prevent video stall, and unmute on the first scroll/touch
+            video.muted = true;
+            video.play().catch(() => {});
+
+            const unlockAudio = () => {
+              video.muted = false;
+              hasUnlockedAudio = true;
+              window.removeEventListener('scroll', unlockAudio);
+              window.removeEventListener('touchmove', unlockAudio);
+              window.removeEventListener('touchstart', unlockAudio);
+              window.removeEventListener('pointerdown', unlockAudio);
+              window.removeEventListener('click', unlockAudio);
+            };
+
+            window.addEventListener('scroll', unlockAudio, { passive: true, once: true });
+            window.addEventListener('touchmove', unlockAudio, { passive: true, once: true });
+            window.addEventListener('touchstart', unlockAudio, { passive: true, once: true });
+            window.addEventListener('pointerdown', unlockAudio, { passive: true, once: true });
+            window.addEventListener('click', unlockAudio, { passive: true, once: true });
+          });
+      }
     };
 
-    window.addEventListener('scroll', registerInteraction, { passive: true });
-    window.addEventListener('touchstart', registerInteraction, { passive: true });
-    window.addEventListener('pointerdown', registerInteraction, { passive: true });
-    window.addEventListener('keydown', registerInteraction, { passive: true });
+    // Global listener on first scroll or touch anywhere on the page
+    const handleInitialUserGesture = () => {
+      if (!hasUnlockedAudio && video) {
+        video.muted = false;
+      }
+    };
 
+    window.addEventListener('scroll', handleInitialUserGesture, { passive: true });
+    window.addEventListener('touchmove', handleInitialUserGesture, { passive: true });
+    window.addEventListener('touchstart', handleInitialUserGesture, { passive: true });
+    window.addEventListener('pointerdown', handleInitialUserGesture, { passive: true });
+
+    // IntersectionObserver to auto-play video and audio whenever user scrolls down into view
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // User scrolled down to the commercial section!
-            // Attempt auto-play with audio ON
-            currentVideo.muted = false;
-            const playPromise = currentVideo.play();
-
-            if (playPromise !== undefined) {
-              playPromise
-                .then(() => {
-                  setIsPlaying(true);
-                  setIsMuted(false);
-                  setHasEnded(false);
-                })
-                .catch(() => {
-                  // If browser blocked unmuted autoplay before full interaction, start muted and immediately unmute on scroll/touch
-                  currentVideo.muted = true;
-                  currentVideo.play().then(() => {
-                    setIsPlaying(true);
-                    setIsMuted(true);
-                  }).catch(() => {});
-
-                  const unlockAudio = () => {
-                    currentVideo.muted = false;
-                    setIsMuted(false);
-                    window.removeEventListener('scroll', unlockAudio);
-                    window.removeEventListener('touchstart', unlockAudio);
-                    window.removeEventListener('click', unlockAudio);
-                  };
-
-                  window.addEventListener('scroll', unlockAudio, { passive: true, once: true });
-                  window.addEventListener('touchstart', unlockAudio, { passive: true, once: true });
-                  window.addEventListener('click', unlockAudio, { passive: true, once: true });
-                });
-            }
+            // Scrolled into view: auto-play video with audio
+            attemptUnmutedPlayback();
           } else {
-            // User scrolled away: pause to avoid audio overlapping other content
-            currentVideo.pause();
-            setIsPlaying(false);
+            // Scrolled out of view: pause video
+            video.pause();
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.25 }
     );
 
     if (containerRef.current) {
@@ -92,45 +86,21 @@ export const CommercialSpotlight: React.FC = () => {
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('scroll', registerInteraction);
-      window.removeEventListener('touchstart', registerInteraction);
-      window.removeEventListener('pointerdown', registerInteraction);
-      window.removeEventListener('keydown', registerInteraction);
+      window.removeEventListener('scroll', handleInitialUserGesture);
+      window.removeEventListener('touchmove', handleInitialUserGesture);
+      window.removeEventListener('touchstart', handleInitialUserGesture);
+      window.removeEventListener('pointerdown', handleInitialUserGesture);
     };
   }, []);
 
-  const togglePlay = () => {
+  const handleVideoClick = () => {
     if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    } else {
+    if (videoRef.current.paused) {
+      videoRef.current.muted = false;
       videoRef.current.play();
-      setIsPlaying(true);
-      setHasEnded(false);
+    } else {
+      videoRef.current.pause();
     }
-  };
-
-  const toggleMute = () => {
-    if (!videoRef.current) return;
-    const nextMuted = !isMuted;
-    videoRef.current.muted = nextMuted;
-    setIsMuted(nextMuted);
-  };
-
-  const handleVideoEnded = () => {
-    setIsPlaying(false);
-    setHasEnded(true);
-  };
-
-  const handleReplay = () => {
-    if (!videoRef.current) return;
-    videoRef.current.currentTime = 0;
-    videoRef.current.muted = false;
-    setIsMuted(false);
-    videoRef.current.play();
-    setIsPlaying(true);
-    setHasEnded(false);
   };
 
   return (
@@ -151,8 +121,8 @@ export const CommercialSpotlight: React.FC = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-turmeric/20 border border-turmeric/40 text-turmeric-200 text-xs sm:text-sm font-bold shadow-sm">
-            <Film className="w-4 h-4 text-turmeric-400" />
-            <span>Sri Balaji 3D CGI Commercial • 15 Seconds of Joy</span>
+            <Sparkles className="w-4 h-4 text-turmeric-400" />
+            <span>Taste the Tradition • Special Mixtures</span>
           </div>
           
           <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
@@ -163,7 +133,7 @@ export const CommercialSpotlight: React.FC = () => {
           </h2>
 
           <p className="text-sm sm:text-base text-ivory/80 leading-relaxed max-w-2xl mx-auto">
-            Experience the irresistible crunch that has brought smiles across Odisha for over 30 years. Watch our animated spot featuring Leo and our authentic Special Mixtures.
+            Experience the irresistible crunch that has brought smiles across Odisha for over 30 years. Handcrafted with authentic spices in Paralakhemundi.
           </p>
         </div>
 
@@ -252,6 +222,7 @@ export const CommercialSpotlight: React.FC = () => {
               </Link>
 
               <button
+                type="button"
                 onClick={() => setIsModalOpen(true)}
                 className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm tracking-wide transition-all"
               >
@@ -262,99 +233,23 @@ export const CommercialSpotlight: React.FC = () => {
 
           </div>
 
-          {/* Right Column: 16:9 Cinematic Video Player */}
+          {/* Right Column: 16:9 Clean Cinematic Video Player */}
           <div className="lg:col-span-6 flex justify-center w-full">
             
             {/* Cinematic Theater Screen Frame */}
             <div className="relative w-full max-w-lg lg:max-w-xl aspect-video rounded-3xl p-2.5 sm:p-3 bg-gradient-to-b from-amber-400/40 via-plum-800 to-plum-950 shadow-2xl border-2 border-turmeric/50 group">
               
-              {/* Video Player Box */}
+              {/* Clean Video Player Box (No overlay text, no Sound On button) */}
               <div className="relative w-full h-full rounded-2xl overflow-hidden bg-black shadow-inner">
                 <video
                   ref={videoRef}
                   src="/videos/sri-balaji-commercial.mp4"
                   playsInline
-                  loop={false}
-                  muted={isMuted}
-                  onEnded={handleVideoEnded}
+                  loop
+                  preload="auto"
                   className="w-full h-full object-cover cursor-pointer"
-                  onClick={togglePlay}
+                  onClick={handleVideoClick}
                 />
-
-                {/* Floating Top Controls: Animated Sound Indicator & Status */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-auto">
-                  <div className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] font-bold text-turmeric-300">
-                    Sri Balaji 15s Commercial
-                  </div>
-
-                  {/* Auto-Volume Button with Equalizer Waveform */}
-                  <button
-                    onClick={toggleMute}
-                    aria-label={isMuted ? 'Turn on sound' : 'Mute sound'}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-full backdrop-blur-md border transition-all transform active:scale-95 shadow-md ${
-                      !isMuted 
-                        ? 'bg-emerald-900/85 hover:bg-emerald-800 border-turmeric text-turmeric-200' 
-                        : 'bg-black/60 hover:bg-black/80 border-white/20 text-white'
-                    }`}
-                  >
-                    {!isMuted ? (
-                      <>
-                        <div className="flex items-center gap-0.5 h-3">
-                          <span className="w-0.5 h-3 bg-turmeric rounded-full animate-bounce [animation-duration:0.6s]" />
-                          <span className="w-0.5 h-2 bg-turmeric-300 rounded-full animate-bounce [animation-duration:0.8s] [animation-delay:0.2s]" />
-                          <span className="w-0.5 h-3.5 bg-turmeric-200 rounded-full animate-bounce [animation-duration:0.5s] [animation-delay:0.4s]" />
-                        </div>
-                        <Volume2 className="w-3.5 h-3.5 text-turmeric" />
-                        <span className="text-[10px] font-bold tracking-wide">Sound ON</span>
-                      </>
-                    ) : (
-                      <>
-                        <VolumeX className="w-3.5 h-3.5 text-white" />
-                        <span className="text-[10px] font-bold text-turmeric-300 tracking-wide">Tap Sound</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                {/* Center Play / Pause / Replay Overlay */}
-                {(!isPlaying || hasEnded) && (
-                  <div 
-                    onClick={hasEnded ? handleReplay : togglePlay}
-                    className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex flex-col items-center justify-center cursor-pointer z-10"
-                  >
-                    <div className="w-16 h-16 rounded-full bg-turmeric text-plum-950 flex items-center justify-center shadow-xl transform hover:scale-110 active:scale-95 transition-all">
-                      {hasEnded ? (
-                        <RotateCcw className="w-7 h-7" />
-                      ) : (
-                        <Play className="w-7 h-7 fill-plum-950 translate-x-0.5" />
-                      )}
-                    </div>
-                    <span className="mt-3 text-xs font-bold text-white uppercase tracking-wider drop-shadow-md">
-                      {hasEnded ? 'Watch Again' : 'Play Video'}
-                    </span>
-                  </div>
-                )}
-
-                {/* Bottom Floating Bar */}
-                <div className="absolute bottom-3 left-3 right-3 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-3 pt-6 rounded-2xl flex items-center justify-between z-10 pointer-events-auto">
-                  <div>
-                    <span className="text-[10px] font-extrabold text-turmeric uppercase tracking-wider block">
-                      Taste The Tradition
-                    </span>
-                    <strong className="text-xs font-bold text-white block">
-                      Special Mixtures 30+ Yrs
-                    </strong>
-                  </div>
-
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="p-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors"
-                    title="Fullscreen"
-                  >
-                    <Maximize2 className="w-4 h-4" />
-                  </button>
-                </div>
-
               </div>
 
             </div>
@@ -372,6 +267,7 @@ export const CommercialSpotlight: React.FC = () => {
             
             {/* Close Button */}
             <button
+              type="button"
               onClick={() => setIsModalOpen(false)}
               className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 transition-all"
               aria-label="Close modal"
@@ -379,7 +275,7 @@ export const CommercialSpotlight: React.FC = () => {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Video in Modal */}
+            {/* Video in Modal with native controls */}
             <video
               ref={modalVideoRef}
               src="/videos/sri-balaji-commercial.mp4"
