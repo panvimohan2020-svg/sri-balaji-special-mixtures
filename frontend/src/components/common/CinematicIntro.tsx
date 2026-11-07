@@ -60,6 +60,7 @@ export const CinematicIntro: React.FC = () => {
     if (video) {
       video.muted = false;
       video.volume = 1.0;
+      video.play().catch(() => {});
     }
   }, []);
 
@@ -100,6 +101,7 @@ export const CinematicIntro: React.FC = () => {
           if (video) {
             video.muted = false;
             video.volume = 1.0;
+            video.play().catch(() => {});
           }
           events.forEach((evt) => window.removeEventListener(evt, onInteraction));
         };
