@@ -49,3 +49,4 @@ export const FloatingWhatsAppButton: React.FC = () => {
     </div>
   );
 };
+

@@ -67,3 +67,4 @@ export const AnnouncementBar: React.FC = () => {
     </div>
   );
 };
+

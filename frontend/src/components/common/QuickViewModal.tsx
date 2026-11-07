@@ -245,3 +245,4 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
     </dialog>
   );
 };
+
