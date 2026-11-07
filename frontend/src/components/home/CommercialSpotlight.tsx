@@ -56,9 +56,13 @@ export const CommercialSpotlight: React.FC = () => {
 
   return (
     <section className="relative overflow-hidden py-12 sm:py-16 bg-gradient-to-br from-plum-950 via-emerald-950 to-plum-900 text-white rounded-3xl border border-gold/30 shadow-2xl mx-4 sm:mx-6 lg:mx-8">
-      {/* Background Decorative Gold Ambient Ornaments */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-turmeric/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Background Decorative Gold Ambient Ornaments with Animations */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-turmeric/15 rounded-full blur-3xl pointer-events-none animate-sun-glow" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none animate-emerald-mist" />
+
+      {/* Floating Sparkles in Commercial Showcase */}
+      <div className="absolute top-10 left-12 text-turmeric-400 opacity-60 animate-star-twinkle text-lg pointer-events-none">✦</div>
+      <div className="absolute bottom-12 right-20 text-amber-300 opacity-70 animate-star-twinkle [animation-delay:2.5s] text-base pointer-events-none">✦</div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         
@@ -302,3 +306,4 @@ export const CommercialSpotlight: React.FC = () => {
     </section>
   );
 };
+

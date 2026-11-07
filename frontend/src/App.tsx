@@ -6,6 +6,7 @@ import { MobileBottomNav } from './components/common/MobileBottomNav';
 import { FloatingWhatsAppButton } from './components/common/FloatingWhatsAppButton';
 import { BackToTopButton } from './components/common/BackToTopButton';
 import { ToastContainer } from './components/common/ToastContainer';
+import { AnimatedBackground } from './components/common/AnimatedBackground';
 import { HomePage } from './pages/HomePage';
 import { CatalogPage } from './pages/CatalogPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
@@ -91,7 +92,8 @@ export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-ivory text-cocoa">
+      <div className="min-h-screen flex flex-col bg-ivory text-cocoa relative">
+        <AnimatedBackground />
         <Navbar />
         
         <main className="flex-grow">

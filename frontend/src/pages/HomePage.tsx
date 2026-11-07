@@ -62,10 +62,17 @@ export const HomePage: React.FC = () => {
     <div className="space-y-16 sm:space-y-24">
       
       {/* 1. ASYMMETRIC EDITORIAL HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-ivory-light via-ivory-warm to-white pt-6 pb-16 sm:pt-12 sm:pb-24 border-b border-ivory-border">
-        {/* Subtle decorative radial glow */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-turmeric/15 rounded-full blur-3xl -z-10 pointer-events-none" />
-        <div className="absolute top-1/3 left-0 w-80 h-80 bg-peach/25 rounded-full blur-3xl -z-10 pointer-events-none" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-amber-50/70 via-ivory-warm to-white pt-6 pb-16 sm:pt-12 sm:pb-24 border-b border-ivory-border">
+        {/* Animated Background Solar Glow & Floating particles */}
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-amber-400/20 via-turmeric-300/10 to-transparent rounded-full blur-3xl -z-10 pointer-events-none animate-sun-glow" />
+        <div className="absolute top-1/3 left-0 w-80 h-80 bg-gradient-to-tr from-emerald-500/15 via-turmeric-400/10 to-transparent rounded-full blur-3xl -z-10 pointer-events-none animate-emerald-mist" />
+
+        {/* Decorative Floating Sparkle Stars */}
+        <div className="absolute top-14 right-1/3 text-amber-400 opacity-70 animate-star-twinkle text-lg pointer-events-none select-none">✦</div>
+        <div className="absolute top-36 left-1/4 text-turmeric-500 opacity-60 animate-star-twinkle [animation-delay:2s] text-base pointer-events-none select-none">✦</div>
+        <div className="absolute bottom-20 left-1/3 text-amber-500 opacity-60 animate-star-twinkle [animation-delay:3.5s] text-sm pointer-events-none select-none">✦</div>
+        <div className="absolute top-28 right-16 w-3 h-3 rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-sm opacity-60 animate-spice-slow pointer-events-none" />
+        <div className="absolute bottom-32 right-1/4 w-2.5 h-2.5 rounded-full bg-gradient-to-br from-turmeric-200 to-amber-400 shadow-sm opacity-70 animate-spice-medium pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,14 +8,15 @@
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
-    background-color: #FFFDF9;
-    color: #2A1810;
+    background-color: #FFFDF5;
+    color: #2D1B12;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   }
 
   body {
     min-height: 100vh;
     overflow-x: hidden;
+    position: relative;
   }
 
   /* Modern Dialog standards per modern-web-guidance */
@@ -26,26 +27,26 @@
   dialog::backdrop {
     overflow: hidden;
     overscroll-behavior: contain;
-    background-color: rgba(26, 14, 10, 0.7);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background-color: rgba(4, 31, 20, 0.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
 }
 
-/* Custom subtle scrollbar */
+/* Custom subtle scrollbar with warm turmeric and emerald trim */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF6EE;
+  background: #FFF9E6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D99163;
+  background: #F59E0B;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B04F22;
+  background: #D97706;
 }
 
 /* PWA App Shell Touch Action optimizations */
@@ -72,4 +73,145 @@
     rgba(255, 255, 255, 0) 100%
   );
   animation: shimmer 2.5s infinite;
+}
+
+/* ========================================================================= */
+/* BACKGROUND ANIMATIONS: SUNLIT AURORAS & FLOATING SPICES/CRUNCH PARTICLES  */
+/* ========================================================================= */
+
+@keyframes sunGlowBreathe {
+  0%, 100% {
+    transform: scale(1) translate3d(0, 0, 0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.12) translate3d(15px, -20px, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes emeraldMistDrift {
+  0%, 100% {
+    transform: scale(1) translate3d(0, 0, 0);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.08) translate3d(-20px, 15px, 0);
+    opacity: 0.95;
+  }
+}
+
+@keyframes floatSpiceSlow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(12px, -32px, 0) rotate(18deg);
+  }
+}
+
+@keyframes floatSpiceMedium {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-18px, -45px, 0) rotate(-22deg);
+  }
+}
+
+@keyframes floatSpiceFast {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(15px, -25px, 0) rotate(12deg);
+  }
+}
+
+@keyframes leafSway {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-15deg);
+  }
+  50% {
+    transform: translate3d(14px, -28px, 0) rotate(20deg);
+  }
+}
+
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.85) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(45deg);
+  }
+}
+
+@keyframes boondiPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+
+/* Background Animation Utility Classes */
+.animate-sun-glow {
+  animation: sunGlowBreathe 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-emerald-mist {
+  animation: emeraldMistDrift 16s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-spice-slow {
+  animation: floatSpiceSlow 12s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-spice-medium {
+  animation: floatSpiceMedium 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-spice-fast {
+  animation: floatSpiceFast 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-leaf-sway {
+  animation: leafSway 11s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-star-twinkle {
+  animation: starTwinkle 4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-boondi-pulse {
+  animation: boondiPulse 5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Accessibility: Turn off transform animations when user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-sun-glow,
+  .animate-emerald-mist,
+  .animate-spice-slow,
+  .animate-spice-medium,
+  .animate-spice-fast,
+  .animate-leaf-sway,
+  .animate-star-twinkle,
+  .animate-boondi-pulse,
+  .shimmer-badge::after {
+    animation: none !important;
+    transform: none !important;
+  }
 }
