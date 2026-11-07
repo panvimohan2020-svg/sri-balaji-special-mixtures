@@ -15,12 +15,28 @@ export const CommercialSpotlight: React.FC = () => {
     // Ensure audio and video attributes are optimized for cross-browser iOS/Android/Desktop
     video.playsInline = true;
     video.preload = 'auto';
+    video.volume = 1.0;
 
     let hasUnlockedAudio = false;
+
+    const unlockAudio = () => {
+      if (video) {
+        video.muted = false;
+        video.volume = 1.0;
+        video.play().catch(() => {});
+        hasUnlockedAudio = true;
+      }
+    };
+
+    const activationEvents = ['click', 'pointerup', 'touchend', 'keydown'];
+    activationEvents.forEach((evt) => {
+      window.addEventListener(evt, unlockAudio, { passive: true });
+    });
 
     // Attempt to start audio playback seamlessly
     const attemptUnmutedPlayback = () => {
       video.muted = false;
+      video.volume = 1.0;
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise
@@ -28,51 +44,20 @@ export const CommercialSpotlight: React.FC = () => {
             hasUnlockedAudio = true;
           })
           .catch(() => {
-            // Reliable Fallback: If unmuted autoplay is gated before full user gesture,
-            // play muted immediately to prevent video stall, and unmute on the first scroll/touch
+            // If browser blocks unmuted playback before interaction, play muted
             video.muted = true;
             video.play().catch(() => {});
-
-            const unlockAudio = () => {
-              video.muted = false;
-              hasUnlockedAudio = true;
-              window.removeEventListener('scroll', unlockAudio);
-              window.removeEventListener('touchmove', unlockAudio);
-              window.removeEventListener('touchstart', unlockAudio);
-              window.removeEventListener('pointerdown', unlockAudio);
-              window.removeEventListener('click', unlockAudio);
-            };
-
-            window.addEventListener('scroll', unlockAudio, { passive: true, once: true });
-            window.addEventListener('touchmove', unlockAudio, { passive: true, once: true });
-            window.addEventListener('touchstart', unlockAudio, { passive: true, once: true });
-            window.addEventListener('pointerdown', unlockAudio, { passive: true, once: true });
-            window.addEventListener('click', unlockAudio, { passive: true, once: true });
           });
       }
     };
 
-    // Global listener on first scroll or touch anywhere on the page
-    const handleInitialUserGesture = () => {
-      if (!hasUnlockedAudio && video) {
-        video.muted = false;
-      }
-    };
-
-    window.addEventListener('scroll', handleInitialUserGesture, { passive: true });
-    window.addEventListener('touchmove', handleInitialUserGesture, { passive: true });
-    window.addEventListener('touchstart', handleInitialUserGesture, { passive: true });
-    window.addEventListener('pointerdown', handleInitialUserGesture, { passive: true });
-
-    // IntersectionObserver to auto-play video and audio whenever user scrolls down into view
+    // IntersectionObserver to auto-play video whenever user scrolls down into view
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Scrolled into view: auto-play video with audio
             attemptUnmutedPlayback();
           } else {
-            // Scrolled out of view: pause video
             video.pause();
           }
         });
@@ -86,20 +71,26 @@ export const CommercialSpotlight: React.FC = () => {
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('scroll', handleInitialUserGesture);
-      window.removeEventListener('touchmove', handleInitialUserGesture);
-      window.removeEventListener('touchstart', handleInitialUserGesture);
-      window.removeEventListener('pointerdown', handleInitialUserGesture);
+      activationEvents.forEach((evt) => {
+        window.removeEventListener(evt, unlockAudio);
+      });
     };
   }, []);
 
   const handleVideoClick = () => {
     if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.muted = false;
-      videoRef.current.play();
+    const video = videoRef.current;
+    if (video.paused) {
+      video.muted = false;
+      video.volume = 1.0;
+      video.play().catch(() => {});
     } else {
-      videoRef.current.pause();
+      if (video.muted) {
+        video.muted = false;
+        video.volume = 1.0;
+      } else {
+        video.pause();
+      }
     }
   };
 
