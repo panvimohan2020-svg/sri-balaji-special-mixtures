@@ -7,6 +7,7 @@ import { FloatingWhatsAppButton } from './components/common/FloatingWhatsAppButt
 import { BackToTopButton } from './components/common/BackToTopButton';
 import { ToastContainer } from './components/common/ToastContainer';
 import { AnimatedBackground } from './components/common/AnimatedBackground';
+import { CinematicIntro } from './components/common/CinematicIntro';
 import { HomePage } from './pages/HomePage';
 import { CatalogPage } from './pages/CatalogPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
@@ -92,6 +93,7 @@ export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <CinematicIntro />
       <div className="min-h-screen flex flex-col bg-ivory text-cocoa relative">
         <AnimatedBackground />
         <Navbar />
