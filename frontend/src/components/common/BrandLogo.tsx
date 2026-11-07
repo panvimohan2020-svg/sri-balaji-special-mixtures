@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface BrandLogoProps {
-  variant?: 'compact' | 'with-badge' | 'crest';
+  variant?: 'compact' | 'with-badge' | 'crest' | 'horizontal';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   showSubtitle?: boolean;
@@ -13,42 +13,27 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   className = '',
   showSubtitle = true,
 }) => {
-  // Use the authentic Sri Balaji logo extracted directly from verified brand packaging
-  const logoSrc =
-    variant === 'crest'
-      ? '/images/brand/sri-balaji-full-crest-transparent.png'
-      : variant === 'with-badge'
-      ? '/images/brand/sri-balaji-logo-with-badge-transparent.png'
-      : '/images/brand/sri-balaji-logo-compact-transparent.png';
+  // Use official redesigned vector brand assets
+  const isCrest = variant === 'crest' || variant === 'with-badge';
+  const logoSrc = isCrest
+    ? '/images/brand/sri-balaji-brand-logo.svg'
+    : '/images/brand/sri-balaji-logo-horizontal.svg';
 
   const sizeStyles = {
-    sm: 'h-9 w-auto max-w-[110px]',
-    md: 'h-12 w-auto max-w-[150px]',
-    lg: 'h-16 w-auto max-w-[190px]',
-    xl: 'h-24 w-auto max-w-[260px]',
+    sm: isCrest ? 'h-10 w-auto' : 'h-8 sm:h-9 w-auto max-w-[200px]',
+    md: isCrest ? 'h-14 w-auto' : 'h-11 sm:h-12 w-auto max-w-[240px]',
+    lg: isCrest ? 'h-20 w-auto' : 'h-14 sm:h-16 w-auto max-w-[280px]',
+    xl: isCrest ? 'h-28 w-auto' : 'h-18 sm:h-20 w-auto max-w-[340px]',
   };
 
   return (
-    <div className={`flex items-center gap-3 select-none ${className}`}>
+    <div className={`flex items-center select-none ${className}`}>
       <img
         src={logoSrc}
         alt="Sri Balaji Special Mixtures – Taste the Tradition"
-        className={`${sizeStyles[size]} object-contain drop-shadow-sm transition-transform hover:scale-105 duration-300`}
+        className={`${sizeStyles[size]} object-contain drop-shadow-sm transition-transform hover:scale-[1.02] duration-300`}
         loading="eager"
       />
-      {showSubtitle && (
-        <div className="flex flex-col justify-center">
-          <span className="font-display font-black text-xl tracking-wider text-plum-900 leading-tight">
-            SRI BALAJI
-          </span>
-          <span className="text-[10px] font-bold text-chilli-600 uppercase tracking-widest leading-none mt-0.5">
-            Special Mixtures • Estd 1995
-          </span>
-          <span className="text-[9px] font-semibold text-cocoa-muted tracking-wide leading-none mt-0.5 hidden sm:block">
-            Paralakhemundi, Odisha
-          </span>
-        </div>
-      )}
     </div>
   );
 };

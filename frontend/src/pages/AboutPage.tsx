@@ -23,6 +23,7 @@ export const AboutPage: React.FC = () => {
       
       {/* Brand Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
+        <BrandLogo variant="crest" size="lg" className="mx-auto justify-center mb-1" />
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-turmeric-100 text-cocoa-dark border border-turmeric-300 text-xs font-bold">
           <Sparkles className="w-4 h-4 text-turmeric-600 fill-turmeric-500" />
           <span>30+ Years of Odia Culinary Heritage • Since 1995</span>
