@@ -89,160 +89,175 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
       ref={dialogRef}
       onClose={onClose}
       aria-labelledby="quick-view-title"
-      className="p-0 rounded-3xl bg-white shadow-elevated border-2 border-gold-400/40 text-spice max-w-2xl w-[92vw] overflow-hidden m-auto backdrop:bg-spice-dark/70 backdrop:backdrop-blur-sm"
+      className="p-0 rounded-3xl bg-white shadow-elevated border border-ivory-border text-cocoa max-w-2xl w-[92vw] overflow-hidden m-auto backdrop:bg-plum-950/70 backdrop:backdrop-blur-sm"
     >
       {/* Modal Header */}
-      <div className="bg-gradient-to-r from-crimson-900 to-crimson-800 text-cream-warm p-4 sm:p-5 flex items-center justify-between">
+      <div className="bg-gradient-to-r from-plum-900 to-plum-950 text-ivory p-4 sm:p-5 flex items-center justify-between border-b border-plum-800">
         <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-gold-300 block">
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-turmeric block">
             Quick Taste Preview
           </span>
           <h2 id="quick-view-title" className="font-display font-bold text-lg sm:text-xl text-white">
             {product.name}
           </h2>
         </div>
-
         <button
           type="button"
           onClick={onClose}
-          className="p-1.5 rounded-xl text-cream-surface/80 hover:text-white hover:bg-white/10 transition-colors"
-          aria-label="Close product preview"
+          className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+          aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
         </button>
       </div>
 
       {/* Modal Body */}
-      <div className="p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-[75vh] overflow-y-auto">
-        {/* Left Image */}
-        <div className="space-y-3">
-          <div className="relative aspect-square rounded-2xl overflow-hidden bg-cream-surface border border-cream-border shadow-inner">
-            <img
-              src={primaryImage}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
+      <div className="p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+        {/* Left: Authentic 1:1 Image */}
+        <div className="relative aspect-square rounded-2xl bg-gradient-to-b from-ivory-warm to-white p-3 border border-ivory-border overflow-hidden">
+          <img
+            src={primaryImage}
+            alt={product.name}
+            className="w-full h-full object-contain"
+          />
+          {product.spice_level && (
+            <span className="absolute bottom-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 text-chilli text-[10px] font-bold border border-chilli-200 shadow-xs">
+              <Flame className="w-3.5 h-3.5 fill-chilli" />
+              {product.spice_level}
+            </span>
+          )}
+        </div>
+
+        {/* Right: Variants, Pricing, Quantity & CTAs */}
+        <div className="flex flex-col justify-between h-full space-y-4">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2.5 py-0.5 rounded-full bg-turmeric-100 text-turmeric-800 text-xs font-bold">
+                {product.category?.name || 'Savouries'}
+              </span>
+              <span className="text-xs text-cocoa-muted font-medium">
+                {product.taste_profiles?.join(', ') || 'Authentic Crunch'}
+              </span>
+            </div>
             
-            {/* Spice Badge */}
-            <div className="absolute top-3 right-3 bg-spice-dark/85 backdrop-blur-md px-2.5 py-1 rounded-xl text-white text-[11px] font-bold flex items-center gap-1 shadow-sm">
-              <Flame className="w-3.5 h-3.5 text-amber-400" />
-              <span>{product.spice_level}</span>
+            <p className="text-xs text-cocoa-muted leading-relaxed line-clamp-3">
+              {product.description}
+            </p>
+          </div>
+
+          {/* Variant Selector */}
+          <div>
+            <label className="text-[11px] font-bold text-plum-900 uppercase tracking-wider block mb-1.5">
+              Select Package Size:
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {product.variants?.map((v) => {
+                const isSelected = selectedVariant.id === v.id;
+                const vPrice = isWholesaleMode 
+                  ? (v.wholesale_price || v.retail_price) 
+                  : (v.retail_price || v.wholesale_price);
+
+                return (
+                  <button
+                    key={v.id}
+                    type="button"
+                    onClick={() => setSelectedVariant(v)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                      isSelected
+                        ? 'bg-plum-900 text-white border-plum-900 shadow-xs'
+                        : 'bg-ivory-warm text-cocoa border-ivory-border hover:bg-peach-50'
+                    }`}
+                  >
+                    <span>{v.weight_label}</span>
+                    <span className="ml-1 opacity-75">₹{vPrice}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-1.5">
-            {product.taste_profiles?.map(taste => (
-              <span key={taste} className="text-[10px] font-bold bg-cream-surface border border-cream-border text-spice px-2.5 py-0.5 rounded-md">
-                {taste}
+          {/* Pricing Row */}
+          <div className="p-3 rounded-2xl bg-ivory-warm border border-ivory-border flex items-baseline justify-between">
+            <div>
+              <span className="text-xs text-cocoa-muted block">
+                {isWholesaleMode ? 'Wholesale Price per Pack' : 'Retail Price'}
               </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Right Details & Selection */}
-        <div className="space-y-4 flex flex-col justify-between">
-          <div className="space-y-3">
-            <p className="text-xs sm:text-sm text-spice-muted leading-relaxed">
-              {product.description}
-            </p>
-
-            {/* Weight Variant Selector */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-spice-dark">Choose Pack Size:</span>
-                {isWholesaleMode && (
-                  <span className="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                    MOQ: {product.minimum_order_qty} pkgs
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-display font-extrabold text-plum-900">
+                  ₹{currentPrice}
+                </span>
+                {isWholesaleMode && selectedVariant.retail_price && (
+                  <span className="text-xs text-stone-400 line-through">
+                    MRP: ₹{selectedVariant.retail_price}
                   </span>
                 )}
               </div>
-
-              <div className="grid grid-cols-3 gap-2">
-                {product.variants?.map(variant => {
-                  const isSelected = selectedVariant.id === variant.id;
-                  const price = isWholesaleMode ? variant.wholesale_price : variant.retail_price;
-                  return (
-                    <button
-                      key={variant.id}
-                      type="button"
-                      onClick={() => setSelectedVariant(variant)}
-                      className={`p-2 rounded-xl text-center border text-xs transition-all ${
-                        isSelected
-                          ? 'bg-crimson-800 text-cream-warm border-crimson-900 shadow-sm font-bold'
-                          : 'bg-cream-warm text-spice border-cream-border hover:bg-cream-surface'
-                      }`}
-                    >
-                      <span className="block font-bold">{variant.weight_label}</span>
-                      <span className="block text-[11px] opacity-90">₹{price}</span>
-                    </button>
-                  );
-                })}
-              </div>
             </div>
 
-            {/* Pricing Summary */}
-            <div className="p-3.5 rounded-xl bg-cream-surface border border-cream-border flex items-baseline justify-between">
-              <div>
-                <span className="text-[10px] text-spice-muted uppercase font-bold block">
-                  {isWholesaleMode ? 'Wholesale Rate' : 'Retail Price'}
+            {/* Quantity Selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-cocoa">Qty:</span>
+              <div className="flex items-center border border-stone-300 rounded-xl bg-white overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="px-2.5 py-1 text-xs font-bold text-cocoa hover:bg-stone-100"
+                >
+                  -
+                </button>
+                <span className="px-3 py-1 text-xs font-bold text-plum-900">
+                  {quantity}
                 </span>
-                <span className="font-display font-extrabold text-2xl text-crimson-900">
-                  ₹{currentPrice}
-                </span>
+                <button
+                  type="button"
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="px-2.5 py-1 text-xs font-bold text-cocoa hover:bg-stone-100"
+                >
+                  +
+                </button>
               </div>
-              <span className="text-xs text-brand-700 font-semibold">
-                Per {selectedVariant.weight_label} package
-              </span>
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Actions */}
           <div className="space-y-2 pt-2">
             <button
               type="button"
               onClick={handleAddToCart}
-              className={`w-full py-3 px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-soft transition-all ${
+              disabled={added || !selectedVariant.is_in_stock}
+              className={`w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all shadow-chilli active:scale-95 ${
                 added 
-                  ? 'bg-emerald-600 text-white' 
-                  : 'bg-crimson-800 hover:bg-crimson-900 text-cream-warm hover:shadow-elevated'
+                  ? 'bg-pista-600 text-white' 
+                  : 'bg-chilli hover:bg-chilli-600 text-white'
               }`}
             >
-              {added ? (
-                <>
-                  <Check className="w-4 h-4" />
-                  <span>Added to Cart!</span>
-                </>
-              ) : (
-                <>
-                  <ShoppingBag className="w-4 h-4 text-gold-300" />
-                  <span>Add to Cart (₹{currentPrice * quantity})</span>
-                </>
-              )}
+              {added ? <Check className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
+              <span>{added ? 'Added to Bag!' : `Add ${quantity} to Bag (₹${currentPrice * quantity})`}</span>
             </button>
 
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={handleWhatsAppEnquiry}
-                className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-pista-50 hover:bg-pista-100 border border-pista-200 text-pista-800 text-xs font-bold transition-colors"
               >
-                <WhatsAppIcon className="w-4 h-4 text-white" variant="white" />
-                <span>WhatsApp Quote</span>
+                <WhatsAppIcon className="w-3.5 h-3.5" variant="green" />
+                <span>Enquire on WhatsApp</span>
               </button>
 
               <Link
                 to={`/product/${product.slug}`}
                 onClick={onClose}
-                className="py-2.5 px-3 rounded-xl border border-cream-border hover:bg-cream-warm text-spice text-xs font-bold flex items-center justify-center gap-1 transition-colors"
+                className="flex items-center justify-center gap-1 px-3 py-2.5 rounded-xl bg-ivory-warm hover:bg-peach-50 text-plum-900 text-xs font-bold border border-ivory-border transition-colors"
               >
-                <span>Full Details</span>
+                <span>Details</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
+
         </div>
       </div>
     </dialog>
   );
 };
-

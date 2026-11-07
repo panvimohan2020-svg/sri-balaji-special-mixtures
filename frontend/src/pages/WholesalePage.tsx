@@ -7,13 +7,18 @@ import {
   Building2,
   PackageCheck,
   CheckCircle2,
-  Phone
+  Phone,
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/common/WhatsAppIcon';
 import { InstagramIcon } from '../components/common/InstagramIcon';
-import { initialBusinessSettings } from '../data/initialData';
+import { initialBusinessSettings, initialProducts } from '../data/initialData';
+import { useCartStore } from '../store/useCartStore';
 
 export const WholesalePage: React.FC = () => {
+  const { isWholesaleMode, toggleWholesaleMode } = useCartStore();
+
   const [formData, setFormData] = useState({
     contactName: '',
     businessName: '',
@@ -43,88 +48,176 @@ export const WholesalePage: React.FC = () => {
       
       {/* Hero Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold">
-          <Store className="w-4 h-4 text-amber-700" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-turmeric-100 text-cocoa-dark border border-turmeric-300 text-xs font-bold">
+          <Store className="w-4 h-4 text-turmeric-700" />
           <span>B2B Wholesale &amp; Bulk Distribution • 30 Years Heritage</span>
         </div>
-        <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-crimson-900 tracking-tight">
+        <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-plum-900 tracking-tight">
           Partner with Sri Balaji for Factory-Direct Savouries
         </h1>
-        <p className="text-sm sm:text-base text-spice-muted leading-relaxed">
-          Supplying grocery stores, retail kiranas, supermarkets, event caterers, and distribution houses with authentic fresh mixtures and chips from Paralakhemundi, Odisha.
+        <p className="text-sm sm:text-base text-cocoa-muted leading-relaxed">
+          Supplying grocery stores, retail Kiranas, supermarkets, event caterers, and distribution houses with authentic fresh mixtures and chips from Paralakhemundi, Odisha.
         </p>
+
+        {/* Wholesale Switcher Callout */}
+        <div className="pt-2">
+          <button
+            type="button"
+            onClick={toggleWholesaleMode}
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs font-bold transition-all border shadow-xs ${
+              isWholesaleMode
+                ? 'bg-plum-900 text-turmeric border-plum-900 shadow-plum'
+                : 'bg-white text-cocoa border-ivory-border hover:bg-peach-50'
+            }`}
+          >
+            <Store className="w-4 h-4 text-chilli" />
+            <span>Storewide Wholesale Mode: {isWholesaleMode ? 'ACTIVE (Showing Bulk Rates)' : 'INACTIVE (Click to Enable)'}</span>
+          </button>
+        </div>
       </div>
 
       {/* 4 Pillars of Wholesale Advantage */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         
-        <div className="p-6 rounded-2xl bg-white border border-cream-border shadow-soft space-y-3">
-          <div className="w-12 h-12 rounded-xl bg-crimson-50 text-crimson-800 flex items-center justify-center font-bold">
+        <div className="p-6 rounded-3xl bg-white border border-ivory-border shadow-soft space-y-3">
+          <div className="w-12 h-12 rounded-2xl bg-peach-50 border border-peach-200 text-chilli flex items-center justify-center font-bold">
             <Store className="w-6 h-6" />
           </div>
-          <h3 className="font-display font-bold text-lg text-spice-dark">High Retail Margins</h3>
-          <p className="text-xs text-spice-muted leading-relaxed">
+          <h3 className="font-display font-bold text-lg text-plum-900">High Retail Margins</h3>
+          <p className="text-xs text-cocoa-muted leading-relaxed">
             Direct manufacturer wholesale rates allow Kirana stores and distributors in Odisha to maximize profit margins while retaining repeat customer trust.
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl bg-white border border-cream-border shadow-soft space-y-3">
-          <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold">
+        <div className="p-6 rounded-3xl bg-white border border-ivory-border shadow-soft space-y-3">
+          <div className="w-12 h-12 rounded-2xl bg-turmeric-50 border border-turmeric-200 text-turmeric-800 flex items-center justify-center font-bold">
             <PackageCheck className="w-6 h-6" />
           </div>
-          <h3 className="font-display font-bold text-lg text-spice-dark">Flexible Packaging</h3>
-          <p className="text-xs text-spice-muted leading-relaxed">
-            Supplied in retail packets (100g, 250g, 500g, 1kg) or bulk cartons (5kg, 10kg) suited for counter display or loose weight sales.
+          <h3 className="font-display font-bold text-lg text-plum-900">Flexible Packaging</h3>
+          <p className="text-xs text-cocoa-muted leading-relaxed">
+            Supplied in retail packets (250g, 500g, 1kg) or commercial bulk cartons (3kg, 5kg, 10kg) suited for counter display or loose weight sales.
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl bg-white border border-cream-border shadow-soft space-y-3">
-          <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold">
+        <div className="p-6 rounded-3xl bg-white border border-ivory-border shadow-soft space-y-3">
+          <div className="w-12 h-12 rounded-2xl bg-pista-50 border border-pista-200 text-pista-800 flex items-center justify-center font-bold">
             <ShieldCheck className="w-6 h-6" />
           </div>
-          <h3 className="font-display font-bold text-lg text-spice-dark">30 Years Batch Consistency</h3>
-          <p className="text-xs text-spice-muted leading-relaxed">
+          <h3 className="font-display font-bold text-lg text-plum-900">30 Years Consistency</h3>
+          <p className="text-xs text-cocoa-muted leading-relaxed">
             Time-tested recipes by Adari Krishna Rao ensuring consistent crispness, oil quality, and authentic taste in every batch.
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl bg-white border border-cream-border shadow-soft space-y-3">
-          <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center font-bold">
+        <div className="p-6 rounded-3xl bg-white border border-ivory-border shadow-soft space-y-3">
+          <div className="w-12 h-12 rounded-2xl bg-plum-50 border border-plum-200 text-plum-900 flex items-center justify-center font-bold">
             <Truck className="w-6 h-6" />
           </div>
-          <h3 className="font-display font-bold text-lg text-spice-dark">Reliable Road Dispatch</h3>
-          <p className="text-xs text-spice-muted leading-relaxed">
-            Dispatches across Gajapati, Odisha and regional road transport networks with heavy transit cartons.
+          <h3 className="font-display font-bold text-lg text-plum-900">Reliable Road Dispatch</h3>
+          <p className="text-xs text-cocoa-muted leading-relaxed">
+            Prompt dispatches across Gajapati, Rayagada, Ganjam, and regional transit corridors in heavy corrugated transit cartons.
           </p>
         </div>
 
+      </div>
+
+      {/* Wholesale Rates & MOQ Table Preview */}
+      <div className="rounded-3xl bg-white border border-ivory-border shadow-soft p-6 sm:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <span className="text-xs font-bold text-chilli uppercase tracking-wider block">
+              Wholesale Price Sheet
+            </span>
+            <h2 className="text-2xl font-display font-extrabold text-plum-900">
+              Retail vs Wholesale Price Comparison
+            </h2>
+          </div>
+          <a
+            href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=Hello%20Sri%20Balaji,%20please%20send%20me%20your%20complete%20wholesale%20rate%20card`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-pista text-plum-950 font-bold text-xs uppercase tracking-wider hover:bg-pista-400 transition-colors shadow-xs"
+          >
+            <WhatsAppIcon className="w-3.5 h-3.5" variant="currentColor" />
+            <span>Download Rate Card</span>
+          </a>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-ivory-border text-cocoa-muted uppercase font-bold text-[11px] bg-ivory-warm">
+                <th className="p-3">Snack Variety</th>
+                <th className="p-3">Package Weight</th>
+                <th className="p-3">Standard Retail MRP</th>
+                <th className="p-3">Wholesale Rate</th>
+                <th className="p-3">Minimum Order (MOQ)</th>
+                <th className="p-3 text-right">Margin Advantage</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-ivory-border">
+              {initialProducts.slice(0, 6).map((p) => {
+                const base = p.variants[0];
+                const bulk = p.variants[p.variants.length - 1];
+                const savings = base.retail_price && base.wholesale_price
+                  ? Math.round(((base.retail_price - base.wholesale_price) / base.retail_price) * 100)
+                  : 15;
+
+                return (
+                  <tr key={p.id} className="hover:bg-peach-50/50 transition-colors">
+                    <td className="p-3 font-bold text-plum-900">
+                      {p.name}
+                    </td>
+                    <td className="p-3 text-cocoa font-semibold">
+                      {base.weight_label}
+                    </td>
+                    <td className="p-3 text-stone-400 line-through">
+                      ₹{base.retail_price}
+                    </td>
+                    <td className="p-3 font-display font-extrabold text-sm text-plum-900">
+                      ₹{base.wholesale_price || base.retail_price}
+                    </td>
+                    <td className="p-3 font-semibold text-cocoa">
+                      {p.minimum_order_qty} packets
+                    </td>
+                    <td className="p-3 text-right">
+                      <span className="px-2 py-0.5 rounded-full bg-turmeric-100 text-turmeric-800 font-bold text-[10px]">
+                        Save {savings}%
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Wholesale Enquiry Form & Contact Block */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left: Wholesale Enquiry Form */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-cream-border shadow-soft space-y-6">
+        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-ivory-border shadow-soft space-y-6">
           <div>
-            <h2 className="font-display font-bold text-2xl text-spice-dark">
+            <h2 className="font-display font-bold text-2xl text-plum-900">
               Request Wholesale Quotation &amp; Samples
             </h2>
-            <p className="text-xs sm:text-sm text-spice-muted mt-1">
+            <p className="text-xs sm:text-sm text-cocoa-muted mt-1">
               Submit your shop requirements below. Our wholesale desk in Paralakhemundi will share the latest rate card and MOQ terms.
             </p>
           </div>
 
           {submitted ? (
-            <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-3">
-              <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-              <h3 className="font-display font-bold text-lg text-emerald-900">Enquiry Forwarded!</h3>
-              <p className="text-xs text-emerald-700">
+            <div className="p-6 rounded-2xl bg-pista-50 border border-pista-200 text-center space-y-3">
+              <CheckCircle2 className="w-10 h-10 text-pista-700 mx-auto" />
+              <h3 className="font-display font-bold text-lg text-plum-900">Enquiry Forwarded!</h3>
+              <p className="text-xs text-cocoa">
                 Your enquiry was prepared for WhatsApp dispatch. If the chat window did not open, click the button below:
               </p>
               <button
                 type="button"
                 onClick={() => setSubmitted(false)}
-                className="px-4 py-2 bg-emerald-700 text-white rounded-xl text-xs font-bold"
+                className="px-4 py-2 bg-pista text-plum-950 rounded-xl text-xs font-bold"
               >
                 Submit Another Enquiry
               </button>
@@ -133,8 +226,8 @@ export const WholesalePage: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-spice-dark mb-1">
-                    Contact Person Name <span className="text-crimson-700">*</span>
+                  <label className="block font-bold text-plum-900 mb-1">
+                    Contact Person Name <span className="text-chilli">*</span>
                   </label>
                   <input
                     type="text"
@@ -142,12 +235,12 @@ export const WholesalePage: React.FC = () => {
                     value={formData.contactName}
                     onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
                     placeholder="e.g. Ramesh Sahoo"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border bg-ivory-warm/40 focus:border-chilli outline-none text-xs"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-spice-dark mb-1">
+                  <label className="block font-bold text-plum-900 mb-1">
                     Store / Firm Name
                   </label>
                   <input
@@ -155,15 +248,15 @@ export const WholesalePage: React.FC = () => {
                     value={formData.businessName}
                     onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
                     placeholder="e.g. Sahoo Kirana Store"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border bg-ivory-warm/40 focus:border-chilli outline-none text-xs"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-spice-dark mb-1">
-                    Phone / WhatsApp Number <span className="text-crimson-700">*</span>
+                  <label className="block font-bold text-plum-900 mb-1">
+                    Phone / WhatsApp Number <span className="text-chilli">*</span>
                   </label>
                   <input
                     type="tel"
@@ -171,13 +264,13 @@ export const WholesalePage: React.FC = () => {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="e.g. 9437135342"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border bg-ivory-warm/40 focus:border-chilli outline-none text-xs"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-spice-dark mb-1">
-                    City / Town <span className="text-crimson-700">*</span>
+                  <label className="block font-bold text-plum-900 mb-1">
+                    City / Town <span className="text-chilli">*</span>
                   </label>
                   <input
                     type="text"
@@ -185,127 +278,95 @@ export const WholesalePage: React.FC = () => {
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                     placeholder="e.g. Paralakhemundi / Berhampur"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border bg-ivory-warm/40 focus:border-chilli outline-none text-xs"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-bold text-spice-dark mb-1">
+                <label className="block font-bold text-plum-900 mb-1">
                   Expected Monthly Requirement
                 </label>
                 <select
                   value={formData.monthlyVolume}
                   onChange={(e) => setFormData({ ...formData, monthlyVolume: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border bg-ivory-warm/40 focus:border-chilli outline-none text-xs cursor-pointer"
                 >
-                  <option value="25kg - 50kg (Trial Order)">25kg - 50kg (Trial Order)</option>
-                  <option value="50kg - 100kg">50kg - 100kg</option>
-                  <option value="100kg - 300kg">100kg - 300kg</option>
-                  <option value="300kg - 500kg">300kg - 500kg</option>
-                  <option value="500kg+ Bulk Distributor Tier">500kg+ Bulk Distributor Tier</option>
+                  <option value="Trial Pack (10kg - 25kg)">Trial Pack (10kg - 25kg)</option>
+                  <option value="50kg - 100kg">50kg - 100kg (Small Kirana Store)</option>
+                  <option value="100kg - 300kg">100kg - 300kg (Supermarket / Distributor)</option>
+                  <option value="500kg+">500kg+ (Regional Wholesale Dealer)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block font-bold text-spice-dark mb-1">
-                  Specific Snack Requirements
+                <label className="block font-bold text-plum-900 mb-1">
+                  Specific Savouries &amp; Requirements
                 </label>
                 <textarea
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="e.g. Inquiring for Sri Balaji Special Mixture & Salted Chips in 250g packets"
-                  className="w-full px-3.5 py-2 rounded-xl border border-cream-border bg-cream-warm/40 focus:border-crimson-700 outline-none resize-none"
+                  placeholder="e.g. Need price list for Onion Mixture 250g, Kar Kar Murrukulu 500g, and bulk cartons."
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border bg-ivory-warm/40 focus:border-chilli outline-none text-xs resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm font-bold flex items-center justify-center gap-2 shadow-elevated transition-all"
+                className="w-full py-3.5 rounded-xl bg-chilli text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-chilli-600 transition-colors shadow-chilli active:scale-95"
               >
-                <Send className="w-4 h-4 text-gold-300" />
-                <span>Submit Wholesale Request via WhatsApp</span>
+                <WhatsAppIcon className="w-4 h-4" variant="white" />
+                <span>Submit Wholesale Inquiry via WhatsApp</span>
               </button>
             </form>
           )}
-
         </div>
 
-        {/* Right: Quick Direct Info Card */}
+        {/* Right: Direct Wholesale Hotline Info */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="p-6 sm:p-8 rounded-3xl bg-cream-surface border-2 border-cream-border shadow-soft space-y-5">
-            <h3 className="font-display font-bold text-xl text-spice-dark">
+          <div className="p-6 rounded-3xl bg-plum-900 text-ivory border border-plum-800 shadow-plum space-y-4">
+            <h3 className="font-display font-extrabold text-xl text-white">
               Direct Wholesale Desk
             </h3>
-            
-            <p className="text-xs text-spice-muted leading-relaxed">
-              Connect directly with Adari Krishna Rao &amp; Adari Dilleshwar Rao for wholesale inquiries, volume pricing, and sample packets.
+            <p className="text-xs text-ivory/80 leading-relaxed">
+              Prefer to speak directly with the owners? Call or message Adari Krishna Rao or Adari Dilleshwar Rao during business hours.
             </p>
 
             <div className="space-y-3 pt-2 text-xs">
-              <a
-                href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I am a retailer looking for wholesale snack supply.')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold transition-all shadow-sm"
-              >
-                <WhatsAppIcon className="w-5 h-5 shrink-0 text-white" variant="white" />
-                <div className="text-left">
-                  <span className="block text-xs font-bold">WhatsApp Hotline: 9861789602</span>
-                  <span className="block text-[11px] font-normal text-emerald-100">Instant quotation support</span>
+              <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-turmeric uppercase font-bold block">Wholesale WhatsApp Desk</span>
+                  <strong className="text-white font-mono text-sm">+91 98617 89602</strong>
                 </div>
-              </a>
-
-              <a
-                href="tel:9437135342"
-                className="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-cream-border hover:bg-cream-warm text-spice font-bold transition-all shadow-sm"
-              >
-                <Phone className="w-5 h-5 text-crimson-800 shrink-0" />
-                <div className="text-left">
-                  <span className="block text-xs">Primary Call: +91 94371 35342</span>
-                  <span className="block text-[11px] font-normal text-spice-muted">Alternate: +91 77353 33542</span>
-                </div>
-              </a>
-
-              {initialBusinessSettings.instagram_url && (
                 <a
-                  href={initialBusinessSettings.instagram_url}
+                  href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=Hello%20Sri%20Balaji,%20I%20am%20calling%20regarding%20wholesale%20distribution`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-cream-border hover:bg-cream-warm text-spice font-bold transition-all shadow-sm"
+                  className="p-2 rounded-xl bg-pista text-plum-950 font-bold"
+                  aria-label="Chat on WhatsApp"
                 >
-                  <InstagramIcon className="w-5 h-5 text-pink-700 shrink-0" />
-                  <div className="text-left">
-                    <span className="block text-xs">Instagram: @sri_balaji_special_mixtures</span>
-                    <span className="block text-[11px] font-normal text-spice-muted">Follow our official page</span>
-                  </div>
+                  <WhatsAppIcon className="w-4 h-4" variant="currentColor" />
                 </a>
-              )}
-            </div>
-
-            <div className="p-4 rounded-xl bg-white border border-cream-border space-y-2 text-xs">
-              <span className="font-bold text-spice-dark block">Location:</span>
-              <p className="text-[11px] text-spice-muted leading-relaxed">
-                Gandhi School Road, Near Post Office, Paralakhemundi, Gajapati, Odisha - 761200
-              </p>
-            </div>
-
-            {/* Authentic Wholesale Store Counter Photo */}
-            <div className="rounded-2xl overflow-hidden border border-cream-border shadow-soft bg-white">
-              <img
-                src="/images/brand/wholesale-counter.png"
-                alt="Sri Balaji Wholesale Store Counter with Founders"
-                className="w-full h-auto object-cover"
-              />
-              <div className="p-3 bg-white text-center">
-                <span className="text-[11px] font-bold text-crimson-900 block">
-                  Wholesale Counter &amp; Direct Supplies
-                </span>
-                <span className="text-[10px] text-spice-muted">
-                  Fresh transparent wholesale packets ready for dispatch
-                </span>
               </div>
+
+              <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-turmeric uppercase font-bold block">Direct Calling Line</span>
+                  <strong className="text-white font-mono text-sm">+91 94371 35342 / +91 77353 33542</strong>
+                </div>
+                <a
+                  href="tel:+919437135342"
+                  className="p-2 rounded-xl bg-chilli text-white font-bold"
+                  aria-label="Call phone"
+                >
+                  <Phone className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+
+            <div className="pt-2 text-[11px] text-ivory/70 border-t border-white/10">
+              📍 <strong>Dispatches from:</strong> Gandhi School Road, Near Post Office, Paralakhemundi, Gajapati, Odisha – 761200.
             </div>
           </div>
         </div>

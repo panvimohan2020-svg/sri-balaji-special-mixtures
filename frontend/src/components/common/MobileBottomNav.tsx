@@ -13,7 +13,7 @@ export const MobileBottomNav: React.FC = () => {
 
   const navItems = [
     { label: 'Home', path: '/', icon: Home },
-    { label: 'Catalog', path: '/catalog', icon: Grid },
+    { label: 'Catalogue', path: '/catalog', icon: Grid },
     { label: 'Wishlist', path: '/catalog?filter=wishlist', icon: Heart, badge: wishlistCount },
     { label: 'Cart', path: '/cart', icon: ShoppingBag, badge: itemCount },
     { label: 'Wholesale', path: '/wholesale', icon: Store },
@@ -22,7 +22,7 @@ export const MobileBottomNav: React.FC = () => {
   return (
     <nav 
       aria-label="Mobile Bottom Navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-cream-warm/95 backdrop-blur-lg border-t border-cream-border safe-bottom shadow-elevated"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg border-t border-ivory-border shadow-elevated safe-bottom"
     >
       <div className="flex items-center justify-around h-16 px-1">
         {navItems.map((item) => {
@@ -34,20 +34,27 @@ export const MobileBottomNav: React.FC = () => {
               className={({ isActive }: { isActive: boolean }) =>
                 `relative flex flex-col items-center justify-center flex-1 h-full py-1 text-xs font-semibold transition-all touch-target ${
                   isActive
-                    ? 'text-crimson-800 scale-105 font-bold'
-                    : 'text-spice-muted hover:text-crimson-700'
+                    ? 'text-chilli font-bold scale-105'
+                    : 'text-cocoa-muted hover:text-plum-900'
                 }`
               }
             >
-              <div className="relative">
-                <Icon className="w-5 h-5 mb-0.5" />
-                {item.badge && item.badge > 0 ? (
-                  <span className="absolute -top-1.5 -right-2 bg-crimson-800 text-white text-[10px] font-extrabold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center shadow-xs">
-                    {item.badge > 99 ? '99+' : item.badge}
-                  </span>
-                ) : null}
-              </div>
-              <span className="text-[11px] leading-tight tracking-tight">{item.label}</span>
+              {({ isActive }: { isActive: boolean }) => (
+                <>
+                  <div className="relative">
+                    <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'stroke-[2.5]' : 'stroke-2'}`} />
+                    {item.badge && item.badge > 0 ? (
+                      <span className="absolute -top-1.5 -right-2 bg-chilli text-white text-[10px] font-black min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center shadow-xs">
+                        {item.badge > 99 ? '99+' : item.badge}
+                      </span>
+                    ) : null}
+                  </div>
+                  <span className="text-[11px] leading-tight tracking-tight">{item.label}</span>
+                  {isActive && (
+                    <span className="absolute bottom-1 w-5 h-0.5 bg-chilli rounded-full" />
+                  )}
+                </>
+              )}
             </NavLink>
           );
         })}

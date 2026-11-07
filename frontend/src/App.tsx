@@ -56,28 +56,28 @@ const PWAInstallBanner = () => {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-20 md:bottom-24 left-4 right-4 md:left-auto md:right-24 md:max-w-sm z-40 p-4 rounded-2xl bg-crimson-900 text-cream-warm shadow-elevated border-2 border-gold-400 flex items-center justify-between gap-3 animate-in slide-in-from-bottom-5">
+    <div className="fixed bottom-20 md:bottom-24 left-4 right-4 md:left-auto md:right-24 md:max-w-sm z-40 p-4 rounded-2xl bg-plum-900 text-ivory shadow-plum border-2 border-turmeric flex items-center justify-between gap-3 animate-in slide-in-from-bottom-5">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-gold-500/20 flex items-center justify-center shrink-0">
-          <Download className="w-5 h-5 text-gold-300" />
+        <div className="w-10 h-10 rounded-xl bg-turmeric/20 flex items-center justify-center shrink-0">
+          <Download className="w-5 h-5 text-turmeric" />
         </div>
         <div className="text-left">
           <span className="font-display font-bold text-sm text-white block">Install Sri Balaji App</span>
-          <span className="text-[11px] text-gold-200 block">Offline snack menu &amp; instant mobile ordering</span>
+          <span className="text-[11px] text-turmeric-200 block">Offline snack menu &amp; instant mobile ordering</span>
         </div>
       </div>
       <div className="flex items-center gap-2">
         <button
           type="button"
           onClick={handleInstall}
-          className="px-3 py-1.5 rounded-lg bg-gold-500 text-spice-dark text-xs font-bold hover:bg-gold-400 transition-colors shadow-xs"
+          className="px-3.5 py-1.5 rounded-xl bg-turmeric text-plum-950 text-xs font-black hover:bg-turmeric-400 transition-colors shadow-xs"
         >
           Install
         </button>
         <button
           type="button"
           onClick={() => setShowBanner(false)}
-          className="p-1 text-gold-200 hover:text-white"
+          className="p-1 text-ivory/60 hover:text-white"
           aria-label="Dismiss install prompt"
         >
           <X className="w-4 h-4" />
@@ -91,7 +91,7 @@ export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-cream text-spice">
+      <div className="min-h-screen flex flex-col bg-ivory text-cocoa">
         <Navbar />
         
         <main className="flex-grow">

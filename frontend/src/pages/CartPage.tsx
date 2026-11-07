@@ -61,21 +61,21 @@ export const CartPage: React.FC = () => {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 space-y-10">
         <div className="text-center space-y-4">
-          <div className="w-20 h-20 mx-auto rounded-3xl bg-cream-surface border-2 border-cream-border flex items-center justify-center text-crimson-800 shadow-soft">
+          <div className="w-20 h-20 mx-auto rounded-3xl bg-peach-50 border-2 border-peach-200 flex items-center justify-center text-chilli shadow-soft">
             <ShoppingBag className="w-10 h-10" />
           </div>
           <div className="space-y-2">
-            <h1 className="font-display font-extrabold text-3xl text-spice-dark">
-              Your Cart is Empty
+            <h1 className="font-display font-extrabold text-3xl text-plum-900">
+              Your Snack Bag is Empty
             </h1>
-            <p className="text-sm text-spice-muted max-w-md mx-auto leading-relaxed">
+            <p className="text-sm text-cocoa-muted max-w-md mx-auto leading-relaxed">
               You haven't added any snacks yet. Explore our crispy mixtures, potato chips, and traditional savouries to build your order.
             </p>
           </div>
           <div className="pt-2">
             <Link
               to="/catalog"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm font-bold text-sm shadow-elevated transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-chilli hover:bg-chilli-600 text-white font-bold text-sm shadow-chilli transition-all active:scale-95"
             >
               <span>Explore Snack Catalogue</span>
               <ArrowRight className="w-4 h-4" />
@@ -83,17 +83,17 @@ export const CartPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Quick Reorder History for returning wholesale buyers */}
+        {/* Quick Reorder History for returning buyers */}
         {orderHistory.length > 0 && (
-          <div className="p-6 rounded-3xl bg-white border border-cream-border shadow-soft space-y-4">
-            <div className="flex items-center gap-2.5 pb-3 border-b border-cream-border">
-              <History className="w-5 h-5 text-crimson-800" />
+          <div className="p-6 rounded-3xl bg-white border border-ivory-border shadow-soft space-y-4">
+            <div className="flex items-center gap-2.5 pb-3 border-b border-ivory-border">
+              <History className="w-5 h-5 text-plum-900" />
               <div>
-                <h3 className="font-display font-bold text-lg text-spice-dark">
+                <h3 className="font-display font-bold text-lg text-plum-900">
                   Recent Orders &amp; Quick Reordering
                 </h3>
-                <p className="text-xs text-spice-muted">
-                  Reorder your regular wholesale batch with one click.
+                <p className="text-xs text-cocoa-muted">
+                  Reorder your regular batch with one click.
                 </p>
               </div>
             </div>
@@ -102,17 +102,17 @@ export const CartPage: React.FC = () => {
               {orderHistory.map((past, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-2xl bg-cream-surface border border-cream-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                  className="p-4 rounded-2xl bg-ivory-warm border border-ivory-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
                 >
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2 font-bold text-spice-dark">
+                    <div className="flex items-center gap-2 font-bold text-plum-900">
                       <span>Order #{past.orderNumber}</span>
-                      <span className="text-[10px] text-spice-muted font-normal">• {past.date}</span>
+                      <span className="text-[10px] text-cocoa-muted font-normal">• {past.date}</span>
                     </div>
-                    <div className="text-spice-muted line-clamp-1">
+                    <div className="text-cocoa-muted line-clamp-1">
                       {past.items.map((i: any) => `${i.productName} (${i.weightLabel} x ${i.quantity})`).join(', ')}
                     </div>
-                    <div className="text-[11px] font-semibold text-brand-700">
+                    <div className="text-[11px] font-semibold text-chilli">
                       Total: ₹{past.totalAmount.toLocaleString('en-IN')} ({past.totalWeightKg} kg)
                     </div>
                   </div>
@@ -120,9 +120,9 @@ export const CartPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleQuickReorder(past)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm font-bold shrink-0 transition-colors shadow-sm"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-plum-900 hover:bg-plum-800 text-white font-bold shrink-0 transition-colors shadow-xs"
                   >
-                    <RotateCcw className="w-3.5 h-3.5 text-gold-300" />
+                    <RotateCcw className="w-3.5 h-3.5 text-turmeric" />
                     <span>Reorder This Batch</span>
                   </button>
                 </div>
@@ -138,13 +138,13 @@ export const CartPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-cream-border">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-ivory-border">
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
+          <span className="text-xs font-bold uppercase tracking-widest text-chilli block">
             Review Your Selection
           </span>
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-crimson-900 mt-1">
-            {isWholesaleMode ? 'Wholesale Order & Quotation' : 'Retail Shopping Cart'}
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-plum-900 mt-1">
+            {isWholesaleMode ? 'Wholesale Order & Quotation' : 'Retail Shopping Bag'}
           </h1>
         </div>
 
@@ -153,22 +153,22 @@ export const CartPage: React.FC = () => {
           <button
             type="button"
             onClick={toggleWholesaleMode}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-bold border transition-all ${
               isWholesaleMode
-                ? 'bg-amber-100 text-amber-900 border-amber-300'
-                : 'bg-cream-surface text-spice border-cream-border hover:bg-cream-warm'
+                ? 'bg-plum-900 text-turmeric border-plum-900 shadow-plum'
+                : 'bg-white text-cocoa border-ivory-border hover:bg-peach-50'
             }`}
           >
-            <Store className="w-4 h-4 text-amber-800" />
+            <Store className="w-4 h-4 text-turmeric" />
             <span>Mode: {isWholesaleMode ? 'Wholesale Rate Active' : 'Retail Price'}</span>
           </button>
 
           <button
             type="button"
             onClick={clearCart}
-            className="text-xs font-bold text-crimson-700 hover:text-crimson-900 px-3 py-2 rounded-lg hover:bg-crimson-50 transition-colors"
+            className="text-xs font-bold text-chilli hover:text-chilli-700 px-3 py-2 rounded-xl hover:bg-peach-50 transition-colors"
           >
-            Clear Cart
+            Clear Bag
           </button>
         </div>
       </div>
@@ -183,15 +183,15 @@ export const CartPage: React.FC = () => {
             return (
               <div
                 key={item.id}
-                className="p-4 sm:p-5 rounded-2xl bg-white border border-cream-border shadow-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all"
+                className="p-4 sm:p-5 rounded-3xl bg-white border border-ivory-border shadow-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all"
               >
-                {/* Product Info & Thumb */}
+                {/* Product Info & 1:1 Thumb */}
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 rounded-xl bg-cream-surface overflow-hidden shrink-0 border border-cream-border">
+                  <div className="w-20 h-20 rounded-2xl bg-ivory-warm p-2 overflow-hidden shrink-0 border border-ivory-border flex items-center justify-center">
                     <img
                       src={item.imageUrl || '/images/products/onion-mixture.png'}
                       alt={item.productName}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </div>
 
@@ -200,60 +200,50 @@ export const CartPage: React.FC = () => {
                       <div className="w-3.5 h-3.5 rounded border border-veg bg-white flex items-center justify-center shrink-0">
                         <span className="w-1.5 h-1.5 rounded-full bg-veg"></span>
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-brand-700">
-                        {item.categoryName}
-                      </span>
+                      <h3 className="font-display font-bold text-base text-plum-900">
+                        {item.productName}
+                      </h3>
                     </div>
 
-                    <Link
-                      to={`/product/${item.productSlug}`}
-                      className="font-display font-bold text-base text-spice-dark hover:text-crimson-800 transition-colors block line-clamp-1"
-                    >
-                      {item.productName}
-                    </Link>
-
-                    <div className="flex items-center gap-2 text-xs text-spice-muted">
-                      <span className="font-semibold px-2 py-0.5 rounded bg-cream-warm border border-cream-border">
+                    <div className="flex items-center gap-3 text-xs text-cocoa-muted">
+                      <span className="font-bold text-chilli bg-peach-50 px-2 py-0.5 rounded-md border border-peach-200">
                         {item.weightLabel}
                       </span>
-                      <span>Rate: ₹{item.unitPrice} / pkg</span>
+                      <span>Rate: ₹{item.unitPrice} each</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Stepper & Price Subtotal */}
-                <div className="flex items-center justify-between sm:justify-end gap-6 pt-3 sm:pt-0 border-t sm:border-t-0 border-cream-border">
+                {/* Quantity Controls & Line Total */}
+                <div className="flex items-center justify-between sm:justify-end gap-6 pt-2 sm:pt-0 border-t sm:border-t-0 border-ivory-border">
                   
                   {/* Quantity Stepper */}
-                  <div className="flex items-center bg-cream-warm rounded-xl border border-cream-border overflow-hidden">
+                  <div className="flex items-center border border-stone-300 rounded-xl bg-ivory-warm overflow-hidden">
                     <button
                       type="button"
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="p-2 text-spice hover:bg-cream-surface transition-colors"
-                      title="Decrease quantity"
+                      className="w-8 h-8 flex items-center justify-center text-cocoa hover:bg-stone-200 transition-colors font-bold text-xs"
+                      aria-label="Decrease quantity"
                     >
                       <Minus className="w-3.5 h-3.5" />
                     </button>
-                    <span className="px-3 text-xs font-bold text-spice-dark min-w-[2rem] text-center">
+                    <span className="w-10 text-center font-bold text-xs text-plum-900">
                       {item.quantity}
                     </span>
                     <button
                       type="button"
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="p-2 text-spice hover:bg-cream-surface transition-colors"
-                      title="Increase quantity"
+                      className="w-8 h-8 flex items-center justify-center text-cocoa hover:bg-stone-200 transition-colors font-bold text-xs"
+                      aria-label="Increase quantity"
                     >
                       <Plus className="w-3.5 h-3.5" />
                     </button>
                   </div>
 
                   {/* Subtotal */}
-                  <div className="text-right min-w-[5rem]">
-                    <span className="font-display font-extrabold text-lg text-crimson-900 block">
+                  <div className="text-right min-w-[70px]">
+                    <span className="font-display font-black text-base text-plum-900 block">
                       ₹{subtotal.toLocaleString('en-IN')}
-                    </span>
-                    <span className="text-[10px] text-spice-muted block">
-                      {(item.weightInGrams * item.quantity / 1000).toFixed(2)} kg
                     </span>
                   </div>
 
@@ -261,128 +251,93 @@ export const CartPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => removeItem(item.id)}
-                    className="p-2 rounded-xl text-spice-muted hover:text-crimson-700 hover:bg-crimson-50 transition-colors"
-                    title="Remove item"
+                    className="p-2 text-stone-400 hover:text-chilli transition-colors"
+                    aria-label="Remove item"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
 
                 </div>
-
               </div>
             );
           })}
 
-          {/* Quick Reorder History drawer under cart items */}
-          {orderHistory.length > 0 && (
-            <div className="p-5 rounded-2xl bg-cream-warm border border-cream-border space-y-3">
-              <span className="text-xs font-bold text-spice-dark flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-brand-700" />
-                <span>Previously Inquired Orders</span>
-              </span>
-              <div className="flex gap-3 overflow-x-auto pb-1 no-scrollbar text-xs">
-                {orderHistory.slice(0, 3).map((past, idx) => (
-                  <div key={idx} className="bg-white p-3 rounded-xl border border-cream-border shrink-0 min-w-[220px] space-y-2">
-                    <div className="flex justify-between items-baseline font-bold text-spice-dark">
-                      <span>#{past.orderNumber}</span>
-                      <span className="text-[10px] text-spice-muted">{past.date}</span>
-                    </div>
-                    <p className="text-[11px] text-spice-muted line-clamp-1">
-                      {past.items.length} items • ₹{past.totalAmount}
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => handleQuickReorder(past)}
-                      className="w-full py-1.5 bg-cream-surface hover:bg-cream-border text-spice-dark font-bold rounded-lg text-[11px] flex items-center justify-center gap-1 transition-colors"
-                    >
-                      <RotateCcw className="w-3 h-3" />
-                      <span>Load This Batch</span>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          <div className="pt-2 flex items-center justify-between">
+            <Link
+              to="/catalog"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-chilli hover:text-chilli-700"
+            >
+              <span>← Continue Shopping Savouries</span>
+            </Link>
+          </div>
         </div>
 
-        {/* Right: Order Summary Card */}
-        <div className="lg:col-span-4 space-y-4">
-          <div className="p-6 rounded-3xl bg-cream-surface border-2 border-cream-border shadow-soft space-y-5">
-            <h3 className="font-display font-bold text-xl text-spice-dark">
+        {/* Right: Sticky Order Summary */}
+        <div className="lg:col-span-4 sticky top-28 space-y-4">
+          <div className="p-6 rounded-3xl bg-white border border-ivory-border shadow-soft space-y-5">
+            <h2 className="font-display font-extrabold text-xl text-plum-900 pb-3 border-b border-ivory-border">
               Order Summary
-            </h3>
+            </h2>
 
-            <div className="space-y-3 text-xs sm:text-sm text-spice">
-              <div className="flex justify-between items-center">
-                <span className="text-spice-muted">Total Snack Packages:</span>
-                <span className="font-bold text-spice-dark">{totalItemsCount} packages</span>
+            <div className="space-y-3 text-xs text-cocoa">
+              <div className="flex items-center justify-between">
+                <span>Total Items</span>
+                <span className="font-bold">{totalItemsCount} packages</span>
               </div>
 
-              <div className="flex justify-between items-center">
-                <span className="text-spice-muted flex items-center gap-1.5">
-                  <Scale className="w-4 h-4 text-brand-700" />
-                  <span>Estimated Net Weight:</span>
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Scale className="w-3.5 h-3.5 text-chilli" />
+                  <span>Consignment Weight</span>
                 </span>
-                <span className="font-bold text-spice-dark">{totalWeightKg} kg</span>
+                <span className="font-bold text-plum-900">{totalWeightKg} kg</span>
               </div>
 
-              <div className="flex justify-between items-center">
-                <span className="text-spice-muted">Pricing Tier:</span>
-                <span className={`font-bold text-xs px-2 py-0.5 rounded ${
-                  isWholesaleMode ? 'bg-amber-100 text-amber-900' : 'bg-stone-200 text-stone-800'
-                }`}>
-                  {isWholesaleMode ? 'Wholesale Factory Rates' : 'Retail Rates'}
+              <div className="flex items-center justify-between">
+                <span>Pricing Tier</span>
+                <span className={`font-bold px-2 py-0.5 rounded-full text-[10px] ${isWholesaleMode ? 'bg-turmeric text-plum-950 font-black' : 'bg-peach-100 text-chilli'}`}>
+                  {isWholesaleMode ? 'Wholesale B2B' : 'Retail MRP'}
                 </span>
               </div>
 
-              <div className="pt-3 border-t border-cream-border flex justify-between items-baseline">
-                <div>
-                  <span className="font-display font-bold text-base text-spice-dark block">
-                    Estimated Subtotal
-                  </span>
-                  <span className="text-[11px] text-spice-muted">
-                    Excludes road transport &amp; taxes
+              <div className="flex items-center justify-between">
+                <span>Packaging &amp; Handling</span>
+                <span className="text-pista-700 font-bold">Standard Included</span>
+              </div>
+
+              <div className="pt-3 border-t border-ivory-border flex items-baseline justify-between">
+                <span className="font-display font-bold text-base text-plum-900">
+                  Estimated Total
+                </span>
+                <div className="text-right">
+                  <span className="font-display font-black text-2xl text-plum-900">
+                    ₹{totalAmount.toLocaleString('en-IN')}
                   </span>
                 </div>
-                <span className="font-display font-extrabold text-2xl text-crimson-900">
-                  ₹{totalAmount.toLocaleString('en-IN')}*
-                </span>
               </div>
             </div>
 
-            {/* Checkout Action Button */}
+            {/* Checkout Action */}
             <div className="pt-2 space-y-3">
               <button
                 type="button"
                 onClick={() => setIsCheckoutModalOpen(true)}
-                className="w-full py-4 px-6 rounded-2xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-base flex items-center justify-center gap-2 shadow-elevated transition-all transform hover:-translate-y-0.5"
+                className="w-full py-4 rounded-2xl bg-chilli text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-chilli-600 transition-colors shadow-chilli active:scale-95"
               >
-                <WhatsAppIcon className="w-5 h-5 text-white" variant="white" />
-                <span>{isWholesaleMode ? 'Submit Wholesale Enquiry' : 'Order on WhatsApp'}</span>
+                <WhatsAppIcon className="w-4 h-4" variant="white" />
+                <span>Submit Order via WhatsApp</span>
               </button>
 
-              <p className="text-[11px] text-center text-spice-muted leading-tight">
-                Generates a structured order quotation on WhatsApp directly to Sri Balaji's sales counter.
+              <p className="text-[10px] text-center text-cocoa-muted leading-relaxed">
+                Orders are sent directly to Sri Balaji management for instant confirmation, packaging, and dispatch coordination.
               </p>
             </div>
-
-            {/* Quality & Packing Assurance */}
-            <div className="p-3.5 rounded-xl bg-white border border-cream-border text-xs space-y-1.5">
-              <div className="flex items-center gap-2 text-emerald-800 font-bold">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Wholesale Packaging Assurance</span>
-              </div>
-              <p className="text-[11px] text-spice-muted leading-relaxed">
-                Carton packing with moisture barrier film. Freshly packed on receipt of order.
-              </p>
-            </div>
-
           </div>
         </div>
 
       </div>
 
-      {/* WhatsApp Checkout Modal */}
+      {/* WhatsApp Checkout Dialog */}
       <WhatsAppCheckoutModal
         isOpen={isCheckoutModalOpen}
         onClose={() => setIsCheckoutModalOpen(false)}

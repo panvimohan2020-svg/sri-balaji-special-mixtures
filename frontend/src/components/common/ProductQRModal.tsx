@@ -43,8 +43,8 @@ export const ProductQRModal: React.FC<ProductQRModalProps> = ({
         width: 240,
         margin: 2,
         color: {
-          dark: '#771D1D', // Deep royal crimson
-          light: '#FFFDF9'  // Warm cream
+          dark: '#351326', // Deep Plum
+          light: '#FFF7E9'  // Warm Ivory
         }
       });
     }
@@ -72,75 +72,68 @@ export const ProductQRModal: React.FC<ProductQRModalProps> = ({
       ref={dialogRef}
       onClose={onClose}
       aria-labelledby="qr-dialog-title"
-      className="p-0 rounded-3xl bg-white shadow-elevated border-2 border-gold-400/40 text-spice max-w-sm w-[92vw] overflow-hidden m-auto backdrop:bg-spice-dark/70 backdrop:backdrop-blur-sm"
+      className="p-0 rounded-3xl bg-white shadow-elevated border border-ivory-border text-cocoa max-w-sm w-[92vw] overflow-hidden m-auto backdrop:bg-plum-950/70 backdrop:backdrop-blur-sm"
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-crimson-800 to-crimson-900 text-cream-warm p-4 flex items-center justify-between">
+      <div className="bg-gradient-to-r from-plum-900 to-plum-950 text-ivory p-4 flex items-center justify-between border-b border-plum-800">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gold-500/20 border border-gold-400/40 flex items-center justify-center">
-            <QrCode className="w-4 h-4 text-gold-300" />
+          <div className="w-8 h-8 rounded-xl bg-turmeric/20 border border-turmeric/40 flex items-center justify-center text-turmeric">
+            <QrCode className="w-4 h-4" />
           </div>
           <div>
-            <h2 id="qr-dialog-title" className="font-display font-bold text-base text-white">
-              Product QR Code
-            </h2>
-            <p className="text-[11px] text-gold-200">Printable Packaging Code</p>
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-turmeric block">
+              Packaging QR Code
+            </span>
+            <h3 id="qr-dialog-title" className="font-display font-bold text-sm text-white truncate max-w-[200px]">
+              {product.name}
+            </h3>
           </div>
         </div>
-
         <button
           type="button"
           onClick={onClose}
-          className="p-1 rounded-lg text-cream-surface/80 hover:text-white hover:bg-white/10 transition-colors"
-          aria-label="Close QR dialog"
+          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+          aria-label="Close dialog"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
       </div>
 
-      {/* Content */}
-      <div className="p-5 text-center space-y-4">
-        <div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-brand-700">
-            {product.category?.name || 'Snacks'}
-          </span>
-          <h3 className="font-display font-bold text-base text-spice-dark">
-            {product.name}
-          </h3>
-          <p className="text-[11px] text-spice-muted mt-0.5">
-            Scan to reorder fresh wholesale batches or view certified ingredients.
-          </p>
+      {/* Body */}
+      <div className="p-6 text-center space-y-4">
+        <p className="text-xs text-cocoa-muted leading-relaxed">
+          Scan this QR code with any smartphone camera to open this snack's catalogue details, weight options, and wholesale rates.
+        </p>
+
+        {/* QR Canvas Display */}
+        <div className="p-4 bg-ivory-warm rounded-2xl border border-ivory-border inline-block shadow-inner">
+          <canvas ref={canvasRef} className="rounded-xl mx-auto" />
         </div>
 
-        {/* Canvas QR Code Display */}
-        <div className="p-4 bg-cream-surface rounded-2xl border border-cream-border inline-block shadow-inner">
-          <canvas ref={canvasRef} className="rounded-xl" />
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2 pt-1">
+        {/* Actions */}
+        <div className="grid grid-cols-2 gap-2 pt-2">
           <button
             type="button"
             onClick={handleDownload}
-            className="flex-1 py-2.5 px-3 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all"
+            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-plum-900 hover:bg-plum-800 text-white font-bold text-xs transition-colors shadow-xs"
           >
-            <Download className="w-4 h-4 text-gold-300" />
-            <span>Download PNG</span>
+            <Download className="w-3.5 h-3.5 text-turmeric" />
+            <span>Save PNG</span>
           </button>
 
           <button
             type="button"
             onClick={handleCopyLink}
-            className="py-2.5 px-3 rounded-xl border border-cream-border hover:bg-cream-warm text-spice text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-ivory-border bg-ivory-warm hover:bg-peach-50 text-cocoa font-bold text-xs transition-colors"
           >
             {copied ? (
               <>
-                <Check className="w-4 h-4 text-emerald-600" />
-                <span>Copied</span>
+                <Check className="w-3.5 h-3.5 text-pista-700" />
+                <span className="text-pista-700">Copied!</span>
               </>
             ) : (
               <>
-                <Copy className="w-4 h-4 text-spice-muted" />
+                <Copy className="w-3.5 h-3.5 text-chilli" />
                 <span>Copy URL</span>
               </>
             )}
@@ -150,4 +143,3 @@ export const ProductQRModal: React.FC<ProductQRModalProps> = ({
     </dialog>
   );
 };
-

@@ -10,22 +10,26 @@ import {
   Phone,
   ChevronRight,
   Heart,
-  HelpCircle,
   ChevronDown,
   Layers,
   Award,
   Users,
   CheckCircle2,
-  Calendar
+  Calendar,
+  Flame,
+  Star
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/common/WhatsAppIcon';
 import { InstagramIcon } from '../components/common/InstagramIcon';
+import { BrandLogo } from '../components/common/BrandLogo';
 import { initialCategories, initialProducts, initialBundles, initialBusinessSettings } from '../data/initialData';
 import { TasteDiscovery } from '../components/home/TasteDiscovery';
 import { ProductCard } from '../components/common/ProductCard';
+import { ReviewsSection } from '../components/common/ReviewsSection';
 
 export const HomePage: React.FC = () => {
   const featuredProducts = initialProducts.filter(p => p.is_featured);
+  const heroProduct = initialProducts[0] || featuredProducts[0]; // Onion Mixture
 
   // FAQ Accordion State
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -56,129 +60,113 @@ export const HomePage: React.FC = () => {
   return (
     <div className="space-y-16 sm:space-y-24">
       
-      {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-cream-warm via-cream to-white pt-8 pb-16 sm:pt-14 sm:pb-24 border-b border-cream-border">
-        {/* Decorative subtle background radial lights */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-brand-100/60 to-transparent blur-3xl -z-10 pointer-events-none" />
+      {/* 1. ASYMMETRIC EDITORIAL HERO SECTION */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-ivory-light via-ivory-warm to-white pt-6 pb-16 sm:pt-12 sm:pb-24 border-b border-ivory-border">
+        {/* Subtle decorative radial glow */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-turmeric/15 rounded-full blur-3xl -z-10 pointer-events-none" />
+        <div className="absolute top-1/3 left-0 w-80 h-80 bg-peach/25 rounded-full blur-3xl -z-10 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Copy */}
+            {/* Left / Primary Content */}
             <div className="lg:col-span-7 space-y-6 text-left">
               
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-crimson-100/90 border border-crimson-300 text-crimson-900 text-xs sm:text-sm font-bold shadow-xs">
-                <Sparkles className="w-4 h-4 text-crimson-700" />
-                <span>30 Years of Tradition • Paralakhemundi, Odisha</span>
+              {/* Heritage Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-turmeric-100 border border-turmeric-300 text-cocoa-dark text-xs sm:text-sm font-bold shadow-xs">
+                <Sparkles className="w-4 h-4 text-turmeric-600 fill-turmeric-500" />
+                <span>30+ Years of Tradition • Paralakhemundi, Odisha</span>
               </div>
 
-              {/* Catchy Headline featuring official Tagline */}
-              <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-spice-dark tracking-tight leading-[1.12]">
-                Taste the Tradition. <br />
-                <span className="text-crimson-800">Fresh &amp; Crispy Savouries.</span> <br />
-                Wholesale Value.
+              {/* Master Headline */}
+              <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-plum-900 tracking-tight leading-[1.12]">
+                Made with Tradition. <br />
+                <span className="text-chilli">Loved for the Crunch.</span>
               </h1>
 
-              {/* Short Brand Introduction */}
-              <p className="text-base sm:text-lg text-spice-muted max-w-2xl leading-relaxed">
-                {initialBusinessSettings.business_description} Serving grocery stores, kirana shops, and families across Odisha for 30 proud years.
+              {/* Supporting Copy */}
+              <p className="text-base sm:text-lg text-cocoa-muted max-w-2xl leading-relaxed">
+                Discover fresh, crispy, and authentic Indian savouries prepared with the taste of tradition. Handcrafted daily on Gandhi School Road by Adari Krishna Rao &amp; Adari Dilleshwar Rao.
               </p>
 
-              {/* CTAs */}
+              {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   to="/catalog"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm font-bold text-sm sm:text-base shadow-elevated hover:shadow-glow transition-all transform hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-chilli hover:bg-chilli-600 text-white font-bold text-sm sm:text-base shadow-chilli active:scale-95 transition-all transform hover:-translate-y-0.5"
                 >
-                  <span>Explore Snacks Catalogue</span>
+                  <span>Explore Our Snacks</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
                 <a
-                  href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to place a wholesale snack order.')}`}
+                  href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to enquire about wholesale pricing and dealership.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm sm:text-base shadow-soft hover:shadow-md transition-all transform hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2.5 px-6 py-4 rounded-2xl bg-white hover:bg-pista-50 text-plum-900 border-2 border-pista-300 font-bold text-sm sm:text-base shadow-soft transition-all"
                 >
-                  <WhatsAppIcon className="w-5 h-5 text-white" variant="white" />
-                  <span>WhatsApp Quote (9861789602)</span>
+                  <WhatsAppIcon className="w-5 h-5" variant="green" />
+                  <span>Wholesale Enquiry</span>
                 </a>
               </div>
 
-              {/* Trust Pillars */}
-              <div className="grid grid-cols-3 gap-3 pt-6 border-t border-cream-border text-xs sm:text-sm text-spice">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-gold-100 flex items-center justify-center text-gold-700 shrink-0">
-                    <ShieldCheck className="w-4 h-4" />
+              {/* Small Trust Indicators */}
+              <div className="pt-6 border-t border-ivory-border grid grid-cols-3 gap-4 text-xs font-semibold text-cocoa">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 rounded border border-veg bg-white flex items-center justify-center shrink-0">
+                    <div className="w-2 h-2 rounded-full bg-veg" />
                   </div>
-                  <div>
-                    <span className="font-bold block text-spice-dark">30 Years Trust</span>
-                    <span className="text-[11px] text-spice-muted">Authentic Recipe</span>
-                  </div>
+                  <span>100% Pure Veg</span>
                 </div>
 
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-crimson-100 flex items-center justify-center text-crimson-700 shrink-0">
-                    <Store className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="font-bold block text-spice-dark">Kirana Margins</span>
-                    <span className="text-[11px] text-spice-muted">Direct Factory Rates</span>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-turmeric-600 shrink-0" />
+                  <span>Handcrafted Daily</span>
                 </div>
 
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
-                    <Truck className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="font-bold block text-spice-dark">Daily Frying</span>
-                    <span className="text-[11px] text-spice-muted">Fresh Batch Supply</span>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <Award className="w-4 h-4 text-chilli shrink-0" />
+                  <span>30+ Years Legacy</span>
                 </div>
               </div>
 
             </div>
 
-            {/* Right Hero Image Card */}
+            {/* Right / Visual Layered Content */}
             <div className="lg:col-span-5 relative">
               <div className="relative mx-auto max-w-md lg:max-w-none">
                 
-                {/* Decorative border frame */}
-                <div className="absolute -inset-2 bg-gradient-to-r from-gold-400 to-crimson-700 rounded-3xl blur-md opacity-30 transform -rotate-1" />
-
-                <div className="relative rounded-3xl overflow-hidden shadow-elevated border-2 border-gold-300 bg-white">
+                {/* Main Hero Photograph with Framing */}
+                <div className="relative rounded-3xl overflow-hidden shadow-plum border-4 border-white bg-gradient-to-br from-ivory-warm to-peach-50 aspect-square flex items-center justify-center p-3 group">
                   <img
                     src="/images/brand/master-banner.png"
-                    alt="Authentic Sri Balaji Special Mixtures Collection with Founders Guarantee"
-                    className="w-full h-80 sm:h-96 object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                    alt="Sri Balaji Special Mixtures – Authentic Traditional Presentation"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                    loading="eager"
                   />
-                  
-                  {/* Floating Highlight Card */}
-                  <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-cream-border shadow-elevated flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-crimson-800">
-                        Signature 30-Year Tradition
-                      </span>
-                      <h4 className="font-display font-bold text-spice-dark text-sm sm:text-base">
-                        Sri Balaji Special Mixtures
-                      </h4>
-                      <p className="text-xs text-spice-muted">
-                        Onion Mixture, Kar Kar Murrukulu &amp; Peanuts Pakodi
-                      </p>
-                    </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-plum-950/40 via-transparent to-transparent pointer-events-none" />
+                </div>
 
-                    <Link 
-                      to="/product/onion-mixture"
-                      className="p-2.5 rounded-xl bg-crimson-800 text-cream-warm hover:bg-crimson-900 transition-colors shadow-sm"
-                      title="View Details"
-                      aria-label="View Onion Mixture details"
-                    >
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
+                {/* Floating Badge 1: 100% Authentic Crunch */}
+                <div className="absolute -top-4 -left-4 sm:-top-5 sm:-left-6 bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-elevated border border-ivory-border flex items-center gap-3 animate-bounce [animation-duration:3s]">
+                  <div className="w-10 h-10 rounded-xl bg-turmeric-100 flex items-center justify-center text-turmeric-700">
+                    <Sparkles className="w-5 h-5 fill-turmeric-400" />
                   </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-chilli uppercase tracking-wider block">Special Recipe</span>
+                    <strong className="text-xs font-extrabold text-plum-900 block">100% Authentic Crunch</strong>
+                  </div>
+                </div>
 
+                {/* Floating Badge 2: Secret 1995 Spice Blend */}
+                <div className="absolute -bottom-5 -right-4 sm:-bottom-6 sm:-right-6 bg-plum-900/95 backdrop-blur-md p-3.5 rounded-2xl shadow-plum border border-plum-700 flex items-center gap-3 text-white">
+                  <div className="w-10 h-10 rounded-xl bg-turmeric flex items-center justify-center text-plum-950 font-black text-sm">
+                    30+
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-turmeric uppercase tracking-wider block">Since 1995</span>
+                    <strong className="text-xs font-extrabold text-ivory block">Secret Spice Heritage</strong>
+                  </div>
                 </div>
 
               </div>
@@ -188,47 +176,84 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. PRODUCT CATEGORIES SHOWCASE */}
+
+      {/* 2. CREATIVE CATEGORY TILES SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
-              Handcrafted Varieties
+            <span className="text-xs font-bold text-chilli uppercase tracking-wider block mb-1">
+              Curated Snack Categories
             </span>
-            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-spice-dark mt-1">
-              Explore Our Snack Categories
+            <h2 className="text-3xl font-display font-extrabold text-plum-900 tracking-tight">
+              Explore Our Authentic Range
             </h2>
           </div>
           <Link
             to="/catalog"
-            className="inline-flex items-center gap-1.5 text-crimson-800 hover:text-crimson-900 font-bold text-sm group"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-chilli hover:text-chilli-700 transition-colors group"
           >
-            <span>View All Categories</span>
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <span>View Complete Catalogue</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-          {initialCategories.map((category) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {[
+            {
+              name: 'Special Mixtures',
+              desc: 'Onion, Chuda & Gujarat Mix',
+              slug: 'special-mixtures',
+              image: '/images/products/onion-mixture.png',
+              accent: 'bg-peach-50 border-peach-200 text-chilli',
+            },
+            {
+              name: 'Traditional Murrukulu',
+              desc: 'Kar Kar & Crispy Rings',
+              slug: 'traditional-murrukulu',
+              image: '/images/products/kar-kar-murrukulu.png',
+              accent: 'bg-turmeric-50 border-turmeric-200 text-turmeric-800',
+            },
+            {
+              name: 'Spicy Crunchies',
+              desc: 'Crispy Peanuts Pakodi',
+              slug: 'crunchy-pakodi',
+              image: '/images/products/crispy-peanuts-pakodi.png',
+              accent: 'bg-pista-50 border-pista-200 text-pista-800',
+            },
+            {
+              name: 'Gujarat Chivda',
+              desc: 'Sweet & Salty Namkeen',
+              slug: 'chivda-special',
+              image: '/images/products/gujarat-mix-chivda.png',
+              accent: 'bg-ivory-warm border-ivory-border text-plum-900',
+            },
+            {
+              name: 'Special Treats',
+              desc: 'Kaju Biscuits Mixture',
+              slug: 'kaju-delights',
+              image: '/images/products/kaju-biscuits-mixture.png',
+              accent: 'bg-peach-100 border-peach-300 text-chilli-800',
+            },
+          ].map((cat) => (
             <Link
-              key={category.id}
-              to={`/catalog?category=${category.slug}`}
-              className="group relative rounded-3xl overflow-hidden bg-white border border-cream-border shadow-soft hover:shadow-elevated hover:border-gold-300 transition-all flex flex-col"
+              key={cat.slug}
+              to={`/catalog?category=${cat.slug}`}
+              className={`p-4 rounded-3xl border ${cat.accent} flex flex-col justify-between hover:shadow-elevated transition-all duration-300 group hover:-translate-y-1`}
             >
-              <div className="aspect-square bg-cream-surface overflow-hidden">
+              <div className="aspect-square rounded-2xl bg-white p-2 mb-3 overflow-hidden flex items-center justify-center border border-ivory-border">
                 <img
-                  src={category.image_url}
-                  alt={category.name}
+                  src={cat.image}
+                  alt={cat.name}
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
-              <div className="p-3.5 sm:p-4 text-center bg-white flex flex-col justify-between flex-grow">
-                <h3 className="font-display font-bold text-sm sm:text-base text-spice-dark group-hover:text-crimson-800 transition-colors">
-                  {category.name}
+              <div>
+                <h3 className="font-display font-bold text-sm text-plum-900 group-hover:text-chilli transition-colors">
+                  {cat.name}
                 </h3>
-                <span className="mt-1 text-[11px] text-brand-700 font-bold group-hover:underline">
-                  Browse Snacks →
+                <span className="text-[11px] text-cocoa-muted block mt-0.5 line-clamp-1">
+                  {cat.desc}
                 </span>
               </div>
             </Link>
@@ -236,341 +261,271 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. POPULAR BESTSELLERS */}
+
+      {/* 3. SIGNATURE FEATURED HIGHLIGHT (STYLE A: FEATURED PRODUCT CARD) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <span className="text-xs font-bold text-chilli uppercase tracking-wider block mb-1">
+            Bestseller Spotlight
+          </span>
+          <h2 className="text-3xl font-display font-extrabold text-plum-900 tracking-tight">
+            Our #1 Signature Blend
+          </h2>
+        </div>
+
+        {heroProduct && (
+          <ProductCard product={heroProduct} cardStyle="featured" />
+        )}
+      </section>
+
+
+      {/* 4. TASTE DISCOVERY SECTION */}
+      <TasteDiscovery products={initialProducts} />
+
+
+      {/* 5. POPULAR SAVOURIES (STANDARD PRODUCT CARDS) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
-              Customer Favorites
+            <span className="text-xs font-bold text-chilli uppercase tracking-wider block mb-1">
+              Fresh Daily Batches
             </span>
-            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-spice-dark mt-1">
-              Popular &amp; High-Demand Savouries
+            <h2 className="text-3xl font-display font-extrabold text-plum-900 tracking-tight">
+              Customer Favourites
             </h2>
           </div>
           <Link
             to="/catalog"
-            className="inline-flex items-center gap-1.5 text-crimson-800 hover:text-crimson-900 font-bold text-sm group"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-chilli hover:text-chilli-700 transition-colors group"
           >
-            <span>Complete Price List</span>
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <span>See All 9 Snack Varieties</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredProducts.slice(0, 6).map((product) => (
-            <ProductCard key={product.id} product={product} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {initialProducts.slice(1, 5).map((p) => (
+            <ProductCard key={p.id} product={p} cardStyle="standard" />
           ))}
         </div>
       </section>
 
-      {/* 4. INTERACTIVE TASTE DISCOVERY (PROFILER) */}
-      <TasteDiscovery products={initialProducts} />
 
-      {/* 5. RETAIL VS WHOLESALE CLARIFICATION */}
+      {/* 6. WHOLESALE B2B ADVANTAGE & COMPARISON */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
-            Flexible Purchasing Modes
-          </span>
-          <h2 className="font-display font-extrabold text-3xl text-spice-dark">
-            Tailored for Households &amp; Wholesale Kiranas
-          </h2>
-          <p className="text-sm text-spice-muted">
-            Switch effortlessly between Retail and Wholesale pricing with one click.
-          </p>
-        </div>
+        <div className="rounded-3xl bg-gradient-to-br from-plum-950 via-plum-900 to-cocoa-dark text-white p-8 sm:p-12 overflow-hidden shadow-plum relative border border-plum-800">
+          <div className="absolute right-0 bottom-0 w-80 h-80 bg-turmeric/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Retail Household Box */}
-          <div className="p-8 rounded-3xl bg-white border-2 border-cream-border shadow-soft space-y-5 hover:border-gold-300 transition-all flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-crimson-100 text-crimson-800 flex items-center justify-center font-bold">
-                <Heart className="w-6 h-6" />
-              </div>
-              <h3 className="font-display font-extrabold text-2xl text-spice-dark">
-                Household &amp; Family Retail
-              </h3>
-              <p className="text-xs sm:text-sm text-spice-muted leading-relaxed">
-                Enjoy authentic traditional snack varieties delivered fresh for family tea times, evening snacks, and festive celebrations.
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            <div className="lg:col-span-7 space-y-4">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-turmeric text-plum-950 text-xs font-black uppercase tracking-wider">
+                <Store className="w-3.5 h-3.5 fill-plum-950" />
+                Kirana &amp; B2B Distribution Hub
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
+                Stock Your Store with High-Margin Snacks
+              </h2>
+              <p className="text-sm text-ivory/80 leading-relaxed max-w-xl">
+                Partner with Sri Balaji for direct factory-gate wholesale rates. We serve tea stalls, supermarkets, sweet shops, and Kirana stores across Odisha with guaranteed crunch and high customer repeat purchases.
               </p>
-              
-              <ul className="space-y-2.5 text-xs sm:text-sm text-spice">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Standard 250g (₹60) &amp; 500g (₹120) sealed pouches</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>No minimum order constraints; order as little as 1 pack</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Assorted gift combos and smart snack boxes</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Direct delivery / local counter pickup in Paralakhemundi</span>
-                </li>
-              </ul>
-            </div>
 
-            <Link
-              to="/catalog"
-              className="w-full py-3.5 px-4 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm text-center font-bold text-xs sm:text-sm transition-colors shadow-soft"
-            >
-              Shop Retail Snacks
-            </Link>
-          </div>
-
-          {/* Wholesale B2B Box */}
-          <div className="p-8 rounded-3xl bg-gradient-to-br from-cream-surface to-white border-2 border-gold-400 shadow-soft space-y-5 flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute -top-3 -right-3 bg-gold-500 text-spice-dark font-extrabold text-[10px] px-8 py-2 rounded-full uppercase tracking-wider rotate-12 shadow-xs">
-              Kirana Margin
-            </div>
-
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold">
-                <Store className="w-6 h-6" />
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs">
+                <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
+                  <strong className="text-turmeric block text-lg font-display">Up to 25%</strong>
+                  <span className="text-ivory/70">Margin Savings</span>
+                </div>
+                <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
+                  <strong className="text-turmeric block text-lg font-display">Low MOQ</strong>
+                  <span className="text-ivory/70">From 2 Pkgs/Carton</span>
+                </div>
+                <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
+                  <strong className="text-turmeric block text-lg font-display">90 Days</strong>
+                  <span className="text-ivory/70">Shelf Freshness</span>
+                </div>
               </div>
-              <h3 className="font-display font-extrabold text-2xl text-crimson-900">
-                B2B Wholesale &amp; Kirana Stores
-              </h3>
-              <p className="text-xs sm:text-sm text-spice-muted leading-relaxed">
-                Direct factory supply for grocery stores, supermarkets, tea stalls, and caterers seeking reliable repeat customer margins.
-              </p>
-              
-              <ul className="space-y-2.5 text-xs sm:text-sm text-spice">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-amber-700 shrink-0" />
-                  <span>Direct wholesale discounts (up to 20%–25% retailer margin)</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-amber-700 shrink-0" />
-                  <span>Low MOQ thresholds (2 to 5 packs per snack)</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-amber-700 shrink-0" />
-                  <span>Commercial bulk sacks (3kg, 5kg, and 10kg cartons)</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-amber-700 shrink-0" />
-                  <span>Automated WhatsApp quotation routing straight to founders</span>
-                </li>
-              </ul>
+
+              <div className="flex flex-wrap gap-3 pt-4">
+                <Link
+                  to="/wholesale"
+                  className="px-6 py-3 rounded-2xl bg-turmeric text-plum-950 font-extrabold text-xs uppercase tracking-wider hover:bg-turmeric-400 active:scale-95 transition-all shadow-glow"
+                >
+                  Enter Wholesale Portal
+                </Link>
+
+                <a
+                  href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=Hello%20Sri%20Balaji,%20I%20run%20a%20retail%20store%20and%20need%20your%20wholesale%20price%20list`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all"
+                >
+                  <WhatsAppIcon className="w-4 h-4" variant="currentColor" />
+                  <span>Request WhatsApp Price Sheet</span>
+                </a>
+              </div>
             </div>
 
-            <Link
-              to="/wholesale"
-              className="w-full py-3.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-center font-bold text-xs sm:text-sm transition-colors shadow-soft"
-            >
-              Explore Wholesale Rate Card
-            </Link>
+            <div className="lg:col-span-5">
+              <div className="rounded-2xl overflow-hidden border-2 border-white/10 shadow-elevated">
+                <img
+                  src="/images/brand/wholesale-counter.png"
+                  alt="Sri Balaji Wholesale Counter"
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 6. BRAND HERITAGE TIMELINE (1995 to 2026+) */}
-      <section className="bg-gradient-to-b from-cream-warm via-white to-cream-warm py-16 border-y border-cream-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
-              30 Years of Uncompromised Taste
+
+      {/* 7. AUTHENTIC 30-YEAR BRAND STORY & TIMELINE */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto space-y-2 mb-12">
+          <span className="text-xs font-bold text-chilli uppercase tracking-wider">
+            Our Proud Roots Since 1995
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-plum-900 tracking-tight">
+            30 Years of Tradition. A Taste That Continues.
+          </h2>
+          <p className="text-sm text-cocoa-muted">
+            Founded on Gandhi School Road, Paralakhemundi, Odisha by Adari Krishna Rao and carried forward by Adari Dilleshwar Rao.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Authentic Founders Photo */}
+          <div className="lg:col-span-5">
+            <div className="relative rounded-3xl overflow-hidden shadow-soft border-4 border-white bg-ivory-warm">
+              <img
+                src="/images/brand/founders-adari-family.png"
+                alt="Adari Family – Founders of Sri Balaji"
+                className="w-full h-auto object-cover"
+                loading="lazy"
+              />
+              <div className="p-4 bg-plum-900 text-white text-center">
+                <strong className="block text-sm font-bold text-turmeric">Adari Krishna Rao &amp; Adari Dilleshwar Rao</strong>
+                <span className="text-xs text-ivory/80">Proprietors &amp; Master Savoury Craftsmen</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 3-Era Heritage Milestones */}
+          <div className="lg:col-span-7 space-y-4">
+            {[
+              {
+                year: '1995',
+                title: 'The Humble Kitchen in Paralakhemundi',
+                desc: 'Adari Krishna Rao began crafting authentic mixtures using cold-pressed groundnut oil, freshly roasted curry leaves, and traditional brass sieves near Gandhi School Road post office.'
+              },
+              {
+                year: '2008',
+                title: 'B2B Wholesale Trust Across Gajapati',
+                desc: 'Local tea vendors and retail grocery shops adopted Sri Balaji as their primary mixture brand due to unmatched crunch retention and consistent taste quality.'
+              },
+              {
+                year: 'Present Day',
+                title: 'Modern Packaging & Digital Reach',
+                desc: 'Adari Dilleshwar Rao modernised production with food-grade moisture barrier packaging, expanding distribution across Odisha while strictly preserving the authentic 30-year family recipe.'
+              }
+            ].map((era) => (
+              <div
+                key={era.year}
+                className="p-5 rounded-2xl bg-white border border-ivory-border shadow-xs hover:border-turmeric-400 transition-all flex items-start gap-4"
+              >
+                <div className="w-12 h-12 rounded-xl bg-peach-50 border border-peach-200 flex items-center justify-center shrink-0">
+                  <span className="font-display font-extrabold text-chilli text-sm">{era.year}</span>
+                </div>
+                <div>
+                  <h4 className="font-display font-bold text-base text-plum-900">{era.title}</h4>
+                  <p className="text-xs text-cocoa-muted mt-1 leading-relaxed">{era.desc}</p>
+                </div>
+              </div>
+            ))}
+
+            <div className="pt-2">
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 text-xs font-bold text-chilli hover:text-chilli-700 transition-colors"
+              >
+                <span>Read Full 30-Year Heritage &amp; Recipe Story</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* 8. NEW: COMMUNITY CUSTOMER REVIEWS & RATINGS */}
+      <ReviewsSection
+        productId="general"
+        productName="Sri Balaji Savouries & Mixtures"
+        title="Community Reviews & Tasting Feedback"
+        subtitle="Read genuine thoughts from families and retail Kirana store owners who crunch Sri Balaji daily."
+      />
+
+
+      {/* 9. INSTAGRAM & COUNTER GALLERY */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div>
+            <span className="text-xs font-bold text-chilli uppercase tracking-wider block mb-1">
+              Social Community
             </span>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-crimson-900">
-              The Sri Balaji Heritage Journey
+            <h2 className="text-3xl font-display font-extrabold text-plum-900 tracking-tight">
+              Follow Us on Instagram
             </h2>
-            <p className="text-sm text-spice-muted">
-              From a single frying kettle in Paralakhemundi to a trusted regional wholesale network.
+            <p className="text-xs text-cocoa-muted mt-0.5">
+              Tag @sri_balaji_special_mixtures in your snack moments
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            {/* 1995 Card */}
-            <div className="p-6 rounded-3xl bg-white border border-cream-border shadow-soft space-y-3 relative">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-crimson-100 text-crimson-900 text-xs font-extrabold">
-                <Calendar className="w-3.5 h-3.5 text-crimson-700" />
-                <span>1995 – The Beginning</span>
-              </div>
-              <h3 className="font-display font-bold text-xl text-spice-dark">
-                Authentic Recipe Mastery
-              </h3>
-              <p className="text-xs sm:text-sm text-spice-muted leading-relaxed">
-                Founded by <strong>Adari Krishna Rao</strong> on Gandhi School Road, Paralakhemundi. Focused on pure gram flour, roasted peanuts, and traditional spices with strict cleanliness.
-              </p>
-            </div>
-
-            {/* 2010s Card */}
-            <div className="p-6 rounded-3xl bg-white border border-cream-border shadow-soft space-y-3 relative">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-100 text-gold-900 text-xs font-extrabold">
-                <Calendar className="w-3.5 h-3.5 text-gold-800" />
-                <span>2010s – Wholesale Expansion</span>
-              </div>
-              <h3 className="font-display font-bold text-xl text-spice-dark">
-                Regional Trade Networks
-              </h3>
-              <p className="text-xs sm:text-sm text-spice-muted leading-relaxed">
-                Son <strong>Adari Dilleshwar Rao</strong> joined operations, partnering with Kirana merchants and tea stalls across Gajapati district to deliver consistent, fresh wholesale batches daily.
-              </p>
-            </div>
-
-            {/* Present Card */}
-            <div className="p-6 rounded-3xl bg-white border border-cream-border shadow-soft space-y-3 relative">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-extrabold">
-                <Calendar className="w-3.5 h-3.5 text-emerald-800" />
-                <span>Present – Modern Pouching</span>
-              </div>
-              <h3 className="font-display font-bold text-xl text-spice-dark">
-                Moisture-Barrier &amp; PWA Platform
-              </h3>
-              <p className="text-xs sm:text-sm text-spice-muted leading-relaxed">
-                Upgraded to multi-layer moisture-barrier pouches, QR code traceability, and an installable digital ordering platform connected directly to WhatsApp.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* 7. SMART SNACK BUNDLES */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
-            Convenient Combinations
-          </span>
-          <h2 className="font-display font-extrabold text-3xl text-spice-dark">
-            Smart Snack Bundles &amp; Combos
-          </h2>
-          <p className="text-sm text-spice-muted">
-            Specially configured packs for retail store starter stock, festive gifting, and evening family tea-time.
-          </p>
+          <a
+            href={initialBusinessSettings.instagram_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-purple-800 via-pink-700 to-amber-600 text-white text-xs font-bold hover:opacity-95 transition-all shadow-soft w-fit"
+          >
+            <InstagramIcon className="w-4 h-4" useGradient={false} />
+            <span>@sri_balaji_special_mixtures</span>
+          </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {initialBundles.map((bundle) => (
-            <div 
-              key={bundle.id}
-              className="bg-white rounded-3xl border border-cream-border overflow-hidden shadow-soft hover:shadow-elevated hover:border-gold-300 transition-all flex flex-col justify-between"
-            >
-              <div className="aspect-[16/10] bg-cream-surface overflow-hidden relative">
-                <img
-                  src={bundle.image_url}
-                  alt={bundle.name}
-                  loading="lazy"
-                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-3 right-3 bg-crimson-800 text-cream-warm text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
-                  Combo Box
-                </div>
-              </div>
-
-              <div className="p-5 flex flex-col flex-grow justify-between gap-4">
-                <div>
-                  <h3 className="font-display font-bold text-lg text-spice-dark">
-                    {bundle.name}
-                  </h3>
-                  <p className="mt-1 text-xs text-spice-muted leading-relaxed">
-                    {bundle.description}
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-cream-border flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] text-spice-muted uppercase font-bold block">
-                      Bundle Price
-                    </span>
-                    <span className="font-display font-extrabold text-xl text-crimson-900">
-                      ₹{bundle.bundle_price}
-                    </span>
-                  </div>
-
-                  <a
-                    href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent(`Namaste Sri Balaji! I would like to order the bundle: ${bundle.name} (Price: ₹${bundle.bundle_price})`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm text-xs font-bold transition-all shadow-xs"
-                  >
-                    <WhatsAppIcon className="w-3.5 h-3.5 text-white" variant="white" />
-                    <span>Inquire Combo</span>
-                  </a>
-                </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { img: '/images/brand/paralakhemundi-pride.png', caption: 'Storefront at Gandhi School Road' },
+            { img: '/images/products/onion-mixture.png', caption: 'Fresh Golden Onion Mixture' },
+            { img: '/images/brand/seven-flavors-lineup.png', caption: 'Seven Signature Flavors' },
+            { img: '/images/products/kar-kar-murrukulu.png', caption: 'Crunchy Kar Kar Murrukulu' },
+          ].map((item, idx) => (
+            <div key={idx} className="group relative rounded-2xl overflow-hidden aspect-square border border-ivory-border bg-white shadow-soft">
+              <img
+                src={item.img}
+                alt={item.caption}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-plum-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                <span className="text-white text-xs font-semibold">{item.caption}</span>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 8. AUTHENTIC INSTAGRAM & BRAND GALLERY */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
-              Official Instagram &amp; Visual Diary
-            </span>
-            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-spice-dark mt-1">
-              Snapshots of Our Authentic Kitchen &amp; Store
-            </h2>
-          </div>
 
-          {initialBusinessSettings.instagram_url && (
-            <a
-              href={initialBusinessSettings.instagram_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-800 via-pink-700 to-amber-600 text-white font-bold text-xs shadow-sm hover:opacity-95 transition-opacity"
-            >
-              <InstagramIcon className="w-4 h-4" useGradient={false} />
-              <span>Follow @sri_balaji_special_mixtures</span>
-            </a>
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="rounded-2xl overflow-hidden bg-cream-surface border border-cream-border aspect-square group shadow-soft">
-            <img
-              src="/images/brand/founders-adari-family.png"
-              alt="Adari Krishna Rao & Dilleshwar Rao"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-
-          <div className="rounded-2xl overflow-hidden bg-cream-surface border border-cream-border aspect-square group shadow-soft">
-            <img
-              src="/images/brand/wholesale-counter.png"
-              alt="Sri Balaji Wholesale Counter with Transparent Bulk Packets"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-
-          <div className="rounded-2xl overflow-hidden bg-cream-surface border border-cream-border aspect-square group shadow-soft">
-            <img
-              src="/images/brand/paralakhemundi-pride.png"
-              alt="Proudly Made in Paralakhemundi, Odisha"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-
-          <div className="rounded-2xl overflow-hidden bg-cream-surface border border-cream-border aspect-square group shadow-soft">
-            <img
-              src="/images/brand/seven-flavors-lineup.png"
-              alt="Seven Flavors Signature Lineup"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* 9. CUSTOMER FAQ ACCORDION */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="text-center space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
+      {/* 10. INTERACTIVE FAQ ACCORDION */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center space-y-2 mb-10">
+          <span className="text-xs font-bold text-chilli uppercase tracking-wider">
             Got Questions?
           </span>
-          <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-spice-dark">
+          <h2 className="text-3xl font-display font-extrabold text-plum-900 tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-xs sm:text-sm text-spice-muted">
-            Everything you need to know about placing orders, wholesale dispatches, and snack shelf life.
+          <p className="text-xs text-cocoa-muted">
+            Everything you need to know about retail ordering, wholesale margins, and dispatch.
           </p>
         </div>
 
@@ -580,103 +535,24 @@ export const HomePage: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="rounded-2xl bg-white border border-cream-border shadow-soft overflow-hidden transition-all"
+                className="rounded-2xl border border-ivory-border bg-white overflow-hidden transition-all shadow-xs"
               >
                 <button
                   type="button"
                   onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
-                  className="w-full p-4 sm:p-5 flex items-center justify-between text-left gap-3"
-                  aria-expanded={isOpen}
+                  className="w-full p-4 sm:p-5 text-left font-bold text-sm sm:text-base text-plum-900 flex items-center justify-between gap-4 hover:bg-ivory-warm transition-colors"
                 >
-                  <span className="font-display font-bold text-sm sm:text-base text-spice-dark">
-                    {faq.q}
-                  </span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-crimson-800 shrink-0 transition-transform duration-300 ${
-                      isOpen ? 'transform rotate-180' : ''
-                    }`}
-                  />
+                  <span>{faq.q}</span>
+                  <ChevronDown className={`w-4 h-4 text-chilli shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 text-xs sm:text-sm text-spice-muted leading-relaxed border-t border-cream-surface pt-3 animate-in fade-in duration-200">
+                  <div className="px-4 pb-5 sm:px-5 sm:pb-6 text-xs sm:text-sm text-cocoa-muted leading-relaxed border-t border-ivory-border/50 pt-3">
                     {faq.a}
                   </div>
                 )}
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* 10. FACTORY LOCATION & DIRECT CONNECT */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="rounded-3xl bg-gradient-to-r from-crimson-900 to-crimson-800 text-cream-warm p-8 sm:p-12 shadow-elevated border-2 border-gold-400/40">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs font-bold border border-gold-400/30">
-                <MapPin className="w-3.5 h-3.5 text-gold-400" />
-                <span>Paralakhemundi, Gajapati, Odisha</span>
-              </div>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-white">
-                Visit Our Manufacturing Store or Place a Bulk Order
-              </h2>
-              <p className="text-sm sm:text-base text-cream-surface/90 max-w-2xl leading-relaxed">
-                Located at {initialBusinessSettings.address}, {initialBusinessSettings.city}, Gajapati, Odisha - {initialBusinessSettings.pin_code}. Managed directly by Adari Krishna Rao &amp; Adari Dilleshwar Rao.
-              </p>
-              
-              <div className="flex flex-wrap items-center gap-4 pt-2 text-sm">
-                <a
-                  href="tel:9437135342"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-crimson-900 font-bold hover:bg-gold-100 transition-colors shadow-sm"
-                >
-                  <Phone className="w-4 h-4 text-crimson-800" />
-                  <span>Call: 9437135342</span>
-                </a>
-
-                <a
-                  href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to place an order for snacks.')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold transition-colors shadow-sm"
-                >
-                  <WhatsAppIcon className="w-4 h-4 text-white" variant="white" />
-                  <span>WhatsApp: 9861789602</span>
-                </a>
-
-                {initialBusinessSettings.instagram_url && (
-                  <a
-                    href={initialBusinessSettings.instagram_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-colors"
-                  >
-                    <InstagramIcon className="w-4 h-4" useGradient={false} />
-                    <span>Instagram</span>
-                  </a>
-                )}
-              </div>
-            </div>
-
-            <div className="lg:col-span-4 bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-xs space-y-3">
-              <h4 className="font-display font-bold text-gold-300 text-base">
-                Business &amp; Supply Details
-              </h4>
-              <p className="text-cream-surface/80">
-                <strong>Owners:</strong> Adari Krishna Rao &amp; Adari Dilleshwar Rao
-              </p>
-              <p className="text-cream-surface/80">
-                <strong>Experience:</strong> 30 Years (Since 1995)
-              </p>
-              <p className="text-cream-surface/80">
-                <strong>Address:</strong> {initialBusinessSettings.address}, {initialBusinessSettings.city}, Odisha - {initialBusinessSettings.pin_code}
-              </p>
-              <p className="text-cream-surface/80">
-                <strong>Payment Methods:</strong> {initialBusinessSettings.payment_methods}
-              </p>
-            </div>
-
-          </div>
         </div>
       </section>
 

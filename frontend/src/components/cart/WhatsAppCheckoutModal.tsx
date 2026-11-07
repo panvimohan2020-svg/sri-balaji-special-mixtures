@@ -100,103 +100,113 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
       }))
     };
 
-    // 1. Submit to Backend API (async, non-blocking)
+    let generatedOrderNum = `SB-${Math.floor(100000 + Math.random() * 900000)}`;
+
     try {
-      const orderResult = await apiService.submitOrder(orderPayload);
-      
-      // Save to local past orders list for Quick Reorder feature
-      const existingHistory = JSON.parse(localStorage.getItem('sri_balaji_order_history') || '[]');
-      const newEntry = {
-        orderNumber: orderResult?.order_number || `SB-${Date.now().toString().slice(-6)}`,
-        date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
-        items: [...items],
-        totalAmount,
-        totalWeightKg,
-        isWholesale: isWholesaleMode
-      };
-      localStorage.setItem('sri_balaji_order_history', JSON.stringify([newEntry, ...existingHistory.slice(0, 9)]));
+      // Attempt background logging to API if backend available
+      const apiResult = await apiService.submitOrder(orderPayload as any);
+      if (apiResult && apiResult.order_number) {
+        generatedOrderNum = apiResult.order_number;
+      }
     } catch {
-      // Offline fallback
+      // Graceful offline fallback: continue to WhatsApp with client order code
     }
 
-    // 2. Generate WhatsApp URL
-    const whatsappUrl = generateWhatsAppOrderUrl({
-      customerName,
-      businessName: isWholesaleMode ? businessName : undefined,
-      phoneNumber,
-      deliveryAddress,
-      city,
-      notes,
-      items,
+    // Persist order in local history for rapid 1-click reordering
+    try {
+      const pastOrders = JSON.parse(localStorage.getItem('sri_balaji_order_history') || '[]');
+      const newHistoryEntry = {
+        orderNumber: generatedOrderNum,
+        date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+        totalAmount,
+        totalWeightKg,
+        isWholesale: isWholesaleMode,
+        items: items.map(i => ({
+          productName: i.productName,
+          weightLabel: i.weightLabel,
+          quantity: i.quantity,
+          unitPrice: i.unitPrice
+        }))
+      };
+      localStorage.setItem(
+        'sri_balaji_order_history',
+        JSON.stringify([newHistoryEntry, ...pastOrders.slice(0, 9)])
+      );
+    } catch {
+      // Ignore local storage error
+    }
+
+    // Construct WhatsApp message with formatted order details
+    const waUrl = generateWhatsAppOrderUrl({
+      customerName: customerName.trim(),
+      businessName: businessName.trim(),
+      phoneNumber: phoneNumber.trim(),
+      city: city.trim(),
+      deliveryAddress: deliveryAddress.trim(),
+      notes: notes.trim(),
+      isWholesale: isWholesaleMode,
+      items: items,
       totalAmount,
       totalWeightKg,
-      isWholesale: isWholesaleMode,
       storeWhatsAppNumber: initialBusinessSettings.whatsapp_number
     });
 
-    // 3. Open WhatsApp in new tab
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-
     setSubmitting(false);
+    clearCart();
     onClose();
+
+    // Direct user to official WhatsApp chat
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
     <dialog
       ref={dialogRef}
       onClose={onClose}
-      aria-labelledby="checkout-dialog-title"
-      className="p-0 rounded-3xl bg-white shadow-elevated border-2 border-gold-400/40 text-spice max-w-lg w-[92vw] sm:w-full overflow-hidden m-auto backdrop:bg-spice-dark/70 backdrop:backdrop-blur-sm"
+      aria-labelledby="checkout-title"
+      className="p-0 rounded-3xl bg-white shadow-elevated border border-ivory-border text-cocoa max-w-lg w-[92vw] overflow-hidden m-auto backdrop:bg-plum-950/70 backdrop:backdrop-blur-sm"
     >
-      {/* Header */}
-      <div className="bg-gradient-to-r from-crimson-800 to-crimson-900 text-cream-warm p-5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#25D366] flex items-center justify-center shadow-xs">
-            <WhatsAppIcon className="w-5 h-5 text-white" variant="white" />
-          </div>
-          <div>
-            <h2 id="checkout-dialog-title" className="font-display font-bold text-lg text-white">
-              {isWholesaleMode ? 'Submit Wholesale Enquiry' : 'Place WhatsApp Order'}
-            </h2>
-            <p className="text-xs text-gold-200">
-              Direct connection with Sri Balaji manufacturing
-            </p>
-          </div>
+      {/* Modal Header */}
+      <div className="bg-gradient-to-r from-plum-900 to-plum-950 text-ivory p-5 flex items-center justify-between border-b border-plum-800">
+        <div>
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-turmeric block">
+            {isWholesaleMode ? 'Wholesale Quotation Request' : 'Direct Order Dispatch'}
+          </span>
+          <h2 id="checkout-title" className="font-display font-bold text-xl text-white">
+            Complete WhatsApp Order
+          </h2>
         </div>
-
         <button
           type="button"
           onClick={onClose}
-          className="p-1.5 rounded-lg text-cream-surface/80 hover:text-white hover:bg-white/10 transition-colors"
+          className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
           aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
         </button>
       </div>
 
-      {/* Form Content */}
-      <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4">
+      {/* Form Body */}
+      <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
         
         {/* Order Summary Snapshot */}
-        <div className="p-3.5 rounded-xl bg-cream-surface border border-cream-border flex items-center justify-between text-xs sm:text-sm">
+        <div className="p-3.5 rounded-2xl bg-ivory-warm border border-ivory-border flex items-center justify-between text-xs">
           <div>
-            <span className="font-semibold text-spice-dark block">
-              {items.length} snacks ({totalWeightKg} kg total)
-            </span>
-            <span className="text-[11px] text-brand-700 font-medium">
-              {isWholesaleMode ? 'Wholesale Pricing Applied' : 'Retail Order'}
-            </span>
+            <span className="text-cocoa-muted block">Estimated Total</span>
+            <strong className="text-base text-plum-900 font-display">
+              ₹{totalAmount.toLocaleString('en-IN')}
+            </strong>
           </div>
           <div className="text-right">
-            <span className="font-display font-extrabold text-base text-crimson-900 block">
-              ₹{totalAmount.toLocaleString('en-IN')}*
+            <span className="text-cocoa-muted block">Weight / Items</span>
+            <span className="font-bold text-plum-900">
+              {totalWeightKg} kg • {items.reduce((s, i) => s + i.quantity, 0)} pkgs
             </span>
-            <span className="text-[10px] text-spice-muted">Estimated amount</span>
           </div>
         </div>
 
         {formError && (
-          <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+          <div className="p-3 rounded-xl bg-chilli-50 border border-chilli-200 text-chilli-800 text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{formError}</span>
           </div>
@@ -205,8 +215,8 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
         {/* Inputs */}
         <div className="space-y-3 text-xs sm:text-sm">
           <div>
-            <label className="block font-bold text-spice-dark mb-1" htmlFor="cust-name">
-              Full Name <span className="text-crimson-700">*</span>
+            <label className="block font-bold text-plum-900 mb-1" htmlFor="cust-name">
+              Full Name <span className="text-chilli">*</span>
             </label>
             <input
               id="cust-name"
@@ -216,13 +226,13 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
               placeholder="e.g. Ramesh Kumar"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border focus:border-crimson-700 focus:ring-1 focus:ring-crimson-700 outline-none bg-cream-warm/40 text-spice"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border focus:border-chilli focus:ring-1 focus:ring-chilli outline-none bg-ivory-warm/40 text-cocoa"
             />
           </div>
 
           {isWholesaleMode && (
             <div>
-              <label className="block font-bold text-spice-dark mb-1" htmlFor="biz-name">
+              <label className="block font-bold text-plum-900 mb-1" htmlFor="biz-name">
                 Shop / Kirana / Business Name (Optional)
               </label>
               <input
@@ -231,15 +241,15 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
                 value={businessName}
                 onChange={(e) => setBusinessName(e.target.value)}
                 placeholder="e.g. Sri Venkateshwara Traders"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border focus:border-crimson-700 focus:ring-1 focus:ring-crimson-700 outline-none bg-cream-warm/40 text-spice"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border focus:border-chilli focus:ring-1 focus:ring-chilli outline-none bg-ivory-warm/40 text-cocoa"
               />
             </div>
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block font-bold text-spice-dark mb-1" htmlFor="phone-num">
-                Phone Number <span className="text-crimson-700">*</span>
+              <label className="block font-bold text-plum-900 mb-1" htmlFor="phone-num">
+                Phone Number <span className="text-chilli">*</span>
               </label>
               <input
                 id="phone-num"
@@ -248,13 +258,13 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="e.g. 9876543210"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border focus:border-crimson-700 focus:ring-1 focus:ring-crimson-700 outline-none bg-cream-warm/40 text-spice"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border focus:border-chilli focus:ring-1 focus:ring-chilli outline-none bg-ivory-warm/40 text-cocoa"
               />
             </div>
 
             <div>
-              <label className="block font-bold text-spice-dark mb-1" htmlFor="city-name">
-                Delivery City / Town <span className="text-crimson-700">*</span>
+              <label className="block font-bold text-plum-900 mb-1" htmlFor="city-name">
+                Delivery City / Town <span className="text-chilli">*</span>
               </label>
               <input
                 id="city-name"
@@ -262,14 +272,14 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
                 required
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                placeholder="e.g. Hyderabad / Warangal"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border focus:border-crimson-700 focus:ring-1 focus:ring-crimson-700 outline-none bg-cream-warm/40 text-spice"
+                placeholder="e.g. Paralakhemundi / Berhampur"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border focus:border-chilli focus:ring-1 focus:ring-chilli outline-none bg-ivory-warm/40 text-cocoa"
               />
             </div>
           </div>
 
           <div>
-            <label className="block font-bold text-spice-dark mb-1" htmlFor="delivery-addr">
+            <label className="block font-bold text-plum-900 mb-1" htmlFor="delivery-addr">
               Complete Delivery Address (Optional)
             </label>
             <input
@@ -278,12 +288,12 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
               value={deliveryAddress}
               onChange={(e) => setDeliveryAddress(e.target.value)}
               placeholder="Shop No., Street, Landmark, PIN code"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-cream-border focus:border-crimson-700 focus:ring-1 focus:ring-crimson-700 outline-none bg-cream-warm/40 text-spice"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-ivory-border focus:border-chilli focus:ring-1 focus:ring-chilli outline-none bg-ivory-warm/40 text-cocoa"
             />
           </div>
 
           <div>
-            <label className="block font-bold text-spice-dark mb-1" htmlFor="order-notes">
+            <label className="block font-bold text-plum-900 mb-1" htmlFor="order-notes">
               Special Transport Instructions / Notes
             </label>
             <textarea
@@ -292,22 +302,22 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. Need dispatch by Friday; prefer lorry transport"
-              className="w-full px-3.5 py-2 rounded-xl border border-cream-border focus:border-crimson-700 focus:ring-1 focus:ring-crimson-700 outline-none bg-cream-warm/40 text-spice resize-none"
+              className="w-full px-3.5 py-2 rounded-xl border border-ivory-border focus:border-chilli focus:ring-1 focus:ring-chilli outline-none bg-ivory-warm/40 text-cocoa resize-none"
             />
           </div>
         </div>
 
         {/* Notice regarding order confirmation */}
-        <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-[11px] leading-relaxed">
-          <strong>Important Note:</strong> Clicking below records your request and generates a structured quotation on WhatsApp. The order is confirmed only after stock and delivery verification with Sri Balaji.
-        </div>
+        <p className="text-[11px] text-cocoa-muted leading-relaxed">
+          ⚡ Clicking submit will open your WhatsApp application with an itemized, pre-calculated message sent to Sri Balaji management (+91 98617 89602).
+        </p>
 
-        {/* Buttons */}
+        {/* Actions */}
         <div className="pt-2 flex items-center justify-end gap-3">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl border border-cream-border text-spice font-semibold hover:bg-cream-surface transition-colors text-xs sm:text-sm"
+            className="px-4 py-2.5 rounded-xl text-xs font-bold text-cocoa hover:bg-stone-100 transition-colors"
           >
             Cancel
           </button>
@@ -315,10 +325,10 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
           <button
             type="submit"
             disabled={submitting}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold transition-all shadow-md text-xs sm:text-sm disabled:opacity-50"
+            className="px-6 py-3 rounded-2xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-sm transition-all active:scale-95"
           >
             <WhatsAppIcon className="w-4 h-4 text-white" variant="white" />
-            <span>{submitting ? 'Preparing Quotation...' : 'Send Enquiry to WhatsApp'}</span>
+            <span>Send to WhatsApp</span>
           </button>
         </div>
 

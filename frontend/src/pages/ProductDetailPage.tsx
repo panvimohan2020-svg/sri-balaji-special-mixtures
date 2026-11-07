@@ -25,6 +25,7 @@ import { useNotificationStore } from '../store/useNotificationStore';
 import { generateSingleProductInquiryUrl } from '../utils/whatsapp';
 import { ProductCard } from '../components/common/ProductCard';
 import { ProductQRModal } from '../components/common/ProductQRModal';
+import { ReviewsSection } from '../components/common/ReviewsSection';
 
 export const ProductDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -58,9 +59,9 @@ export const ProductDetailPage: React.FC = () => {
   if (!product) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
-        <h2 className="font-display font-bold text-2xl text-crimson-900">Snack Not Found</h2>
-        <p className="text-sm text-spice-muted">The snack product you are looking for does not exist or is currently unavailable.</p>
-        <Link to="/catalog" className="inline-block px-5 py-2.5 bg-crimson-800 text-cream-warm rounded-xl font-bold text-sm">
+        <h2 className="font-display font-bold text-2xl text-plum-900">Snack Not Found</h2>
+        <p className="text-sm text-cocoa-muted">The snack product you are looking for does not exist or is currently unavailable.</p>
+        <Link to="/catalog" className="inline-block px-5 py-2.5 bg-chilli text-white rounded-xl font-bold text-sm">
           Browse All Snacks
         </Link>
       </div>
@@ -110,16 +111,16 @@ export const ProductDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
       
       {/* Breadcrumb Navigation & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-cream-border text-xs">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-spice-muted">
-          <Link to="/" className="hover:text-crimson-800 transition-colors">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5 text-cream-border" />
-          <Link to="/catalog" className="hover:text-crimson-800 transition-colors">Snacks</Link>
-          <ChevronRight className="w-3.5 h-3.5 text-cream-border" />
-          <span className="font-bold text-spice-dark truncate max-w-[200px]">{product.name}</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-ivory-border text-xs">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-cocoa-muted">
+          <Link to="/" className="hover:text-chilli transition-colors">Home</Link>
+          <ChevronRight className="w-3.5 h-3.5 text-stone-300" />
+          <Link to="/catalog" className="hover:text-chilli transition-colors">Snacks</Link>
+          <ChevronRight className="w-3.5 h-3.5 text-stone-300" />
+          <span className="font-bold text-plum-900 truncate max-w-[200px]">{product.name}</span>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -130,8 +131,8 @@ export const ProductDetailPage: React.FC = () => {
             aria-label={isFavorited ? "Remove from wishlist" : "Save to wishlist"}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border transition-all text-xs font-bold ${
               isFavorited
-                ? 'bg-crimson-800 text-white border-crimson-900 shadow-sm'
-                : 'bg-white hover:bg-cream-warm text-spice border-cream-border'
+                ? 'bg-chilli text-white border-chilli shadow-sm'
+                : 'bg-white hover:bg-peach-50 text-cocoa border-ivory-border'
             }`}
           >
             <Heart className={`w-3.5 h-3.5 ${isFavorited ? 'fill-white' : ''}`} />
@@ -142,9 +143,9 @@ export const ProductDetailPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsQRModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-cream-border bg-white hover:bg-cream-warm text-xs font-bold text-spice transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-ivory-border bg-white hover:bg-peach-50 text-xs font-bold text-cocoa transition-colors shadow-xs"
           >
-            <QrCode className="w-3.5 h-3.5 text-brand-700" />
+            <QrCode className="w-3.5 h-3.5 text-plum-900" />
             <span>Packaging QR</span>
           </button>
         </div>
@@ -153,36 +154,36 @@ export const ProductDetailPage: React.FC = () => {
       {/* Main Product Showcase */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         
-        {/* Left: Large Product Image Gallery */}
+        {/* Left: Large 1:1 Product Image Gallery */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="relative aspect-square rounded-3xl overflow-hidden bg-cream-surface border-2 border-cream-border shadow-elevated">
+          <div className="relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-b from-ivory-warm to-white border-2 border-ivory-border shadow-elevated p-6 flex items-center justify-center">
             <img
               src={product.images?.[0]?.image_url || '/images/products/onion-mixture.png'}
               alt={product.name}
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-contain"
             />
             
             {/* Vegetarian Badge Overlay */}
-            <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-md border border-cream-border flex items-center gap-2">
+            <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-xs border border-ivory-border flex items-center gap-2">
               <div className="w-5 h-5 rounded border border-veg bg-white flex items-center justify-center">
                 <span className="w-2.5 h-2.5 rounded-full bg-veg"></span>
               </div>
-              <span className="text-xs font-bold text-spice-dark">100% Pure Vegetarian</span>
+              <span className="text-xs font-bold text-plum-900">100% Pure Vegetarian</span>
             </div>
 
             {/* Spice Level */}
-            <div className="absolute top-4 right-4 bg-spice-dark/85 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-md text-white text-xs font-bold flex items-center gap-1.5">
-              <Flame className="w-4 h-4 text-amber-400" />
+            <div className="absolute top-4 right-4 bg-plum-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-xs text-white text-xs font-bold flex items-center gap-1.5">
+              <Flame className="w-4 h-4 text-turmeric" />
               <span>{product.spice_level} Spice</span>
             </div>
 
             {/* Authentic Heritage Badge */}
-            <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-2xl border border-cream-border flex items-center justify-between text-xs">
+            <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-ivory-border flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-gold-600" />
-                <span className="font-bold text-spice-dark">Fresh Batch Fried Daily</span>
+                <Sparkles className="w-4 h-4 text-turmeric" />
+                <span className="font-bold text-plum-900">Fresh Batch Fried Daily</span>
               </div>
-              <span className="text-spice-muted font-semibold">Paralakhemundi, Odisha</span>
+              <span className="text-cocoa-muted font-semibold">Paralakhemundi, Odisha</span>
             </div>
           </div>
         </div>
@@ -191,60 +192,79 @@ export const ProductDetailPage: React.FC = () => {
         <div className="lg:col-span-6 space-y-6">
           
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-700">
+            <span className="text-xs font-bold uppercase tracking-widest text-chilli">
               {product.category?.name || 'Fresh Savouries'}
             </span>
-            <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-spice-dark mt-1">
+            <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-plum-900 mt-1">
               {product.name}
             </h1>
-            <p className="mt-3 text-sm sm:text-base text-spice-muted leading-relaxed">
+            <p className="mt-3 text-sm sm:text-base text-cocoa-muted leading-relaxed">
               {product.description}
             </p>
           </div>
 
-          {/* Taste Profiles */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold text-spice-muted">Flavour Profile:</span>
-            {product.taste_profiles.map((taste) => (
-              <span key={taste} className="px-3 py-1 rounded-full bg-cream-surface border border-cream-border text-xs font-bold text-spice-dark">
-                {taste}
-              </span>
-            ))}
-          </div>
+          {/* Pricing & Tier Switcher Notice */}
+          <div className="p-4 rounded-2xl bg-ivory-warm border border-ivory-border space-y-2">
+            <div className="flex items-baseline justify-between">
+              <div>
+                <span className="text-xs text-cocoa-muted block">
+                  {isWholesaleMode ? 'Wholesale Price per Pack (B2B)' : 'Standard Retail Price'}
+                </span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-display font-black text-plum-900">
+                    ₹{currentPrice}
+                  </span>
+                  <span className="text-xs text-cocoa-muted font-medium">
+                    / {activeVariant.weight_label}
+                  </span>
+                  {isWholesaleMode && activeVariant.retail_price && (
+                    <span className="text-xs text-stone-400 line-through">
+                      MRP: ₹{activeVariant.retail_price}
+                    </span>
+                  )}
+                </div>
+              </div>
 
-          {/* Multi-Weight Variant Selector */}
-          <div className="p-5 rounded-3xl bg-white border border-cream-border shadow-soft space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-spice-dark uppercase tracking-wider">
-                Select Package Weight:
-              </span>
               {isWholesaleMode && (
-                <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-md border border-amber-200">
-                  Minimum Order: {product.minimum_order_qty} Packages
+                <span className="px-3 py-1 rounded-full bg-turmeric text-plum-950 text-xs font-black uppercase">
+                  Wholesale Active
                 </span>
               )}
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {product.variants.map((variant) => {
-                const isSelected = activeVariant.id === variant.id;
-                const price = isWholesaleMode ? variant.wholesale_price : variant.retail_price;
+            {isWholesaleMode && (
+              <p className="text-xs text-pista-800 font-semibold pt-1 border-t border-ivory-border">
+                ✓ Minimum Order Quantity: <strong>{product.minimum_order_qty} packages</strong>. Bulk cartons packed with moisture seals.
+              </p>
+            )}
+          </div>
+
+          {/* Package Weight Selection */}
+          <div>
+            <label className="text-xs font-bold text-plum-900 uppercase tracking-wider block mb-2">
+              Select Package Weight:
+            </label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              {product.variants.map((v) => {
+                const isSelected = activeVariant.id === v.id;
+                const vPrice = isWholesaleMode
+                  ? (v.wholesale_price || v.retail_price)
+                  : (v.retail_price || v.wholesale_price);
+
                 return (
                   <button
-                    key={variant.id}
+                    key={v.id}
                     type="button"
-                    onClick={() => {
-                      setSelectedVariant(variant);
-                    }}
-                    className={`p-3 rounded-2xl text-center border transition-all ${
+                    onClick={() => setSelectedVariant(v)}
+                    className={`p-3 rounded-2xl border text-left transition-all ${
                       isSelected
-                        ? 'bg-crimson-800 text-cream-warm border-crimson-900 shadow-sm font-bold'
-                        : 'bg-cream-warm text-spice border-cream-border hover:bg-cream-surface hover:border-gold-300'
+                        ? 'bg-plum-900 text-white border-plum-900 shadow-sm'
+                        : 'bg-white hover:bg-peach-50 text-cocoa border-ivory-border'
                     }`}
                   >
-                    <span className="block text-sm font-bold">{variant.weight_label}</span>
-                    <span className="block text-xs font-semibold opacity-90 mt-0.5">
-                      ₹{price}
+                    <span className="font-bold text-sm block">{v.weight_label}</span>
+                    <span className={`text-xs mt-0.5 block ${isSelected ? 'text-turmeric' : 'text-cocoa-muted'}`}>
+                      ₹{vPrice} {isWholesaleMode ? 'b2b' : 'retail'}
                     </span>
                   </button>
                 );
@@ -252,154 +272,96 @@ export const ProductDetailPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Pricing & Quantity Stepper */}
-          <div className="p-5 rounded-3xl bg-cream-surface border border-cream-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <span className="text-xs text-spice-muted uppercase font-bold block">
-                {isWholesaleMode ? 'Wholesale Rate / Package' : 'Retail Price'}
-              </span>
-              <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="font-display font-extrabold text-3xl text-crimson-900">
-                  ₹{currentPrice}
-                </span>
-                {isWholesaleMode && activeVariant.retail_price && (
-                  <span className="text-sm text-spice-muted line-through">
-                    ₹{activeVariant.retail_price}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Stepper */}
+          {/* Quantity Selector & Add to Bag CTA */}
+          <div className="pt-2 space-y-3">
             <div className="flex items-center gap-3">
-              <span className="text-xs font-bold text-spice-dark">Quantity:</span>
-              <div className="flex items-center bg-white rounded-xl border border-cream-border overflow-hidden shadow-xs">
+              <div className="flex items-center border border-stone-300 rounded-2xl bg-white overflow-hidden p-1">
                 <button
                   type="button"
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  onClick={() => setQuantity(Math.max(isWholesaleMode ? product.minimum_order_qty : 1, quantity - 1))}
+                  className="w-10 h-10 flex items-center justify-center text-cocoa hover:bg-stone-100 rounded-xl font-bold"
                   aria-label="Decrease quantity"
-                  className="p-2.5 text-spice-dark hover:bg-cream-surface transition-colors"
                 >
-                  <Minus className="w-3.5 h-3.5" />
+                  <Minus className="w-4 h-4" />
                 </button>
-                <span className="px-4 text-sm font-bold text-spice-dark min-w-[2.5rem] text-center">
+                <span className="w-12 text-center font-bold text-base text-plum-900">
                   {quantity}
                 </span>
                 <button
                   type="button"
                   onClick={() => setQuantity(quantity + 1)}
+                  className="w-10 h-10 flex items-center justify-center text-cocoa hover:bg-stone-100 rounded-xl font-bold"
                   aria-label="Increase quantity"
-                  className="p-2.5 text-spice-dark hover:bg-cream-surface transition-colors"
                 >
-                  <Plus className="w-3.5 h-3.5" />
+                  <Plus className="w-4 h-4" />
                 </button>
               </div>
+
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                disabled={added || !activeVariant.is_in_stock}
+                className={`flex-1 py-4 px-6 rounded-2xl font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-chilli active:scale-95 transition-all ${
+                  added
+                    ? 'bg-pista-600 text-white'
+                    : 'bg-chilli hover:bg-chilli-600 text-white'
+                }`}
+              >
+                {added ? <Check className="w-5 h-5" /> : <ShoppingBag className="w-5 h-5" />}
+                <span>{added ? 'Added to Bag!' : `Add to Bag • ₹${currentPrice * quantity}`}</span>
+              </button>
             </div>
-          </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-3">
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              className={`flex-1 w-full py-4 px-6 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-elevated transition-all ${
-                added
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-crimson-800 hover:bg-crimson-900 text-cream-warm hover:shadow-glow'
-              }`}
-            >
-              {added ? (
-                <>
-                  <Check className="w-5 h-5" />
-                  <span>Added to Cart!</span>
-                </>
-              ) : (
-                <>
-                  <ShoppingBag className="w-5 h-5 text-gold-300" />
-                  <span>Add {quantity} to Cart (₹{currentPrice * quantity})</span>
-                </>
-              )}
-            </button>
-
+            {/* Direct WhatsApp Action */}
             <button
               type="button"
               onClick={handleWhatsAppEnquiry}
-              className="w-full sm:w-auto py-4 px-6 rounded-2xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white shadow-soft transition-all"
+              className="w-full py-3.5 px-4 rounded-2xl bg-pista-50 hover:bg-pista-100 border border-pista-300 text-pista-800 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
             >
-              <WhatsAppIcon className="w-5 h-5 text-white" variant="white" />
-              <span>WhatsApp Quote</span>
+              <WhatsAppIcon className="w-4 h-4" variant="green" />
+              <span>Ask Questions or Place Order via WhatsApp</span>
             </button>
           </div>
 
-          {/* Transparency Accordion / Info Cards */}
-          <div className="space-y-3 pt-4 border-t border-cream-border text-xs sm:text-sm">
-            {product.ingredients && (
-              <div className="p-4 rounded-2xl bg-white border border-cream-border space-y-1">
-                <span className="font-bold text-spice-dark flex items-center gap-1.5">
-                  <Info className="w-4 h-4 text-brand-700" />
-                  <span>Verified Ingredients</span>
-                </span>
-                <p className="text-spice-muted leading-relaxed pl-5">
-                  {product.ingredients}
-                </p>
-              </div>
-            )}
-
-            {product.allergen_info && (
-              <div className="p-4 rounded-2xl bg-white border border-cream-border space-y-1">
-                <span className="font-bold text-spice-dark flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-amber-700" />
-                  <span>Allergen Advisory</span>
-                </span>
-                <p className="text-spice-muted leading-relaxed pl-5">
-                  {product.allergen_info}
-                </p>
-              </div>
-            )}
-
-            {product.packaging_info && (
-              <div className="p-4 rounded-2xl bg-white border border-cream-border space-y-1">
-                <span className="font-bold text-spice-dark flex items-center gap-1.5">
-                  <Package className="w-4 h-4 text-emerald-700" />
-                  <span>Packaging &amp; Shelf Life</span>
-                </span>
-                <p className="text-spice-muted leading-relaxed pl-5">
-                  {product.packaging_info}
-                </p>
-              </div>
-            )}
+          {/* Key Facts Sheet */}
+          <div className="border-t border-ivory-border pt-6 grid grid-cols-2 gap-4 text-xs text-cocoa-muted">
+            <div>
+              <strong className="text-plum-900 block font-bold mb-0.5">Ingredients &amp; Blend:</strong>
+              <span>{product.ingredients || 'Gram flour (Besan), peanuts, curry leaves, cold-pressed oil, salt, authentic Indian spices.'}</span>
+            </div>
+            <div>
+              <strong className="text-plum-900 block font-bold mb-0.5">Storage &amp; Shelf Life:</strong>
+              <span>Store in an airtight container away from moisture. Stays crispy for 90 days.</span>
+            </div>
           </div>
 
         </div>
 
       </div>
 
-      {/* Related Products */}
-      {relatedProducts.length > 0 && (
-        <section className="pt-12 border-t border-cream-border space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-700 block">
-                More from {product.category?.name || 'Sri Balaji'}
-              </span>
-              <h2 className="font-display font-extrabold text-2xl text-spice-dark mt-0.5">
-                Complementary Crispy Savouries
-              </h2>
-            </div>
-            <Link to="/catalog" className="text-crimson-800 font-bold text-sm hover:underline">
-              View All Catalogue →
-            </Link>
-          </div>
+      {/* CUSTOMER REVIEWS & RATINGS SECTION */}
+      <ReviewsSection
+        productId={product.id}
+        productName={product.name}
+        title={`Reviews for ${product.name}`}
+        subtitle="Read real crunch and taste feedback from customers who have savoured this exact batch."
+      />
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {relatedProducts.map(rel => (
-              <ProductCard key={rel.id} product={rel} />
+      {/* Related Savouries */}
+      {relatedProducts.length > 0 && (
+        <section className="pt-12 border-t border-ivory-border">
+          <h3 className="font-display font-extrabold text-2xl text-plum-900 mb-6">
+            You May Also Enjoy
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {relatedProducts.map(rp => (
+              <ProductCard key={rp.id} product={rp} cardStyle="standard" />
             ))}
           </div>
         </section>
       )}
 
-      {/* Product QR Code Modal */}
+      {/* QR Code Packaging Modal */}
       <ProductQRModal
         product={product}
         isOpen={isQRModalOpen}

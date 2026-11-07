@@ -17,14 +17,14 @@ export const FloatingWhatsAppButton: React.FC = () => {
     >
       {/* Tooltip on Desktop / Hover */}
       <div 
-        className={`hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-spice-dark/95 backdrop-blur-md text-white text-xs font-semibold shadow-elevated border border-gold-400/30 transition-all duration-300 pointer-events-none transform ${
+        className={`hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-plum-900/95 backdrop-blur-md text-white text-xs font-semibold shadow-plum border border-turmeric/30 transition-all duration-300 pointer-events-none transform ${
           isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2'
         }`}
       >
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <span className="w-2 h-2 rounded-full bg-turmeric animate-pulse" />
         <div>
-          <span className="block font-bold text-gold-300">Wholesale Desk Active</span>
-          <span className="text-[11px] text-cream-surface/80">Direct Line: +91 98617 89602</span>
+          <span className="block font-bold text-turmeric">Wholesale Desk Active</span>
+          <span className="text-[11px] text-ivory/80">Direct Line: +91 98617 89602</span>
         </div>
       </div>
 
@@ -42,11 +42,10 @@ export const FloatingWhatsAppButton: React.FC = () => {
         <WhatsAppIcon className="w-7 h-7 text-white" variant="white" />
 
         {/* Small verified badge pip */}
-        <span className="absolute -top-1 -right-1 w-4 h-4 bg-gold-400 text-spice-dark font-extrabold text-[9px] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+        <span className="absolute -top-1 -right-1 w-4 h-4 bg-turmeric text-plum-950 font-black text-[9px] rounded-full flex items-center justify-center border-2 border-white shadow-xs">
           ✓
         </span>
       </a>
     </div>
   );
 };
-
