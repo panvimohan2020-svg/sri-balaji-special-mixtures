@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Play, 
@@ -14,13 +14,90 @@ import {
 } from 'lucide-react';
 
 export const CommercialSpotlight: React.FC = () => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [hasEnded, setHasEnded] = useState<boolean>(false);
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
+
+  // Auto-play video and auto-turn on volume when user scrolls down to this section
+  useEffect(() => {
+    const currentVideo = videoRef.current;
+    if (!currentVideo) return;
+
+    // Track user gesture to satisfy browser autoplay audio policy
+    let hasInteracted = false;
+    const registerInteraction = () => {
+      hasInteracted = true;
+    };
+
+    window.addEventListener('scroll', registerInteraction, { passive: true });
+    window.addEventListener('touchstart', registerInteraction, { passive: true });
+    window.addEventListener('pointerdown', registerInteraction, { passive: true });
+    window.addEventListener('keydown', registerInteraction, { passive: true });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // User scrolled down to the commercial section!
+            // Attempt auto-play with audio ON
+            currentVideo.muted = false;
+            const playPromise = currentVideo.play();
+
+            if (playPromise !== undefined) {
+              playPromise
+                .then(() => {
+                  setIsPlaying(true);
+                  setIsMuted(false);
+                  setHasEnded(false);
+                })
+                .catch(() => {
+                  // If browser blocked unmuted autoplay before full interaction, start muted and immediately unmute on scroll/touch
+                  currentVideo.muted = true;
+                  currentVideo.play().then(() => {
+                    setIsPlaying(true);
+                    setIsMuted(true);
+                  }).catch(() => {});
+
+                  const unlockAudio = () => {
+                    currentVideo.muted = false;
+                    setIsMuted(false);
+                    window.removeEventListener('scroll', unlockAudio);
+                    window.removeEventListener('touchstart', unlockAudio);
+                    window.removeEventListener('click', unlockAudio);
+                  };
+
+                  window.addEventListener('scroll', unlockAudio, { passive: true, once: true });
+                  window.addEventListener('touchstart', unlockAudio, { passive: true, once: true });
+                  window.addEventListener('click', unlockAudio, { passive: true, once: true });
+                });
+            }
+          } else {
+            // User scrolled away: pause to avoid audio overlapping other content
+            currentVideo.pause();
+            setIsPlaying(false);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', registerInteraction);
+      window.removeEventListener('touchstart', registerInteraction);
+      window.removeEventListener('pointerdown', registerInteraction);
+      window.removeEventListener('keydown', registerInteraction);
+    };
+  }, []);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -49,13 +126,18 @@ export const CommercialSpotlight: React.FC = () => {
   const handleReplay = () => {
     if (!videoRef.current) return;
     videoRef.current.currentTime = 0;
+    videoRef.current.muted = false;
+    setIsMuted(false);
     videoRef.current.play();
     setIsPlaying(true);
     setHasEnded(false);
   };
 
   return (
-    <section className="relative overflow-hidden py-12 sm:py-16 bg-gradient-to-br from-plum-950 via-emerald-950 to-plum-900 text-white rounded-3xl border border-gold/30 shadow-2xl mx-4 sm:mx-6 lg:mx-8">
+    <section 
+      ref={containerRef}
+      className="relative overflow-hidden py-12 sm:py-16 bg-gradient-to-br from-plum-950 via-emerald-950 to-plum-900 text-white rounded-3xl border border-gold/30 shadow-2xl mx-4 sm:mx-6 lg:mx-8"
+    >
       {/* Background Decorative Gold Ambient Ornaments with Animations */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-turmeric/15 rounded-full blur-3xl pointer-events-none animate-sun-glow" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none animate-emerald-mist" />
@@ -192,7 +274,6 @@ export const CommercialSpotlight: React.FC = () => {
                   ref={videoRef}
                   src="/videos/sri-balaji-commercial.mp4"
                   playsInline
-                  autoPlay
                   loop={false}
                   muted={isMuted}
                   onEnded={handleVideoEnded}
@@ -200,24 +281,37 @@ export const CommercialSpotlight: React.FC = () => {
                   onClick={togglePlay}
                 />
 
-                {/* Floating Top Controls */}
+                {/* Floating Top Controls: Animated Sound Indicator & Status */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-auto">
                   <div className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] font-bold text-turmeric-300">
                     Sri Balaji 15s Commercial
                   </div>
 
+                  {/* Auto-Volume Button with Equalizer Waveform */}
                   <button
                     onClick={toggleMute}
-                    aria-label={isMuted ? 'Unmute video' : 'Mute video'}
-                    className="p-2 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/20 text-white transition-all transform active:scale-95"
+                    aria-label={isMuted ? 'Turn on sound' : 'Mute sound'}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-full backdrop-blur-md border transition-all transform active:scale-95 shadow-md ${
+                      !isMuted 
+                        ? 'bg-emerald-900/85 hover:bg-emerald-800 border-turmeric text-turmeric-200' 
+                        : 'bg-black/60 hover:bg-black/80 border-white/20 text-white'
+                    }`}
                   >
-                    {isMuted ? (
-                      <div className="flex items-center gap-1 text-[10px] font-bold px-1 text-turmeric-300">
-                        <VolumeX className="w-3.5 h-3.5 text-white" />
-                        <span>Tap Sound</span>
-                      </div>
+                    {!isMuted ? (
+                      <>
+                        <div className="flex items-center gap-0.5 h-3">
+                          <span className="w-0.5 h-3 bg-turmeric rounded-full animate-bounce [animation-duration:0.6s]" />
+                          <span className="w-0.5 h-2 bg-turmeric-300 rounded-full animate-bounce [animation-duration:0.8s] [animation-delay:0.2s]" />
+                          <span className="w-0.5 h-3.5 bg-turmeric-200 rounded-full animate-bounce [animation-duration:0.5s] [animation-delay:0.4s]" />
+                        </div>
+                        <Volume2 className="w-3.5 h-3.5 text-turmeric" />
+                        <span className="text-[10px] font-bold tracking-wide">Sound ON</span>
+                      </>
                     ) : (
-                      <Volume2 className="w-4 h-4 text-turmeric-400" />
+                      <>
+                        <VolumeX className="w-3.5 h-3.5 text-white" />
+                        <span className="text-[10px] font-bold text-turmeric-300 tracking-wide">Tap Sound</span>
+                      </>
                     )}
                   </button>
                 </div>
@@ -301,4 +395,3 @@ export const CommercialSpotlight: React.FC = () => {
     </section>
   );
 };
-
