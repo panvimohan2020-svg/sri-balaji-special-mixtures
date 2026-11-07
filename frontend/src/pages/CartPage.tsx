@@ -5,7 +5,6 @@ import {
   Trash2, 
   Plus, 
   Minus, 
-  MessageCircle, 
   ArrowRight, 
   Store, 
   ShieldCheck, 
@@ -14,6 +13,7 @@ import {
   Clock,
   History
 } from 'lucide-react';
+import { WhatsAppIcon } from '../components/common/WhatsAppIcon';
 import { useCartStore } from '../store/useCartStore';
 import { WhatsAppCheckoutModal } from '../components/cart/WhatsAppCheckoutModal';
 import type { CartItem } from '../types';
@@ -355,9 +355,9 @@ export const CartPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsCheckoutModalOpen(true)}
-                className="w-full py-4 px-6 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-base flex items-center justify-center gap-2 shadow-elevated transition-all transform hover:-translate-y-0.5"
+                className="w-full py-4 px-6 rounded-2xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-base flex items-center justify-center gap-2 shadow-elevated transition-all transform hover:-translate-y-0.5"
               >
-                <MessageCircle className="w-5 h-5 text-white" />
+                <WhatsAppIcon className="w-5 h-5 text-white" variant="white" />
                 <span>{isWholesaleMode ? 'Submit Wholesale Enquiry' : 'Order on WhatsApp'}</span>
               </button>
 

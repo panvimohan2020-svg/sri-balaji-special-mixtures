@@ -1,23 +1,72 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-    <meta name="theme-color" content="#8B1E1E" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Sri Balaji" />
-    <meta name="description" content="Sri Balaji – Authentic South Indian wholesale snacks, premium crispy mixtures, potato chips, and traditional savouries. Direct bulk pricing & fresh batches." />
-    
-    <!-- Preconnect fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <title>Sri Balaji – Premium Wholesale Snacks | Fresh &amp; Crispy</title>
-  </head>
-  <body class="bg-cream text-spice antialiased selection:bg-brand-200 selection:text-spice-dark">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="theme-color" content="#7A1616" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Sri Balaji" />
+  
+  <title>Sri Balaji – Premium Wholesale Snacks &amp; Special Mixtures | Paralakhemundi</title>
+  
+  <meta name="description"
+    content="Sri Balaji – 30 years of authentic South Indian &amp; Odia snack mastery. Handcrafted Onion Mixture, Chuda Mixture, Kar Kar Murrukulu, Peanuts Pakodi &amp; wholesale savouries in Paralakhemundi, Odisha." />
+  <meta name="keywords"
+    content="Sri Balaji snacks, special mixtures, wholesale snacks Odisha, Paralakhemundi snacks, Kar Kar Murrukulu, Onion Mixture, Chuda Mixture, Peanuts Pakodi, Kirana wholesale" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sri Balaji – Premium Wholesale Snacks &amp; Special Mixtures" />
+  <meta property="og:description" content="Taste the Tradition. 30 years of authentic snack-making in Paralakhemundi, Odisha. Retail &amp; B2B wholesale rates." />
+  <meta property="og:image" content="/images/brand/master-banner.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sri Balaji – Premium Wholesale Snacks &amp; Special Mixtures" />
+  <meta name="twitter:description" content="Authentic taste, personally guaranteed by Adari Krishna Rao &amp; Adari Dilleshwar Rao." />
+  <meta name="twitter:image" content="/images/brand/master-banner.png" />
+
+  <!-- Preconnect Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- LocalBusiness Schema (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodEstablishment",
+    "name": "Sri Balaji Special Mixtures",
+    "image": "/images/brand/master-banner.png",
+    "telephone": ["+919437135342", "+917735333542"],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Gandhi School Road, Near Post Office",
+      "addressLocality": "Paralakhemundi",
+      "addressRegion": "Odisha",
+      "postalCode": "761200",
+      "addressCountry": "IN"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "Adari Krishna Rao"
+    },
+    "employee": {
+      "@type": "Person",
+      "name": "Adari Dilleshwar Rao"
+    },
+    "servesCuisine": "Indian Savoury Snacks, Traditional Mixtures",
+    "priceRange": "₹₹",
+    "url": "http://localhost:5173"
+  }
+  </script>
+</head>
+
+<body class="bg-cream text-spice antialiased selection:bg-brand-200 selection:text-spice-dark">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

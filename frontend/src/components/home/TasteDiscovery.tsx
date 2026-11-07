@@ -14,9 +14,9 @@ export const TasteDiscovery: React.FC<TasteDiscoveryProps> = ({ products }) => {
     { label: 'All Savouries', value: 'All' },
     { label: '🔥 Fiery & Spicy', value: 'Spicy' },
     { label: '✨ Ultra Crunchy', value: 'Crunchy' },
-    { label: '🏛️ Traditional South Indian', value: 'Traditional' },
-    { label: '🍃 Mild & Crispy', value: 'Mild' },
-    { label: '🧂 Hand-Salted', value: 'Salty' },
+    { label: '🍯 Sweet & Spicy', value: 'Sweet & Spicy' },
+    { label: '🏛️ Traditional Odia / South', value: 'Traditional' },
+    { label: '🍃 Light & Roasted', value: 'Light' },
     { label: '⭐ Bestsellers', value: 'Bestseller' },
   ];
 

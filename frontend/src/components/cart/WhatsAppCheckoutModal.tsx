@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { MessageCircle, X, AlertCircle } from 'lucide-react';
+import { X, AlertCircle } from 'lucide-react';
+import { WhatsAppIcon } from '../common/WhatsAppIcon';
 import { useCartStore } from '../../store/useCartStore';
 import { initialBusinessSettings } from '../../data/initialData';
 import { generateWhatsAppOrderUrl } from '../../utils/whatsapp';
@@ -145,13 +146,13 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
       ref={dialogRef}
       onClose={onClose}
       aria-labelledby="checkout-dialog-title"
-      className="p-0 rounded-2xl bg-white shadow-elevated border border-cream-border text-spice max-w-lg w-[92vw] sm:w-full overflow-hidden m-auto"
+      className="p-0 rounded-3xl bg-white shadow-elevated border-2 border-gold-400/40 text-spice max-w-lg w-[92vw] sm:w-full overflow-hidden m-auto backdrop:bg-spice-dark/70 backdrop:backdrop-blur-sm"
     >
       {/* Header */}
       <div className="bg-gradient-to-r from-crimson-800 to-crimson-900 text-cream-warm p-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gold-500/20 border border-gold-400/40 flex items-center justify-center">
-            <MessageCircle className="w-5 h-5 text-gold-300" />
+          <div className="w-9 h-9 rounded-xl bg-[#25D366] flex items-center justify-center shadow-xs">
+            <WhatsAppIcon className="w-5 h-5 text-white" variant="white" />
           </div>
           <div>
             <h2 id="checkout-dialog-title" className="font-display font-bold text-lg text-white">
@@ -314,9 +315,9 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
           <button
             type="submit"
             disabled={submitting}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold transition-all shadow-md text-xs sm:text-sm disabled:opacity-50"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold transition-all shadow-md text-xs sm:text-sm disabled:opacity-50"
           >
-            <MessageCircle className="w-4 h-4" />
+            <WhatsAppIcon className="w-4 h-4 text-white" variant="white" />
             <span>{submitting ? 'Preparing Quotation...' : 'Send Enquiry to WhatsApp'}</span>
           </button>
         </div>

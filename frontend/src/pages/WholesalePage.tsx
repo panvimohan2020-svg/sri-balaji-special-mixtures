@@ -3,13 +3,13 @@ import {
   Store, 
   Truck, 
   ShieldCheck, 
-  MessageCircle, 
   Send,
   Building2,
   PackageCheck,
   CheckCircle2,
   Phone
 } from 'lucide-react';
+import { WhatsAppIcon } from '../components/common/WhatsAppIcon';
 import { InstagramIcon } from '../components/common/InstagramIcon';
 import { initialBusinessSettings } from '../data/initialData';
 
@@ -248,11 +248,11 @@ export const WholesalePage: React.FC = () => {
                 href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I am a retailer looking for wholesale snack supply.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold transition-all shadow-sm"
+                className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold transition-all shadow-sm"
               >
-                <MessageCircle className="w-5 h-5 shrink-0" />
+                <WhatsAppIcon className="w-5 h-5 shrink-0 text-white" variant="white" />
                 <div className="text-left">
-                  <span className="block text-xs">WhatsApp Hotline: 9861789602</span>
+                  <span className="block text-xs font-bold">WhatsApp Hotline: 9861789602</span>
                   <span className="block text-[11px] font-normal text-emerald-100">Instant quotation support</span>
                 </div>
               </a>

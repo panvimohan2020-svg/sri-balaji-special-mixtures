@@ -72,7 +72,7 @@ export const ProductQRModal: React.FC<ProductQRModalProps> = ({
       ref={dialogRef}
       onClose={onClose}
       aria-labelledby="qr-dialog-title"
-      className="p-0 rounded-2xl bg-white shadow-elevated border border-cream-border text-spice max-w-sm w-[92vw] overflow-hidden m-auto"
+      className="p-0 rounded-3xl bg-white shadow-elevated border-2 border-gold-400/40 text-spice max-w-sm w-[92vw] overflow-hidden m-auto backdrop:bg-spice-dark/70 backdrop:backdrop-blur-sm"
     >
       {/* Header */}
       <div className="bg-gradient-to-r from-crimson-800 to-crimson-900 text-cream-warm p-4 flex items-center justify-between">

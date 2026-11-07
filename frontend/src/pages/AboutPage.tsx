@@ -7,10 +7,10 @@ import {
   Users, 
   MapPin, 
   Phone, 
-  MessageCircle, 
   Award,
   Sparkles
 } from 'lucide-react';
+import { WhatsAppIcon } from '../components/common/WhatsAppIcon';
 import { InstagramIcon } from '../components/common/InstagramIcon';
 import { initialBusinessSettings } from '../data/initialData';
 
@@ -272,9 +272,9 @@ export const AboutPage: React.FC = () => {
           href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to inquire about wholesale snacks.')}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm shadow-md shrink-0"
+          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md shrink-0 transition-transform hover:scale-105"
         >
-          <MessageCircle className="w-5 h-5" />
+          <WhatsAppIcon className="w-5 h-5 text-white" variant="white" />
           <span>Chat on WhatsApp (9861789602)</span>
         </a>
       </div>

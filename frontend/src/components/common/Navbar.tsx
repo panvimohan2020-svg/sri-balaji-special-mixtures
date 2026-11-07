@@ -2,24 +2,30 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   ShoppingBag, 
-  MessageCircle, 
   Phone, 
   Menu, 
   X, 
   Search, 
-  Store 
+  Store,
+  Heart,
+  Sparkles
 } from 'lucide-react';
+import { AnnouncementBar } from './AnnouncementBar';
+import { WhatsAppIcon } from './WhatsAppIcon';
 import { InstagramIcon } from './InstagramIcon';
-import { useCartStore, type CartState } from '../../store/useCartStore';
+import { useCartStore } from '../../store/useCartStore';
+import { useWishlistStore } from '../../store/useWishlistStore';
 import { initialBusinessSettings } from '../../data/initialData';
 
 export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { isWholesaleMode, toggleWholesaleMode, getItemCount, getTotalWeightKg } = useCartStore();
+  const { getWishlistCount } = useWishlistStore();
   
   const itemCount = getItemCount();
   const totalWeight = getTotalWeightKg();
+  const wishlistCount = getWishlistCount();
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -37,55 +43,8 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 bg-cream-warm/95 backdrop-blur-md border-b border-cream-border transition-all">
-      {/* Top Wholesale Hotline Banner */}
-      <div className="bg-crimson-800 text-cream-warm text-xs sm:text-sm py-1.5 px-4 font-medium">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <span className="bg-gold-500 text-spice-dark text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">
-              {initialBusinessSettings.years_in_business} Years of Heritage
-            </span>
-            <span className="hidden sm:inline font-semibold">
-              "{initialBusinessSettings.tagline}" • Fresh Wholesale Savouries from Paralakhemundi, Odisha
-            </span>
-            <span className="sm:hidden font-semibold">
-              Wholesale Snacks • Paralakhemundi
-            </span>
-          </div>
-          <div className="flex items-center gap-3 sm:gap-4">
-            <a 
-              href="tel:9437135342" 
-              className="flex items-center gap-1.5 hover:text-gold-300 transition-colors"
-              title="Call Sales Office"
-            >
-              <Phone className="w-3.5 h-3.5 text-gold-400" />
-              <span>9437135342</span>
-            </a>
-
-            <a 
-              href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to inquire about wholesale snacks.')}`}
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hidden md:flex items-center gap-1.5 text-gold-300 hover:text-white transition-colors"
-              title="WhatsApp Ordering Hotline"
-            >
-              <MessageCircle className="w-3.5 h-3.5" />
-              <span>WhatsApp: 9861789602</span>
-            </a>
-
-            {initialBusinessSettings.instagram_url && (
-              <a 
-                href={initialBusinessSettings.instagram_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-pink-300 hover:text-pink-100 transition-colors p-0.5"
-                title="Follow @sri_balaji_special_mixtures on Instagram"
-              >
-                <InstagramIcon className="w-3.5 h-3.5" />
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
+      {/* Top Announcement Bar */}
+      <AnnouncementBar />
 
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,14 +52,17 @@ export const Navbar: React.FC = () => {
           
           {/* Brand Identity / Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-crimson-700 to-crimson-900 border-2 border-gold-400 flex items-center justify-center shadow-soft group-hover:scale-105 transition-transform">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-crimson-800 via-crimson-900 to-spice-dark border-2 border-gold-400 flex items-center justify-center shadow-soft group-hover:scale-105 transition-transform">
               <span className="font-display font-bold text-gold-300 text-xl tracking-wider">SB</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-2xl tracking-wide text-crimson-900 leading-tight">
-                SRI BALAJI
-              </span>
-              <span className="text-[11px] font-semibold text-brand-700 uppercase tracking-widest">
+              <div className="flex items-center gap-1.5">
+                <span className="font-display font-extrabold text-2xl tracking-wide text-crimson-900 leading-tight">
+                  SRI BALAJI
+                </span>
+                <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-gold-500" />
+              </div>
+              <span className="text-[11px] font-bold text-brand-700 uppercase tracking-widest">
                 Wholesale Snacks • Paralakhemundi
               </span>
             </div>
@@ -112,13 +74,16 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
+                className={`relative px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${
                   isActive(link.path)
-                    ? 'text-crimson-800 bg-crimson-50 shadow-sm font-bold'
+                    ? 'text-crimson-800 bg-crimson-50 font-bold shadow-xs'
                     : 'text-spice hover:text-crimson-700 hover:bg-cream-surface'
                 }`}
               >
                 {link.name}
+                {isActive(link.path) && (
+                  <span className="absolute bottom-0.5 left-3.5 right-3.5 h-0.5 bg-crimson-800 rounded-full" />
+                )}
               </Link>
             ))}
           </nav>
@@ -129,7 +94,7 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={toggleWholesaleMode}
-              className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${
+              className={`hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border ${
                 isWholesaleMode
                   ? 'bg-amber-100 text-amber-900 border-amber-300 shadow-sm'
                   : 'bg-stone-100 text-stone-700 border-stone-200 hover:bg-stone-200'
@@ -137,7 +102,7 @@ export const Navbar: React.FC = () => {
               title="Click to switch between Wholesale & Retail pricing"
             >
               <Store className="w-3.5 h-3.5 text-amber-700" />
-              <span>{isWholesaleMode ? 'Wholesale Pricing Active' : 'Retail Pricing'}</span>
+              <span>{isWholesaleMode ? 'Wholesale Mode Active' : 'Retail Pricing'}</span>
               <span className={`w-2 h-2 rounded-full ${isWholesaleMode ? 'bg-amber-600 animate-pulse' : 'bg-stone-400'}`} />
             </button>
 
@@ -146,8 +111,24 @@ export const Navbar: React.FC = () => {
               to="/catalog" 
               className="p-2.5 rounded-xl text-spice hover:bg-cream-surface hover:text-crimson-800 transition-colors"
               title="Search Snacks"
+              aria-label="Search snacks catalogue"
             >
               <Search className="w-5 h-5" />
+            </Link>
+
+            {/* Wishlist Icon */}
+            <Link
+              to="/catalog?filter=wishlist"
+              className="relative p-2.5 rounded-xl text-spice hover:bg-cream-surface hover:text-crimson-800 transition-colors"
+              title="View Wishlist / Saved Snacks"
+              aria-label="View saved snacks"
+            >
+              <Heart className="w-5 h-5" />
+              {wishlistCount > 0 && (
+                <span className="absolute top-1 right-1 w-4 h-4 bg-crimson-800 text-white text-[10px] font-extrabold rounded-full flex items-center justify-center shadow-xs">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
 
             {/* Cart / Quotation Trigger */}
@@ -155,6 +136,7 @@ export const Navbar: React.FC = () => {
               to="/cart"
               className="relative flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm transition-all shadow-soft group"
               title="View Cart & Quotation"
+              aria-label="View Cart and order summary"
             >
               <ShoppingBag className="w-5 h-5 text-gold-300 group-hover:scale-110 transition-transform" />
               <div className="hidden sm:flex flex-col text-left">
@@ -162,11 +144,11 @@ export const Navbar: React.FC = () => {
                   {isWholesaleMode ? 'Wholesale Cart' : 'My Cart'}
                 </span>
                 <span className="text-xs font-bold leading-tight">
-                  {itemCount > 0 ? `${itemCount} items (${totalWeight} kg)` : 'Empty'}
+                  {itemCount > 0 ? `${itemCount} pkgs (${totalWeight} kg)` : 'Empty'}
                 </span>
               </div>
               {itemCount > 0 && (
-                <span className="sm:hidden absolute -top-1 -right-1 w-5 h-5 bg-gold-500 text-spice-dark text-xs font-extrabold rounded-full flex items-center justify-center">
+                <span className="sm:hidden absolute -top-1 -right-1 w-5 h-5 bg-gold-500 text-spice-dark text-xs font-extrabold rounded-full flex items-center justify-center shadow-xs">
                   {itemCount}
                 </span>
               )}
@@ -177,7 +159,7 @@ export const Navbar: React.FC = () => {
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2.5 rounded-xl text-spice hover:bg-cream-surface"
-              aria-label="Toggle menu"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -187,18 +169,24 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-cream-border bg-cream-warm px-4 pt-3 pb-6 space-y-3 shadow-elevated animate-in slide-in-from-top-2">
-          <div className="flex items-center justify-between pb-2 border-b border-cream-border">
-            <span className="text-xs font-bold text-spice-muted uppercase tracking-wider">Price Mode</span>
+        <div className="lg:hidden border-t border-cream-border bg-cream-warm px-4 pt-3 pb-6 space-y-4 shadow-elevated animate-in slide-in-from-top-2">
+          {/* Wholesale Mode Toggle in Mobile Drawer */}
+          <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-cream-border">
+            <div className="space-y-0.5">
+              <span className="text-xs font-bold text-spice-dark block">Pricing Tier</span>
+              <span className="text-[11px] text-spice-muted block">
+                {isWholesaleMode ? 'B2B Wholesale (Volume Rates)' : 'Household Retail'}
+              </span>
+            </div>
             <button
               type="button"
               onClick={toggleWholesaleMode}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border transition-colors ${
                 isWholesaleMode ? 'bg-amber-100 text-amber-900 border-amber-300' : 'bg-stone-100 text-stone-700 border-stone-200'
               }`}
             >
               <Store className="w-3.5 h-3.5 text-amber-700" />
-              <span>{isWholesaleMode ? 'Wholesale Rates' : 'Retail Rates'}</span>
+              <span>{isWholesaleMode ? 'Wholesale' : 'Retail'}</span>
             </button>
           </div>
 
@@ -208,7 +196,7 @@ export const Navbar: React.FC = () => {
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-3 py-2.5 rounded-lg text-base font-semibold transition-colors ${
+                className={`px-3 py-2.5 rounded-xl text-base font-semibold transition-colors ${
                   isActive(link.path)
                     ? 'text-crimson-800 bg-crimson-50 font-bold'
                     : 'text-spice hover:bg-cream-surface'
@@ -217,17 +205,29 @@ export const Navbar: React.FC = () => {
                 {link.name}
               </Link>
             ))}
+            <Link
+              to="/catalog?filter=wishlist"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-3 py-2.5 rounded-xl text-base font-semibold text-spice hover:bg-cream-surface flex items-center justify-between"
+            >
+              <span>Saved Wishlist</span>
+              {wishlistCount > 0 && (
+                <span className="px-2 py-0.5 bg-crimson-800 text-white text-xs font-bold rounded-full">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
           </div>
 
-          <div className="pt-2 border-t border-cream-border flex flex-col gap-2">
+          <div className="pt-3 border-t border-cream-border flex flex-col gap-2.5">
             <a
               href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to inquire about wholesale snacks.')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-sm"
+              className="flex items-center justify-center gap-2 w-full py-3 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold rounded-xl shadow-soft"
             >
-              <MessageCircle className="w-5 h-5" />
-              <span>Inquire on WhatsApp (9861789602)</span>
+              <WhatsAppIcon className="w-5 h-5 text-white" variant="white" />
+              <span>WhatsApp Hotline (9861789602)</span>
             </a>
 
             <div className="flex items-center justify-between pt-1 text-xs text-spice-muted">
@@ -239,7 +239,7 @@ export const Navbar: React.FC = () => {
                   rel="noopener noreferrer"
                   className="text-pink-700 font-bold hover:underline flex items-center gap-1"
                 >
-                  <InstagramIcon className="w-3.5 h-3.5" />
+                  <InstagramIcon className="w-3.5 h-3.5" useGradient={true} />
                   <span>Instagram</span>
                 </a>
               )}

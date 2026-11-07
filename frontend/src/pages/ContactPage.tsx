@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { 
   MapPin, 
   Phone, 
-  MessageCircle, 
   Send, 
   CheckCircle2, 
   ExternalLink,
   Clock,
   ShieldCheck
 } from 'lucide-react';
+import { WhatsAppIcon } from '../components/common/WhatsAppIcon';
 import { InstagramIcon } from '../components/common/InstagramIcon';
 import { initialBusinessSettings } from '../data/initialData';
 
@@ -100,8 +100,8 @@ export const ContactPage: React.FC = () => {
           {/* WhatsApp Direct */}
           <div className="p-6 rounded-2xl bg-white border border-cream-border shadow-soft space-y-3">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
-                <MessageCircle className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-sm">
+                <WhatsAppIcon className="w-5 h-5 text-white" variant="white" />
               </div>
               <div className="space-y-1">
                 <h3 className="font-display font-bold text-base text-spice-dark">WhatsApp Ordering Hotline</h3>
@@ -112,9 +112,9 @@ export const ContactPage: React.FC = () => {
                   href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent('Namaste Sri Balaji! I would like to place an order for snacks.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs mt-1 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs mt-1 transition-colors"
                 >
-                  <MessageCircle className="w-3.5 h-3.5" />
+                  <WhatsAppIcon className="w-3.5 h-3.5 text-white" variant="white" />
                   <span>Chat on WhatsApp</span>
                 </a>
               </div>

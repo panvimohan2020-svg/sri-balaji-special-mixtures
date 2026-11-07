@@ -1,5 +1,6 @@
 import React from 'react';
-import { Sparkles, MessageCircle, ShoppingBag, ArrowRight } from 'lucide-react';
+import { Sparkles, ShoppingBag, ArrowRight } from 'lucide-react';
+import { WhatsAppIcon } from '../components/common/WhatsAppIcon';
 import { initialBundles, initialBusinessSettings } from '../data/initialData';
 
 export const BundlesPage: React.FC = () => {
@@ -62,9 +63,9 @@ export const BundlesPage: React.FC = () => {
                   href={`https://wa.me/${initialBusinessSettings.whatsapp_number}?text=${encodeURIComponent(`Namaste Sri Balaji! I would like to order the snack bundle: ${bundle.name} (Price: ₹${bundle.bundle_price}). Please share dispatch details.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-crimson-800 hover:bg-crimson-900 text-cream-warm text-xs font-bold transition-all shadow-soft"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold transition-all shadow-xs"
                 >
-                  <MessageCircle className="w-4 h-4 text-gold-300" />
+                  <WhatsAppIcon className="w-4 h-4 text-white" variant="white" />
                   <span>Order on WhatsApp</span>
                 </a>
               </div>
