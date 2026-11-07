@@ -26,7 +26,6 @@ import { initialCategories, initialProducts, initialBundles, initialBusinessSett
 import { TasteDiscovery } from '../components/home/TasteDiscovery';
 import { ProductCard } from '../components/common/ProductCard';
 import { ReviewsSection } from '../components/common/ReviewsSection';
-import { HorizontalStorySection } from '../components/story/HorizontalStorySection';
 
 export const HomePage: React.FC = () => {
   const featuredProducts = initialProducts.filter(p => p.is_featured);
@@ -177,10 +176,8 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. LUXURY MAXIMALIST HORIZONTAL STORYTELLING EXPERIENCE (GSAP ScrollTrigger) */}
-      <HorizontalStorySection />
 
-      {/* 3. CREATIVE CATEGORY TILES SECTION */}
+      {/* 2. CREATIVE CATEGORY TILES SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
