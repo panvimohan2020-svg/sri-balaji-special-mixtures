@@ -1,166 +1,284 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 120" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 86" width="100%" height="100%">
   <defs>
-    <!-- Royal Gold Gradient -->
-    <linearGradient id="hGoldSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Radiant Imperial Gold Gradient -->
+    <linearGradient id="sbGold" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFFDF0" />
-      <stop offset="25%" stop-color="#FCE182" />
-      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="20%" stop-color="#FCE182" />
+      <stop offset="45%" stop-color="#E2B43A" />
       <stop offset="75%" stop-color="#B8860B" />
-      <stop offset="100%" stop-color="#E5BE4A" />
+      <stop offset="90%" stop-color="#E5BE4A" />
+      <stop offset="100%" stop-color="#936706" />
     </linearGradient>
 
-    <!-- Deep Emerald Green Shield Gradient -->
-    <radialGradient id="hEmeraldBg" cx="50%" cy="40%" r="65%">
-      <stop offset="0%" stop-color="#155D3F" />
-      <stop offset="60%" stop-color="#0E422C" />
-      <stop offset="100%" stop-color="#051C13" />
+    <!-- Warm Metallic Gold Stroke Gradient -->
+    <linearGradient id="sbGoldStroke" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#AA8222" />
+      <stop offset="25%" stop-color="#FCE182" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="75%" stop-color="#FFF3C4" />
+      <stop offset="100%" stop-color="#8C6615" />
+    </linearGradient>
+
+    <!-- Deep Royal Purple Gradient (Brand Signature) -->
+    <radialGradient id="sbPurpleBg" cx="45%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#3C1A5C" />
+      <stop offset="60%" stop-color="#28143F" />
+      <stop offset="100%" stop-color="#190D2B" />
     </radialGradient>
 
-    <!-- Scarlet Red Ribbon Gradient -->
-    <linearGradient id="hScarletRibbon" x1="0%" y1="0%" x2="100%" y2="0%">
+    <!-- Emerald Green Spice Gradient -->
+    <linearGradient id="sbEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B7A52" />
+      <stop offset="50%" stop-color="#126044" />
+      <stop offset="100%" stop-color="#083B28" />
+    </linearGradient>
+
+    <!-- Crimson Festive Ribbon Gradient -->
+    <linearGradient id="sbCrimson" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#881313" />
-      <stop offset="30%" stop-color="#C5221F" />
-      <stop offset="70%" stop-color="#E53935" />
+      <stop offset="25%" stop-color="#C5221F" />
+      <stop offset="50%" stop-color="#E53935" />
+      <stop offset="75%" stop-color="#C5221F" />
       <stop offset="100%" stop-color="#881313" />
     </linearGradient>
 
-    <filter id="hShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#030D08" flood-opacity="0.3" />
+    <!-- Soft Drop Shadow for Depth -->
+    <filter id="sbShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="2.5" stdDeviation="3" flood-color="#09030E" flood-opacity="0.35" />
     </filter>
 
-    <filter id="hGoldGlow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#FCE182" flood-opacity="0.5" />
+    <!-- Shimmer Glow for Brand Typography -->
+    <filter id="sbTextGlow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="1.2" stdDeviation="2" flood-color="#FCE182" flood-opacity="0.45" />
     </filter>
   </defs>
 
-  <g filter="url(#hShadow)">
-    <!-- ============================================== -->
-    <!-- LEFT CREST EMBLEM (COMPACT EMERALD SHIELD)     -->
-    <!-- ============================================== -->
-    <g transform="translate(56, 60)">
+  <g filter="url(#sbShadow)">
+    
+    <!-- ======================================================== -->
+    <!-- 1. ICONIC BRAND EMBLEM (Left: Temple Shield & Murruku)    -->
+    <!-- ======================================================== -->
+    <g transform="translate(44, 43)">
       
-      <!-- Laurel Leaves Embracing the Shield -->
-      <g fill="url(#hGoldSheen)" stroke="#8C6615" stroke-width="0.5">
-        <!-- Left Laurel Leaves -->
-        <path d="M -38 -20 C -48 -28 -44 -40 -34 -38 C -36 -28 -32 -22 -38 -20 Z" />
-        <path d="M -44 -2 C -54 -10 -52 -22 -42 -20 C -43 -12 -38 -4 -44 -2 Z" />
-        <path d="M -44 18 C -54 10 -52 -2 -42 0 C -43 8 -38 16 -44 18 Z" />
-        <path d="M -38 36 C -48 28 -44 16 -34 18 C -36 26 -32 34 -38 36 Z" />
-        <path d="M -24 48 C -32 44 -28 32 -18 36 C -20 42 -18 46 -24 48 Z" />
-
-        <!-- Right Laurel Leaves -->
-        <path d="M 38 -20 C 48 -28 44 -40 34 -38 C 36 -28 32 -22 38 -20 Z" />
-        <path d="M 44 -2 C 54 -10 52 -22 42 -20 C 43 -12 38 -4 44 -2 Z" />
-        <path d="M 44 18 C 54 10 52 -2 42 0 C 43 8 38 16 44 18 Z" />
-        <path d="M 38 36 C 48 28 44 16 34 18 C 36 26 32 34 38 36 Z" />
-        <path d="M 24 48 C 32 44 28 32 18 36 C 20 42 18 46 24 48 Z" />
+      <!-- Outer Sunburst Filigree / Auspicious Radiance -->
+      <g fill="none" stroke="url(#sbGold)" stroke-width="1.2" opacity="0.9">
+        <circle cx="0" cy="0" r="38" stroke-dasharray="2 3.5" />
+        <circle cx="0" cy="0" r="35.5" stroke="url(#sbGoldStroke)" stroke-width="0.9" />
       </g>
 
-      <!-- Emerald Shield Body -->
-      <path d="M 0 -48 
-               C 34 -48, 44 -32, 45 -2 
-               C 46 26, 26 44, 0 54 
-               C -26 44, -46 26, -45 -2 
-               C -44 -32, -34 -48, 0 -48 Z" 
-            fill="url(#hEmeraldBg)" 
-            stroke="url(#hGoldSheen)" 
-            stroke-width="3.5" />
+      <!-- Traditional 12-Fluted Golden Scallop Rim -->
+      <path d="M 0 -35 C 4 -35, 7 -32, 9 -33 C 12 -33, 15 -30, 18 -29 C 21 -28, 24 -24, 26 -22 C 28 -20, 31 -16, 32 -13 C 33 -10, 35 -6, 35 -2 C 35 2, 33 6, 32 9 C 31 12, 28 16, 26 18 C 24 20, 21 24, 18 26 C 15 28, 12 30, 9 32 C 7 33, 4 34, 0 35 C -4 34, -7 33, -9 32 C -12 30, -15 28, -18 26 C -21 24, -24 20, -26 18 C -28 16, -31 12, -32 9 C -33 6, -35 2, -35 -2 C -35 -6, -33 -10, -32 -13 C -31 -16, -28 -20, -26 -22 C -24 -24, -21 -28, -18 -29 C -15 -30, -12 -33, -9 -33 C -7 -32, -4 -35, 0 -35 Z"
+            fill="url(#sbGold)" 
+            stroke="#7C5708" 
+            stroke-width="0.8" />
 
-      <!-- Inner Gold Ring -->
-      <path d="M 0 -42 
-               C 28 -42, 38 -28, 38 -2 
-               C 40 22, 22 38, 0 46 
-               C -22 38, -40 22, -38 -2 
-               C -38 -28, -28 -42, 0 -42 Z" 
+      <!-- Deep Imperial Shield Center -->
+      <circle cx="0" cy="0" r="30" fill="url(#sbPurpleBg)" stroke="url(#sbGoldStroke)" stroke-width="2.5" />
+
+      <!-- Inner Emerald Beaded Rim -->
+      <circle cx="0" cy="0" r="26.5" fill="none" stroke="url(#sbEmerald)" stroke-width="1.6" />
+      <circle cx="0" cy="0" r="24.5" fill="none" stroke="url(#sbGold)" stroke-width="0.8" stroke-dasharray="2 2" />
+
+      <!-- Auspicious Diya Flame at Crown Apex -->
+      <path d="M 0 -24 C -4 -18, -3 -13, 0 -9 C 3 -13, 4 -18, 0 -24 Z" fill="url(#sbGold)" />
+      <circle cx="0" cy="-8.5" r="1.6" fill="#DC2626" />
+
+      <!-- Golden Murruku Ring Swirl -->
+      <path d="M -9 4 C -13 -3, -6 -10, 0 -8 C 7 -6, 12 0, 9 7 C 6 13, -2 14, -8 10 C -12 7, -13 0, -10 -5"
             fill="none" 
-            stroke="url(#hGoldSheen)" 
-            stroke-width="1.2" 
-            stroke-dasharray="3,2" />
+            stroke="url(#sbGold)" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            opacity="0.4" />
 
-      <!-- Auspicious Kalash / Diya Flame at Crown -->
-      <path d="M 0 -44 C -6 -35, -5 -27, 0 -22 C 5 -27, 6 -35, 0 -44 Z" fill="url(#hGoldSheen)" />
-
-      <!-- Golden Monogram "SB" -->
-      <text x="0" y="9" 
+      <!-- Majestic Monogram 'SB' -->
+      <!-- Shadow -->
+      <text x="0" y="9.5" 
             text-anchor="middle" 
             font-family="'Cinzel', 'Playfair Display', Georgia, serif" 
             font-weight="900" 
-            font-size="28" 
-            letter-spacing="1.5" 
-            fill="url(#hGoldSheen)"
-            filter="url(#hGoldGlow)">
+            font-size="22" 
+            letter-spacing="1" 
+            fill="#09030E"
+            opacity="0.85">
+        SB
+      </text>
+      <!-- Face -->
+      <text x="0" y="8" 
+            text-anchor="middle" 
+            font-family="'Cinzel', 'Playfair Display', Georgia, serif" 
+            font-weight="900" 
+            font-size="22" 
+            letter-spacing="1" 
+            fill="url(#sbGold)"
+            filter="url(#sbTextGlow)">
         SB
       </text>
 
-      <!-- 30+ Ribbon pill -->
-      <rect x="-24" y="22" width="48" height="15" rx="7.5" fill="url(#hScarletRibbon)" stroke="url(#hGoldSheen)" stroke-width="1" />
-      <text x="0" y="32.5" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="8.5" fill="#FFFDF0" letter-spacing="1">
-        30+ YRS
+      <!-- 1995 Foundation Pill -->
+      <rect x="-19" y="16" width="38" height="12" rx="6" fill="url(#sbCrimson)" stroke="url(#sbGold)" stroke-width="1" />
+      <text x="0" y="24.8" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="7.2" fill="#FFFDF0" letter-spacing="0.8">
+        1995
       </text>
     </g>
 
 
-    <!-- ============================================== -->
-    <!-- RIGHT TYPOGRAPHY & BRAND WORDMARK              -->
-    <!-- ============================================== -->
+    <!-- ======================================================== -->
+    <!-- 2. TYPOGRAPHY & BRAND WORDMARK (Heroic Radiant Gold)      -->
+    <!-- ======================================================== -->
     
-    <!-- Top Sub-tag: ~ Sri ~ in Serif Italic -->
-    <text x="125" y="30" 
-          font-family="'Playfair Display', Georgia, serif" 
-          font-weight="700" 
-          font-style="italic" 
-          font-size="18" 
-          letter-spacing="3" 
-          fill="#D4AF37">
-      ~ Sri ~
-    </text>
+    <!-- BRAND NAME: SRI BALAJI -->
+    <g transform="translate(94, 0)">
+      
+      <!-- Top Sacred "Sri" Prefix -->
+      <!-- Shadow -->
+      <text x="0" y="36.5" 
+            font-family="'Playfair Display', 'Cinzel', Georgia, serif" 
+            font-weight="900" 
+            font-style="italic" 
+            font-size="21" 
+            letter-spacing="2" 
+            fill="#09030E"
+            opacity="0.9">
+        Sri
+      </text>
+      <!-- Bevel Outline -->
+      <text x="0" y="35" 
+            font-family="'Playfair Display', 'Cinzel', Georgia, serif" 
+            font-weight="900" 
+            font-style="italic" 
+            font-size="21" 
+            letter-spacing="2" 
+            fill="none"
+            stroke="#3A1C04"
+            stroke-width="2.5"
+            stroke-linejoin="round">
+        Sri
+      </text>
+      <!-- Face -->
+      <text x="0" y="35" 
+            font-family="'Playfair Display', 'Cinzel', Georgia, serif" 
+            font-weight="900" 
+            font-style="italic" 
+            font-size="21" 
+            letter-spacing="2" 
+            fill="url(#sbGold)"
+            filter="url(#sbTextGlow)">
+        Sri
+      </text>
 
-    <!-- Master Brand Name: BALAJI in Regal Serif -->
-    <text x="125" y="68" 
-          font-family="'Cinzel', 'Playfair Display', Georgia, serif" 
-          font-weight="900" 
-          font-size="40" 
-          letter-spacing="5" 
-          fill="#2A0B1A">
-      BALAJI
-    </text>
+      <!-- Main Master Word: BALAJI (Monumental Radiant Gold) -->
+      <!-- 1. Deep 3D Shadow -->
+      <text x="38" y="37" 
+            font-family="'Cinzel', 'Playfair Display', Georgia, serif" 
+            font-weight="900" 
+            font-size="33" 
+            letter-spacing="3.8" 
+            fill="#09030E"
+            opacity="0.95">
+        BALAJI
+      </text>
 
-    <!-- Scarlet Red Ribbon Pill: SPECIAL MIXTURES -->
-    <g transform="translate(125, 78)">
-      <rect x="0" y="0" width="220" height="24" rx="12" fill="url(#hScarletRibbon)" stroke="url(#hGoldSheen)" stroke-width="1.2" />
-      <text x="110" y="16" 
+      <!-- 2. Dark Bevel Outline for Razor-Sharp Contrast -->
+      <text x="38" y="35" 
+            font-family="'Cinzel', 'Playfair Display', Georgia, serif" 
+            font-weight="900" 
+            font-size="33" 
+            letter-spacing="3.8" 
+            fill="none"
+            stroke="#3A1C04"
+            stroke-width="3"
+            stroke-linejoin="round">
+        BALAJI
+      </text>
+
+      <!-- 3. Radiant Imperial Gold Face -->
+      <text x="38" y="35" 
+            font-family="'Cinzel', 'Playfair Display', Georgia, serif" 
+            font-weight="900" 
+            font-size="33" 
+            letter-spacing="3.8" 
+            fill="url(#sbGold)"
+            filter="url(#sbTextGlow)">
+        BALAJI
+      </text>
+
+      <!-- 4. Top Shimmer Bevel Highlight -->
+      <text x="38" y="34.2" 
+            font-family="'Cinzel', 'Playfair Display', Georgia, serif" 
+            font-weight="900" 
+            font-size="33" 
+            letter-spacing="3.8" 
+            fill="#FFFDF0"
+            opacity="0.32">
+        BALAJI
+      </text>
+
+      <!-- 100% Pure Veg Icon Badge -->
+      <g transform="translate(228, 17)">
+        <rect x="0" y="0" width="14" height="14" rx="3" fill="#FFFFFF" stroke="#126044" stroke-width="1.8" />
+        <circle cx="7" cy="7" r="3.5" fill="#126044" />
+      </g>
+    </g>
+
+
+    <!-- ======================================================== -->
+    <!-- 3. SUB-BANNER: SPECIAL MIXTURES (Rich Ruby & Gold Ribbon) -->
+    <!-- ======================================================== -->
+    <g transform="translate(94, 43)">
+      <!-- Drop Shadow -->
+      <rect x="0" y="1.5" width="222" height="21" rx="10.5" fill="#09030E" opacity="0.45" />
+      <!-- Main Crimson Ribbon -->
+      <rect x="0" y="0" width="222" height="21" rx="10.5" fill="url(#sbCrimson)" stroke="url(#sbGold)" stroke-width="1.4" />
+      <!-- Inner Gold Hairline -->
+      <rect x="2.5" y="2" width="217" height="17" rx="8.5" fill="none" stroke="url(#sbGold)" stroke-width="0.6" opacity="0.7" />
+      
+      <!-- Sparkle Diamonds -->
+      <polygon points="12,10.5 10.5,8 12,5.5 13.5,8" fill="url(#sbGold)" />
+      <polygon points="210,10.5 208.5,8 210,5.5 211.5,8" fill="url(#sbGold)" />
+      
+      <!-- Text -->
+      <text x="111" y="14.8" 
             text-anchor="middle" 
             font-family="'Cinzel', 'Plus Jakarta Sans', sans-serif" 
             font-weight="900" 
-            font-size="12" 
+            font-size="11.4" 
             letter-spacing="3" 
-            fill="#FFFDF0">
+            fill="#FFFDF0"
+            filter="url(#sbTextGlow)">
         SPECIAL MIXTURES
       </text>
     </g>
 
-    <!-- Heritage Tag: Fresh • Crispy • Tasty • Estd 1995 -->
-    <text x="358" y="94" 
-          font-family="'Plus Jakarta Sans', sans-serif" 
-          font-weight="800" 
-          font-size="10.5" 
-          letter-spacing="1.5" 
-          fill="#0E422C">
-      FRESH • CRISPY • TASTY
-    </text>
-    <text x="358" y="76" 
-          font-family="'Plus Jakarta Sans', sans-serif" 
-          font-weight="700" 
-          font-size="10" 
-          letter-spacing="1" 
-          fill="#6E5034">
-      Paralakhemundi, Odisha
-    </text>
 
-    <!-- Pure Veg Badge (Compact) -->
-    <g transform="translate(500, 20)">
-      <rect x="0" y="0" width="18" height="18" rx="3" fill="#FFF" stroke="#16A34A" stroke-width="1.8" />
-      <circle cx="9" cy="9" r="4" fill="#16A34A" />
+    <!-- ======================================================== -->
+    <!-- 4. TRADITION TAGLINE: PARALAKHEMUNDI • TASTE THE TRADITION -->
+    <!-- ======================================================== -->
+    <g transform="translate(94, 77)">
+      <!-- Town Origin: Warm Ivory High Visibility -->
+      <text x="0" y="0" 
+            font-family="'Plus Jakarta Sans', system-ui, sans-serif" 
+            font-weight="800" 
+            font-size="9.2" 
+            letter-spacing="1.6" 
+            fill="#FFF8EB"
+            filter="url(#sbTextGlow)">
+        PARALAKHEMUNDI
+      </text>
+
+      <!-- Radiant Gold Separator Dot -->
+      <circle cx="110" cy="-2.8" r="1.8" fill="url(#sbGold)" />
+
+      <!-- Brand Motto: Radiant Gold -->
+      <text x="119" y="0" 
+            font-family="'Plus Jakarta Sans', system-ui, sans-serif" 
+            font-weight="800" 
+            font-size="9.2" 
+            letter-spacing="1.3" 
+            fill="#FCE182"
+            filter="url(#sbTextGlow)">
+        TASTE THE TRADITION
+      </text>
     </g>
 
   </g>

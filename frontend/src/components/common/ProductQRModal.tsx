@@ -43,8 +43,8 @@ export const ProductQRModal: React.FC<ProductQRModalProps> = ({
         width: 240,
         margin: 2,
         color: {
-          dark: '#351326', // Deep Plum
-          light: '#FFF7E9'  // Warm Ivory
+          dark: '#28143F', // Deep Imperial Purple
+          light: '#FFF8EB'  // Warm Ivory
         }
       });
     }
@@ -72,16 +72,16 @@ export const ProductQRModal: React.FC<ProductQRModalProps> = ({
       ref={dialogRef}
       onClose={onClose}
       aria-labelledby="qr-dialog-title"
-      className="p-0 rounded-3xl bg-white shadow-elevated border border-ivory-border text-cocoa max-w-sm w-[92vw] overflow-hidden m-auto backdrop:bg-plum-950/70 backdrop:backdrop-blur-sm"
+      className="p-0 rounded-3xl bg-white shadow-royal border border-gold/30 text-cocoa max-w-sm w-[92vw] overflow-hidden m-auto backdrop:bg-imperial-dark/80 backdrop:backdrop-blur-sm"
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-plum-900 to-plum-950 text-ivory p-4 flex items-center justify-between border-b border-plum-800">
+      <div className="bg-gradient-to-r from-imperial-dark via-imperial to-imperial-secondary text-white p-4 flex items-center justify-between border-b border-gold/30">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-turmeric/20 border border-turmeric/40 flex items-center justify-center text-turmeric">
+          <div className="w-8 h-8 rounded-xl bg-gold/20 border border-gold/40 flex items-center justify-center text-gold">
             <QrCode className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-turmeric block">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-gold block">
               Packaging QR Code
             </span>
             <h3 id="qr-dialog-title" className="font-display font-bold text-sm text-white truncate max-w-[200px]">
@@ -92,7 +92,7 @@ export const ProductQRModal: React.FC<ProductQRModalProps> = ({
         <button
           type="button"
           onClick={onClose}
-          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gold-light flex items-center justify-center transition-colors"
           aria-label="Close dialog"
         >
           <X className="w-4 h-4" />
@@ -106,34 +106,36 @@ export const ProductQRModal: React.FC<ProductQRModalProps> = ({
         </p>
 
         {/* QR Canvas Display */}
-        <div className="p-4 bg-ivory-warm rounded-2xl border border-ivory-border inline-block shadow-inner">
+        <div className="p-4 bg-ivory rounded-2xl border border-gold/25 inline-block shadow-inner">
           <canvas ref={canvasRef} className="rounded-xl mx-auto" />
         </div>
 
         {/* Actions */}
         <div className="grid grid-cols-2 gap-2 pt-2">
+          {/* Primary CTA: Saffron Gold background with Deep Purple text */}
           <button
             type="button"
             onClick={handleDownload}
-            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-plum-900 hover:bg-plum-800 text-white font-bold text-xs transition-colors shadow-xs"
+            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gold hover:bg-gold-rich text-imperial font-black text-xs transition-colors shadow-gold"
           >
-            <Download className="w-3.5 h-3.5 text-turmeric" />
+            <Download className="w-3.5 h-3.5 text-imperial" />
             <span>Save PNG</span>
           </button>
 
+          {/* Secondary CTA: Deep Purple with Gold borders & text */}
           <button
             type="button"
             onClick={handleCopyLink}
-            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-ivory-border bg-ivory-warm hover:bg-peach-50 text-cocoa font-bold text-xs transition-colors"
+            className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-gold/30 bg-imperial hover:bg-imperial-secondary text-gold font-bold text-xs transition-colors"
           >
             {copied ? (
               <>
-                <Check className="w-3.5 h-3.5 text-pista-700" />
-                <span className="text-pista-700">Copied!</span>
+                <Check className="w-3.5 h-3.5 text-emerald" />
+                <span className="text-emerald">Copied!</span>
               </>
             ) : (
               <>
-                <Copy className="w-3.5 h-3.5 text-chilli" />
+                <Copy className="w-3.5 h-3.5 text-gold" />
                 <span>Copy URL</span>
               </>
             )}

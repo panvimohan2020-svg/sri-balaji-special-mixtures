@@ -16,61 +16,63 @@ import { WhatsAppIcon } from '../components/common/WhatsAppIcon';
 import { InstagramIcon } from '../components/common/InstagramIcon';
 import { BrandLogo } from '../components/common/BrandLogo';
 import { initialBusinessSettings } from '../data/initialData';
+import { useTranslation } from '../store/useLanguageStore';
 
 export const AboutPage: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-16">
       
       {/* Brand Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <BrandLogo variant="crest" size="lg" className="mx-auto justify-center mb-1" />
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-turmeric-100 text-cocoa-dark border border-turmeric-300 text-xs font-bold">
-          <Sparkles className="w-4 h-4 text-turmeric-600 fill-turmeric-500" />
-          <span>30+ Years of Odia Culinary Heritage • Since 1995</span>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold-light/40 text-imperial border border-gold/30 text-xs font-bold">
+          <Sparkles className="w-4 h-4 text-gold-deep" />
+          <span>{t('hero.badge', '30+ Years of Odia Culinary Heritage • Since 1995')}</span>
         </div>
-        <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-plum-900 tracking-tight">
-          30 Years of Tradition. <br />
-          <span className="text-chilli">A Taste That Continues.</span>
+        <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-imperial tracking-tight">
+          {t('about.title', '30 Years of Tradition.')} <br />
+          <span className="text-gold-deep">{t('about.subtitle', 'A family recipe perfected in Paralakhemundi since 1995.')}</span>
         </h1>
         <p className="text-base sm:text-lg text-cocoa-muted leading-relaxed">
-          &ldquo;{initialBusinessSettings.business_description}&rdquo;
+          &ldquo;{t('footer.desc', initialBusinessSettings.business_description)}&rdquo;
         </p>
       </div>
 
       {/* Leadership Spotlight: Father & Son with Authentic Photography */}
-      <div className="bg-gradient-to-br from-ivory-warm via-white to-peach-50 p-8 sm:p-12 rounded-3xl border border-ivory-border shadow-soft">
+      <div className="bg-gradient-to-br from-ivory via-white to-cream/60 p-8 sm:p-12 rounded-3xl border border-gold/25 shadow-royal">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
           <div className="lg:col-span-5">
-            <div className="rounded-3xl overflow-hidden border-4 border-white shadow-plum bg-white">
+            <div className="rounded-3xl overflow-hidden border-4 border-gold/30 shadow-royal bg-white">
               <img
                 src="/images/brand/founders-adari-family.png"
                 alt="Adari Family – Sri Balaji Founders"
                 className="w-full h-auto object-cover"
               />
-              <div className="p-4 bg-plum-900 text-white text-center">
-                <strong className="block text-sm font-bold text-turmeric">Adari Krishna Rao &amp; Adari Dilleshwar Rao</strong>
+              <div className="p-4 bg-imperial text-white text-center border-t border-gold/30">
+                <strong className="block text-sm font-bold text-gold">Adari Krishna Rao &amp; Adari Dilleshwar Rao</strong>
                 <span className="text-xs text-ivory/80">Proprietors, Sri Balaji Special Mixtures</span>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-peach-100 text-chilli-800 text-xs font-bold border border-peach-200">
-              <Users className="w-4 h-4 text-chilli" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-light/40 text-imperial text-xs font-bold border border-gold/30">
+              <Users className="w-4 h-4 text-gold-deep" />
               <span>Two Generations of Savoury Craftsmanship</span>
             </div>
 
-            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-plum-900">
+            <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-imperial">
               Founded &amp; Personally Directed by the Adari Family
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-5 rounded-2xl bg-white border border-ivory-border shadow-xs space-y-2">
-                <span className="text-[10px] font-black uppercase tracking-wider text-chilli block">
+                <span className="text-[10px] font-black uppercase tracking-wider text-gold-deep block">
                   Founder &amp; Master Blender
                 </span>
-                <h3 className="font-display font-bold text-lg text-plum-900">
+                <h3 className="font-display font-bold text-lg text-imperial">
                   Adari Krishna Rao
                 </h3>
                 <p className="text-xs text-cocoa-muted leading-relaxed">
@@ -79,10 +81,10 @@ export const AboutPage: React.FC = () => {
               </div>
 
               <div className="p-5 rounded-2xl bg-white border border-ivory-border shadow-xs space-y-2">
-                <span className="text-[10px] font-black uppercase tracking-wider text-chilli block">
+                <span className="text-[10px] font-black uppercase tracking-wider text-gold-deep block">
                   Managing Partner &amp; Operations
                 </span>
-                <h3 className="font-display font-bold text-lg text-plum-900">
+                <h3 className="font-display font-bold text-lg text-imperial">
                   Adari Dilleshwar Rao
                 </h3>
                 <p className="text-xs text-cocoa-muted leading-relaxed">
@@ -103,10 +105,10 @@ export const AboutPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
         <div className="lg:col-span-6 space-y-6">
-          <span className="text-xs font-bold uppercase tracking-widest text-chilli">
+          <span className="text-xs font-bold uppercase tracking-widest text-gold-deep">
             Rooted in Paralakhemundi, Odisha
           </span>
-          <h2 className="font-display font-extrabold text-3xl text-plum-900">
+          <h2 className="font-display font-extrabold text-3xl text-imperial">
             Three Decades of Uncompromised Crunch &amp; Purity
           </h2>
           <p className="text-sm text-cocoa-muted leading-relaxed">
@@ -117,15 +119,15 @@ export const AboutPage: React.FC = () => {
           </p>
 
           <div className="grid grid-cols-2 gap-4 pt-4 border-t border-ivory-border text-xs sm:text-sm">
-            <div className="p-4 rounded-2xl bg-ivory-warm border border-ivory-border">
-              <span className="font-display font-black text-3xl text-plum-900 block">
+            <div className="p-4 rounded-2xl bg-ivory border border-gold/25">
+              <span className="font-display font-black text-3xl text-imperial block">
                 30+ Years
               </span>
               <span className="text-cocoa-muted font-medium">Business Experience</span>
             </div>
 
-            <div className="p-4 rounded-2xl bg-ivory-warm border border-ivory-border">
-              <span className="font-display font-black text-3xl text-chilli block">
+            <div className="p-4 rounded-2xl bg-ivory border border-gold/25">
+              <span className="font-display font-black text-3xl text-emerald block">
                 100%
               </span>
               <span className="text-cocoa-muted font-medium">Pure Vegetarian</span>
@@ -134,13 +136,13 @@ export const AboutPage: React.FC = () => {
         </div>
 
         <div className="lg:col-span-6">
-          <div className="relative rounded-3xl overflow-hidden shadow-plum border-4 border-white bg-white aspect-[4/3] flex items-center justify-center">
+          <div className="relative rounded-3xl overflow-hidden shadow-royal border-4 border-gold/30 bg-white aspect-[4/3] flex items-center justify-center">
             <img
               src="/images/brand/paralakhemundi-pride.png"
               alt="Sri Balaji Storefront and Landmark in Paralakhemundi"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-plum-950/70 via-transparent to-transparent flex items-end p-6">
+            <div className="absolute inset-0 bg-gradient-to-t from-imperial-dark/80 via-transparent to-transparent flex items-end p-6">
               <span className="text-white text-xs font-bold">Gandhi School Road landmark storefront, Paralakhemundi</span>
             </div>
           </div>
@@ -155,37 +157,37 @@ export const AboutPage: React.FC = () => {
             icon: ShieldCheck,
             title: 'Hygiene & Cleanliness',
             desc: 'Clean stainless steel facilities, food-grade storage, and strict cleanliness standards.',
-            color: 'text-pista-700 bg-pista-50 border-pista-200'
+            color: 'text-emerald-deep bg-emerald/15 border-emerald/30'
           },
           {
             icon: Flame,
             title: 'Fresh Daily Frying',
             desc: 'Daily small-batch frying guarantees ultimate crispiness and maximum shelf-life.',
-            color: 'text-chilli bg-peach-50 border-peach-200'
+            color: 'text-gold-deep bg-gold/15 border-gold/30'
           },
           {
             icon: Layers,
             title: 'Heritage Spice Blends',
             desc: 'Traditional secret masala formulas unchanged for over 30 years.',
-            color: 'text-turmeric-800 bg-turmeric-50 border-turmeric-200'
+            color: 'text-imperial bg-gold-light/40 border-gold/30'
           },
           {
             icon: Heart,
             title: 'Customer Satisfaction',
             desc: 'Direct family accountability for every packet, with fast wholesale dispatch.',
-            color: 'text-plum-900 bg-plum-50 border-plum-200'
+            color: 'text-imperial bg-imperial/10 border-imperial/20'
           }
         ].map((pillar, idx) => {
           const Icon = pillar.icon;
           return (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-white border border-ivory-border shadow-xs hover:shadow-soft transition-all space-y-3"
+              className="p-6 rounded-3xl bg-white border border-ivory-border shadow-xs hover:border-gold hover:shadow-soft transition-all space-y-3"
             >
               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${pillar.color}`}>
                 <Icon className="w-6 h-6" />
               </div>
-              <h3 className="font-display font-bold text-base text-plum-900">
+              <h3 className="font-display font-bold text-base text-imperial">
                 {pillar.title}
               </h3>
               <p className="text-xs text-cocoa-muted leading-relaxed">
@@ -197,10 +199,10 @@ export const AboutPage: React.FC = () => {
       </div>
 
       {/* Official Business Certificate Summary */}
-      <div className="p-8 sm:p-10 rounded-3xl bg-plum-900 text-ivory border border-plum-800 shadow-plum">
+      <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-imperial-dark via-imperial to-imperial-secondary text-ivory border border-gold/30 shadow-royal">
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="flex items-center gap-3">
-            <Award className="w-8 h-8 text-turmeric shrink-0" />
+            <Award className="w-8 h-8 text-gold shrink-0" />
             <div>
               <h3 className="font-display font-extrabold text-xl sm:text-2xl text-white">
                 Official Business Credentials
@@ -212,34 +214,34 @@ export const AboutPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <span className="text-turmeric block font-bold mb-1">Business Name</span>
+            <div className="p-4 rounded-2xl bg-white/5 border border-gold/20">
+              <span className="text-gold block font-bold mb-1">Business Name</span>
               <strong className="text-white text-sm">{initialBusinessSettings.business_name}</strong>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <span className="text-turmeric block font-bold mb-1">Founders / Owners</span>
+            <div className="p-4 rounded-2xl bg-white/5 border border-gold/20">
+              <span className="text-gold block font-bold mb-1">Founders / Owners</span>
               <strong className="text-white text-sm">Adari Krishna Rao &amp; Son</strong>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <span className="text-turmeric block font-bold mb-1">Headquarters &amp; Works</span>
+            <div className="p-4 rounded-2xl bg-white/5 border border-gold/20">
+              <span className="text-gold block font-bold mb-1">Headquarters &amp; Works</span>
               <strong className="text-white text-sm">{initialBusinessSettings.city}, {initialBusinessSettings.state}</strong>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <span className="text-turmeric block font-bold mb-1">Postal Address</span>
+            <div className="p-4 rounded-2xl bg-white/5 border border-gold/20">
+              <span className="text-gold block font-bold mb-1">Postal Address</span>
               <span className="text-ivory/80">{initialBusinessSettings.address} – {initialBusinessSettings.pin_code}</span>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <span className="text-turmeric block font-bold mb-1">Direct Calling Desks</span>
+            <div className="p-4 rounded-2xl bg-white/5 border border-gold/20">
+              <span className="text-gold block font-bold mb-1">Direct Calling Desks</span>
               <span className="text-white font-mono font-bold">9437135342 / 7735333542</span>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <span className="text-turmeric block font-bold mb-1">WhatsApp Wholesale</span>
-              <span className="text-pista font-mono font-bold">9861789602</span>
+            <div className="p-4 rounded-2xl bg-white/5 border border-gold/20">
+              <span className="text-gold block font-bold mb-1">WhatsApp Wholesale</span>
+              <span className="text-emerald-soft font-mono font-bold">9861789602</span>
             </div>
           </div>
         </div>

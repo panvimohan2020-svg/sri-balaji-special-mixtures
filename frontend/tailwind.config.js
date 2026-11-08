@@ -7,152 +7,196 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Official Sri Balaji Brand Palette — Authenticated from Packaging & Mascot Artwork
-        // Primary Jewel Tone: Noble Emerald Green (From Crest & Pure Veg Seal)
+        // SRI BALAJI – ROYAL IMPERIAL BRAND COLOUR IDENTITY
+
+        // 1. PRIMARY – DEEP IMPERIAL PURPLE
+        imperial: {
+          DEFAULT: '#28143F', // Suggested Primary
+          secondary: '#392052', // Secondary Purple
+          dark: '#190D2B', // Dark Purple
+          soft: '#51336B', // Soft Purple
+          light: '#6D468E',
+          border: '#42255F',
+        },
         plum: {
-          DEFAULT: '#0D3B2E',
-          50: '#F0FDF4',
-          100: '#DCFCE7',
-          200: '#BBF7D0',
-          300: '#86EFAC',
-          400: '#4ADE80',
-          500: '#22C55E',
-          600: '#16A34A',
-          700: '#156B48',
-          800: '#0E4E36',
-          900: '#0A3826',
-          950: '#041F14',
-        },
-        // Secondary Action Tone: Festive Chilli Scarlet (From Ribbon & Spices)
-        chilli: {
-          DEFAULT: '#DC2626',
-          50: '#FEF2F2',
-          100: '#FEE2E2',
-          200: '#FECACA',
-          300: '#FCA5A5',
-          400: '#F87171',
-          500: '#EF4444',
-          600: '#DC2626',
-          700: '#B91C1C',
-          800: '#991B1B',
-          900: '#7F1D1D',
-        },
-        // Hero Radiant Atmosphere: Sunlit Turmeric & Saffron Yellow (From Background & Fresh Mixture)
-        turmeric: {
-          DEFAULT: '#F59E0B',
-          50: '#FFFDF0',
-          100: '#FEF7C8',
-          200: '#FDEE8A',
-          300: '#FCD34D',
-          400: '#FBBF24',
-          500: '#F59E0B',
-          600: '#D97706',
-          700: '#B45309',
-          800: '#92400E',
-          900: '#78350F',
-        },
-        // Pista & Curry Leaf Green
-        pista: {
-          DEFAULT: '#10B981',
-          50: '#ECFDF5',
-          100: '#D1FAE5',
-          200: '#A7F3D0',
-          300: '#6EE7B7',
-          400: '#34D399',
-          500: '#10B981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065F46',
-          900: '#064E3B',
-        },
-        // Sunlit Golden Cream & Warm Saffron Butter Surfaces
-        ivory: {
-          DEFAULT: '#FFFDF5',
-          light: '#FFFEFA',
-          warm: '#FFF9E6',
-          dark: '#FDECB8',
-          border: '#F6DCA0',
-        },
-        // Roasted Cocoa & Teak Wood (Authentic Snack Table & Deep Typography)
-        cocoa: {
-          DEFAULT: '#2D1B12',
-          dark: '#1C1009',
-          muted: '#664B38',
-          light: '#9E7E69',
-        },
-        // Golden Amber & Roasted Crunch Tones
-        peach: {
-          DEFAULT: '#FED7AA',
-          50: '#FFFBEB',
-          100: '#FEF3C7',
-          200: '#FED7AA',
-          300: '#FDBA74',
-          400: '#FB923C',
-          500: '#F97316',
+          DEFAULT: '#28143F',
+          50: '#F8F5FB',
+          100: '#F0EBF7',
+          200: '#DFD3EE',
+          300: '#C4B0E0',
+          400: '#A184CD',
+          500: '#7B54B4',
+          600: '#51336B', // Soft Purple
+          700: '#392052', // Secondary Purple
+          800: '#2E1749',
+          900: '#28143F', // Primary Imperial Purple
+          950: '#190D2B', // Darkest Purple
         },
 
-        // Backward compatibility mappings
-        brand: {
-          50: '#F0FDF4',
-          100: '#DCFCE7',
-          200: '#FED7AA',
-          300: '#FCD34D',
-          400: '#FBBF24',
-          500: '#DC2626',
-          600: '#B91C1C',
-          700: '#991B1B',
-          800: '#0E4E36',
-          900: '#0A3826',
-        },
-        crimson: {
-          50: '#FEF2F2',
-          100: '#FEE2E2',
-          200: '#FECACA',
-          600: '#DC2626',
-          700: '#B91C1C',
-          800: '#0E4E36',
-          900: '#0A3826',
-        },
+        // 2. SECONDARY – RADIANT SAFFRON GOLD
         gold: {
-          50: '#FFFDF0',
-          100: '#FEF7C8',
-          200: '#FDEE8A',
-          300: '#FCD34D',
-          400: '#FBBF24',
-          500: '#F59E0B',
-          600: '#D97706',
-          700: '#B45309',
-          800: '#92400E',
+          DEFAULT: '#F4C45E', // Primary Gold
+          50: '#FFFDF7',
+          100: '#FFF8EB',
+          200: '#FFE7A3', // Light Gold
+          300: '#FAD77B',
+          400: '#F4C45E', // Primary Gold
+          500: '#E5B242',
+          600: '#D6A52D', // Rich Gold
+          700: '#A97819', // Deep Gold
+          800: '#865C0F',
+          900: '#664407',
+          light: '#FFE7A3',
+          rich: '#D6A52D',
+          deep: '#A97819',
+        },
+        turmeric: {
+          DEFAULT: '#F4C45E', // Primary Gold alias
+          50: '#FFFDF7',
+          100: '#FFF8EB',
+          200: '#FFE7A3',
+          300: '#FAD77B',
+          400: '#F4C45E',
+          500: '#E5B242',
+          600: '#D6A52D',
+          700: '#A97819',
+          800: '#865C0F',
+          900: '#664407',
+        },
+        saffron: {
+          DEFAULT: '#F4C45E',
+          light: '#FFE7A3',
+          rich: '#D6A52D',
+          deep: '#A97819',
+        },
+
+        // 3. DETAIL – EMERALD GREEN
+        emerald: {
+          DEFAULT: '#126044', // Primary Emerald
+          50: '#F0FDF7',
+          100: '#DCFCEE',
+          200: '#BBF7DC',
+          300: '#86EFC1',
+          400: '#72A88A', // Soft Emerald
+          500: '#126044', // Primary Emerald
+          600: '#0E5039',
+          700: '#0B4433', // Deep Emerald
+          800: '#083528',
+          900: '#05261C',
+          950: '#02140F',
+          primary: '#126044',
+          deep: '#0B4433',
+          soft: '#72A88A',
+        },
+        pista: {
+          DEFAULT: '#126044',
+          50: '#F0FDF7',
+          100: '#DCFCEE',
+          200: '#BBF7DC',
+          300: '#86EFC1',
+          400: '#72A88A',
+          500: '#126044',
+          600: '#0E5039',
+          700: '#0B4433',
+          800: '#083528',
+          900: '#05261C',
+        },
+
+        // 4. SUPPORTING NEUTRAL COLOURS
+        ivory: {
+          DEFAULT: '#FFF8EB', // Warm Ivory
+          light: '#FFFFFF', // Soft White
+          warm: '#FFF5E3',
+          dark: '#F5EBD8', // Cream
+          border: '#EEDDC4',
         },
         cream: {
-          DEFAULT: '#FFFDF5',
-          warm: '#FFF9E6',
-          surface: '#FDF3DA',
-          border: '#F6DCA0',
+          DEFAULT: '#F5EBD8', // Cream
+          warm: '#FFF8EB', // Warm Ivory
+          surface: '#FBF4E7',
+          border: '#E5D3B8',
+        },
+        cocoa: {
+          DEFAULT: '#392C28', // Cocoa Brown
+          dark: '#271D1A',
+          muted: '#68544E',
+          light: '#9C857E',
         },
         spice: {
-          DEFAULT: '#2D1B12',
-          dark: '#1C1009',
-          muted: '#664B38',
-          light: '#9E7E69',
+          DEFAULT: '#392C28',
+          dark: '#271D1A',
+          muted: '#68544E',
+          light: '#9C857E',
+        },
+
+        // Action Tone Aliases & Pure Veg
+        chilli: {
+          DEFAULT: '#D6A52D', // Remapped to Rich Saffron Gold to remove old burgundy/orange
+          50: '#FFF8EB',
+          100: '#FFE7A3',
+          200: '#FAD77B',
+          300: '#F4C45E',
+          400: '#E5B242',
+          500: '#D6A52D',
+          600: '#A97819',
+          700: '#28143F',
+          800: '#190D2B',
+          900: '#190D2B',
+        },
+        peach: {
+          DEFAULT: '#FFE7A3',
+          50: '#FFFDF7',
+          100: '#FFF8EB',
+          200: '#FFE7A3',
+          300: '#FAD77B',
+          400: '#F4C45E',
+          500: '#D6A52D',
+        },
+        brand: {
+          50: '#F8F5FB',
+          100: '#F0EBF7',
+          200: '#FFE7A3',
+          300: '#F4C45E',
+          400: '#D6A52D',
+          500: '#28143F',
+          600: '#392052',
+          700: '#190D2B',
+          800: '#190D2B',
+          900: '#190D2B',
+        },
+        crimson: {
+          50: '#FFF8EB',
+          100: '#FFE7A3',
+          200: '#FAD77B',
+          600: '#D6A52D',
+          700: '#A97819',
+          800: '#28143F',
+          900: '#190D2B',
         },
         veg: {
-          DEFAULT: '#16A34A',
-          bg: '#DCFCE7',
-          border: '#86EFAC',
+          DEFAULT: '#126044',
+          bg: '#DCFCEE',
+          border: '#72A88A',
         }
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        display: ['"Cinzel"', '"Playfair Display"', 'serif'],
+        sans: ['"Manrope"', '"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
+        display: ['"Cinzel"', 'serif'],
+        script: ['"Great Vibes"', 'cursive'],
+        oriya: ['"Noto Sans Oriya"', 'sans-serif'],
+        telugu: ['"Noto Sans Telugu"', 'sans-serif'],
+        devanagari: ['"Noto Sans Devanagari"', 'sans-serif'],
       },
       boxShadow: {
-        'soft': '0 4px 20px -2px rgba(10, 56, 38, 0.07)',
-        'elevated': '0 12px 32px -4px rgba(10, 56, 38, 0.12)',
-        'glow': '0 0 30px rgba(251, 191, 36, 0.45)',
-        'chilli': '0 8px 24px -4px rgba(220, 38, 38, 0.35)',
-        'plum': '0 12px 32px -4px rgba(4, 31, 20, 0.40)',
+        'soft': '0 4px 20px -2px rgba(40, 20, 63, 0.08)',
+        'elevated': '0 12px 32px -4px rgba(40, 20, 63, 0.16)',
+        'glow': '0 0 30px rgba(244, 196, 94, 0.45)',
+        'gold': '0 8px 24px -4px rgba(214, 165, 45, 0.35)',
+        'royal': '0 14px 36px -4px rgba(25, 13, 43, 0.50)',
+        'chilli': '0 8px 24px -4px rgba(214, 165, 45, 0.35)',
+        'plum': '0 12px 32px -4px rgba(40, 20, 63, 0.45)',
+        'emerald': '0 8px 24px -4px rgba(18, 96, 68, 0.30)',
       }
     },
   },

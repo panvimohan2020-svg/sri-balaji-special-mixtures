@@ -158,11 +158,11 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-ivory-border">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-turmeric-100 border border-turmeric-300 text-cocoa font-bold text-xs uppercase tracking-widest mb-3">
-              <Star className="w-3.5 h-3.5 text-turmeric-600 fill-turmeric-500" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-light/40 border border-gold/30 text-imperial font-bold text-xs uppercase tracking-widest mb-3">
+              <Star className="w-3.5 h-3.5 text-gold-rich fill-gold" />
               <span>Real Customer Feedback</span>
             </div>
-            <h2 id="reviews-heading" className="text-3xl font-display font-extrabold text-plum-900 tracking-tight">
+            <h2 id="reviews-heading" className="text-3xl font-display font-extrabold text-imperial tracking-tight">
               {title}
             </h2>
             <p className="text-sm text-cocoa-muted mt-1 max-w-xl">
@@ -173,19 +173,19 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
           <button
             type="button"
             onClick={handleOpenForm}
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-chilli text-white font-bold text-sm shadow-chilli hover:bg-chilli-600 active:scale-95 transition-all w-fit"
+            className="btn-royal-gold inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl text-xs sm:text-sm font-sans font-black shadow-gold active:scale-95 transition-all w-fit cursor-pointer"
           >
-            <Star className="w-4 h-4 fill-white" />
+            <Star className="w-4 h-4 fill-imperial" />
             <span>Write a Review</span>
           </button>
         </div>
 
         {/* Rating Breakdown & Stats */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 my-8 p-6 sm:p-8 rounded-3xl bg-ivory-warm border border-ivory-border shadow-soft">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 my-8 p-6 sm:p-8 rounded-3xl bg-ivory border border-gold/25 shadow-soft">
           
           {/* Average Score Box */}
           <div className="lg:col-span-4 flex flex-col items-center justify-center text-center p-4 border-b lg:border-b-0 lg:border-r border-ivory-border">
-            <span className="text-6xl font-display font-black text-plum-900 tracking-tight">
+            <span className="text-6xl font-display font-black text-imperial tracking-tight">
               {total > 0 ? average.toFixed(1) : '—'}
             </span>
             <div className="flex items-center gap-1.5 my-2">
@@ -194,7 +194,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                   key={star}
                   className={`w-5 h-5 ${
                     star <= Math.round(average)
-                      ? 'text-turmeric fill-turmeric'
+                      ? 'text-gold fill-gold'
                       : 'text-stone-300 fill-stone-100'
                   }`}
                 />
@@ -217,11 +217,11 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
               return (
                 <div key={stars} className="flex items-center gap-3 text-xs font-semibold text-cocoa">
                   <span className="w-10 text-right font-bold flex items-center justify-end gap-1">
-                    {stars} <Star className="w-3 h-3 text-turmeric fill-turmeric inline" />
+                    {stars} <Star className="w-3 h-3 text-gold fill-gold inline" />
                   </span>
-                  <div className="flex-1 h-3 rounded-full bg-stone-200/80 overflow-hidden">
+                  <div className="flex-1 h-3 rounded-full bg-cream overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-turmeric to-chilli transition-all duration-500"
+                      className="h-full rounded-full bg-gradient-to-r from-gold to-gold-deep transition-all duration-500"
                       style={{ width: `${percentage}%` }}
                     />
                   </div>
@@ -237,7 +237,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
         {/* Filter Chips */}
         <div className="flex flex-wrap items-center gap-2 mb-8">
           <span className="text-xs font-bold text-cocoa-muted uppercase tracking-wider flex items-center gap-1 mr-2">
-            <Filter className="w-3.5 h-3.5" /> Filter:
+            <Filter className="w-3.5 h-3.5 text-gold-deep" /> Filter:
           </span>
           {[
             { id: 'all', label: `All Reviews (${total})` },
@@ -254,8 +254,8 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
               onClick={() => setActiveFilter(tab.id as any)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border ${
                 activeFilter === tab.id
-                  ? 'bg-plum-900 text-white border-plum-900 shadow-sm'
-                  : 'bg-white text-cocoa border-ivory-border hover:bg-ivory-warm'
+                  ? 'bg-imperial text-gold border-imperial font-black shadow-royal'
+                  : 'bg-white text-cocoa border-ivory-border hover:bg-cream/40'
               }`}
             >
               {tab.label}
@@ -265,11 +265,11 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
 
         {/* Reviews List */}
         {filteredReviews.length === 0 ? (
-          <div className="text-center py-16 px-4 rounded-3xl bg-ivory-warm border-2 border-dashed border-ivory-border">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-turmeric-100 border border-turmeric-300 flex items-center justify-center text-turmeric-600">
-              <Star className="w-8 h-8 fill-turmeric-400" />
+          <div className="text-center py-16 px-4 rounded-3xl bg-ivory border-2 border-dashed border-gold/30">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gold-light/40 border border-gold/30 flex items-center justify-center text-gold-deep">
+              <Star className="w-8 h-8 fill-gold" />
             </div>
-            <h3 className="text-xl font-display font-bold text-plum-900 mb-1">
+            <h3 className="text-xl font-display font-bold text-imperial mb-1">
               Be the First to Review!
             </h3>
             <p className="text-sm text-cocoa-muted max-w-md mx-auto mb-6">
@@ -278,9 +278,9 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
             <button
               type="button"
               onClick={handleOpenForm}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-chilli text-white font-bold text-xs uppercase tracking-wider hover:bg-chilli-600 transition-all shadow-chilli"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gold hover:bg-gold-rich text-imperial font-black text-xs uppercase tracking-wider transition-all shadow-gold"
             >
-              <Star className="w-3.5 h-3.5 fill-white" />
+              <Star className="w-3.5 h-3.5 fill-imperial" />
               Write Your Review Now
             </button>
           </div>
@@ -299,22 +299,22 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                         <Star
                           key={s}
                           className={`w-4 h-4 ${
-                            s <= rev.rating ? 'text-turmeric fill-turmeric' : 'text-stone-200 fill-stone-100'
+                            s <= rev.rating ? 'text-gold fill-gold' : 'text-stone-200 fill-stone-100'
                           }`}
                         />
                       ))}
                     </div>
 
                     {rev.verifiedPurchase && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-pista-100 text-pista-800 text-[10px] font-bold border border-pista-300">
-                        <CheckCircle2 className="w-3 h-3 text-pista-700" />
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald/15 text-emerald-deep text-[10px] font-bold border border-emerald/30">
+                        <CheckCircle2 className="w-3 h-3 text-emerald" />
                         <span>Verified Buyer</span>
                       </span>
                     )}
                   </div>
 
                   {/* Title & Comment */}
-                  <h4 className="font-display font-bold text-base text-plum-900 mb-1.5 leading-snug">
+                  <h4 className="font-display font-bold text-base text-imperial mb-1.5 leading-snug">
                     {rev.title}
                   </h4>
                   <p className="text-xs text-cocoa leading-relaxed line-clamp-4">
@@ -337,7 +337,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                         className="w-full h-32 object-cover"
                         loading="lazy"
                       />
-                      <span className="text-[10px] font-bold text-chilli-600 block text-left py-1 px-2 bg-peach-50">
+                      <span className="text-[10px] font-bold text-imperial block text-left py-1 px-2 bg-gold-light/40">
                         📷 Click to enlarge photo
                       </span>
                     </button>
@@ -347,7 +347,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                 {/* Footer: Author Info & Helpful Button */}
                 <div className="pt-4 mt-4 border-t border-ivory-border flex items-center justify-between">
                   <div>
-                    <span className="font-bold text-xs text-plum-900 block">
+                    <span className="font-bold text-xs text-imperial block">
                       {rev.authorName}
                     </span>
                     <span className="text-[10px] text-cocoa-muted">
@@ -360,7 +360,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                     onClick={() => handleHelpfulClick(rev.id)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold transition-all border ${
                       helpfulVotedIds.includes(rev.id)
-                        ? 'bg-pista-100 text-pista-800 border-pista-300'
+                        ? 'bg-emerald/15 text-emerald-deep border-emerald/30'
                         : 'bg-stone-50 text-cocoa-muted border-stone-200 hover:bg-stone-100'
                     }`}
                     title="Mark review as helpful"
@@ -378,22 +378,22 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
         <dialog
           ref={dialogRef}
           aria-labelledby="write-review-title"
-          className="rounded-3xl p-0 w-full max-w-lg bg-white shadow-2xl backdrop:bg-black/60 m-auto"
+          className="rounded-3xl p-0 w-full max-w-lg bg-white shadow-royal border border-gold/30 backdrop:bg-imperial-dark/85 m-auto"
         >
           <div className="p-6 sm:p-8">
             <div className="flex items-center justify-between pb-4 border-b border-ivory-border">
               <div>
-                <h3 id="write-review-title" className="text-xl font-display font-bold text-plum-900">
+                <h3 id="write-review-title" className="text-xl font-display font-bold text-imperial">
                   Share Your Experience
                 </h3>
                 <p className="text-xs text-cocoa-muted mt-0.5">
-                  Reviewing: <strong className="text-chilli">{productName}</strong>
+                  Reviewing: <strong className="text-gold-deep">{productName}</strong>
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleCloseForm}
-                className="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-cocoa flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-cream hover:bg-gold/20 text-cocoa flex items-center justify-center transition-colors border border-gold/20"
                 aria-label="Close review dialog"
               >
                 <X className="w-4 h-4" />
@@ -401,8 +401,8 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
             </div>
 
             {formError && (
-              <div className="mt-4 p-3 rounded-xl bg-chilli-50 border border-chilli-200 text-chilli-700 text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 shrink-0" />
+              <div className="mt-4 p-3 rounded-xl bg-imperial/10 border border-gold/30 text-imperial text-xs flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 text-gold-deep" />
                 <span>{formError}</span>
               </div>
             )}
@@ -427,7 +427,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                       <Star
                         className={`w-7 h-7 ${
                           star <= (hoverRating || rating)
-                            ? 'text-turmeric fill-turmeric'
+                            ? 'text-gold fill-gold'
                             : 'text-stone-300 fill-stone-100'
                         }`}
                       />
@@ -451,7 +451,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                     value={authorName}
                     onChange={(e) => setAuthorName(e.target.value)}
                     placeholder="e.g. Ramesh Patnaik"
-                    className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-chilli focus:border-transparent outline-none"
+                    className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-gold focus:border-transparent outline-none"
                   />
                 </div>
                 <div>
@@ -463,7 +463,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     placeholder="e.g. Paralakhemundi"
-                    className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-chilli focus:border-transparent outline-none"
+                    className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-gold focus:border-transparent outline-none"
                   />
                 </div>
               </div>
@@ -478,7 +478,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                   value={orderNumber}
                   onChange={(e) => setOrderNumber(e.target.value)}
                   placeholder="e.g. SB-10492 or WhatsApp Order"
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-chilli focus:border-transparent outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-gold focus:border-transparent outline-none"
                 />
               </div>
 
@@ -493,7 +493,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                   value={reviewTitle}
                   onChange={(e) => setReviewTitle(e.target.value)}
                   placeholder="e.g. Best Onion Mixture in Odisha!"
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-chilli focus:border-transparent outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-gold focus:border-transparent outline-none"
                 />
               </div>
 
@@ -508,7 +508,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                   placeholder="How was the crunch, freshness, spice blend, and packaging? Tell us what you loved!"
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-chilli focus:border-transparent outline-none resize-none"
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-gold focus:border-transparent outline-none resize-none"
                 />
               </div>
 
@@ -526,12 +526,12 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                 />
                 
                 {photoDataUrl ? (
-                  <div className="relative w-24 h-24 rounded-2xl overflow-hidden border-2 border-pista-400">
+                  <div className="relative w-24 h-24 rounded-2xl overflow-hidden border-2 border-emerald">
                     <img src={photoDataUrl} alt="Upload preview" className="w-full h-full object-cover" />
                     <button
                       type="button"
                       onClick={() => setPhotoDataUrl(undefined)}
-                      className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/70 text-white flex items-center justify-center text-xs"
+                      className="absolute top-1 right-1 w-5 h-5 rounded-full bg-imperial-dark/80 text-gold flex items-center justify-center text-xs"
                       aria-label="Remove photo"
                     >
                       ×
@@ -554,13 +554,13 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                 <button
                   type="button"
                   onClick={handleCloseForm}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-cocoa-muted hover:bg-stone-100 transition-colors"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-cocoa-muted hover:bg-cream transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-chilli text-white text-xs font-bold uppercase tracking-wider hover:bg-chilli-600 transition-all shadow-chilli active:scale-95"
+                  className="px-6 py-2.5 rounded-xl bg-gold hover:bg-gold-rich text-imperial text-xs font-black uppercase tracking-wider transition-all shadow-gold active:scale-95"
                 >
                   Submit Genuine Review
                 </button>

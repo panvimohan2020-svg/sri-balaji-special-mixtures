@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /account
+Disallow: /account/*
+
+Sitemap: https://sribalajispecialmixtures.in/sitemap.xml
+

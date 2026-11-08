@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Volume2, VolumeX, Play } from 'lucide-react';
 
 export const CinematicIntro: React.FC = () => {
   // Check sessionStorage on initial evaluation; also allow ?intro=true in URL to test anytime
@@ -18,7 +18,12 @@ export const CinematicIntro: React.FC = () => {
   });
 
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isAutoplayBlocked, setIsAutoplayBlocked] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
   const mainVideoRef = useRef<HTMLVideoElement>(null);
+  const bgVideoRef = useRef<HTMLVideoElement>(null);
 
   // Dismiss and reveal homepage smoothly
   const dismissIntro = useCallback(() => {
@@ -34,6 +39,9 @@ export const CinematicIntro: React.FC = () => {
     if (mainVideoRef.current) {
       mainVideoRef.current.pause();
     }
+    if (bgVideoRef.current) {
+      bgVideoRef.current.pause();
+    }
 
     // Smooth 600ms fade transition out
     setTimeout(() => {
@@ -48,6 +56,7 @@ export const CinematicIntro: React.FC = () => {
         sessionStorage.removeItem('sriBalajiIntroPlayed');
       } catch {}
       setIsFadingOut(false);
+      setIsAutoplayBlocked(false);
       setIsVisible(true);
     };
 
@@ -55,52 +64,75 @@ export const CinematicIntro: React.FC = () => {
     return () => window.removeEventListener('sri-balaji-replay-intro', handleReplay);
   }, []);
 
-  const triggerUnmute = useCallback(() => {
-    const video = mainVideoRef.current;
-    if (video) {
-      video.muted = false;
-      video.volume = 1.0;
-      video.play().catch(() => {});
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
+  // Toggle sound or unmute
+  const toggleSound = useCallback((e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     const video = mainVideoRef.current;
     if (!video) return;
 
-    // Prevent document scrolling during cinematic intro
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    if (video.muted) {
+      video.muted = false;
+      video.volume = 1.0;
+      setIsMuted(false);
+      // If unmuted in the first 2 seconds, rewind to 0:00 so voiceover is heard from the start
+      if (video.currentTime > 0 && video.currentTime < 2.5) {
+        video.currentTime = 0;
+        if (bgVideoRef.current) bgVideoRef.current.currentTime = 0;
+      }
+      video.play().catch(() => {});
+      if (bgVideoRef.current) bgVideoRef.current.play().catch(() => {});
+    } else {
+      video.muted = true;
+      setIsMuted(true);
+    }
+  }, []);
 
-    // 14-second safety timeout (video is ~10s)
-    const safetyTimeout = setTimeout(() => {
-      dismissIntro();
-    }, 14000);
+  // Primary playback handler: attempts unmuted playback first; falls back gracefully if restricted
+  const startPlayback = useCallback(async () => {
+    const video = mainVideoRef.current;
+    const bgVideo = bgVideoRef.current;
+    if (!video) return;
 
     video.playsInline = true;
-    video.preload = 'auto';
     video.volume = 1.0;
-    video.muted = false;
 
-    // Attempt direct simultaneous unmuted playback
-    const startPlayback = async () => {
+    // Step 1: Attempt direct simultaneous unmuted playback
+    try {
+      video.muted = false;
+      video.currentTime = 0;
+      await video.play();
+      setIsMuted(false);
+      setIsPlaying(true);
+      setIsAutoplayBlocked(false);
+      if (bgVideo) {
+        bgVideo.currentTime = 0;
+        bgVideo.play().catch(() => {});
+      }
+    } catch (unmutedErr) {
+      console.info('Unmuted autoplay prevented by browser policy; attempting muted playback with audio control pill:', unmutedErr);
+      
+      // Step 2: Attempt muted playback so the visitor immediately sees the advertisement
       try {
-        video.muted = false;
-        video.volume = 1.0;
-        await video.play();
-      } catch {
-        // Fallback if browser environment restricts unmuted autoplay prior to user interaction
         video.muted = true;
-        await video.play().catch(() => {});
+        await video.play();
+        setIsMuted(true);
+        setIsPlaying(true);
+        setIsAutoplayBlocked(false);
+        if (bgVideo) {
+          bgVideo.play().catch(() => {});
+        }
 
-        // Unmute immediately on any screen interaction
-        const events = ['pointerdown', 'touchstart', 'mousedown', 'keydown', 'scroll', 'click'];
+        // Setup single-touch unmuting listener on any interaction
+        const events = ['pointerdown', 'touchstart', 'mousedown', 'keydown'];
         const onInteraction = () => {
-          if (video) {
+          if (video && video.muted) {
             video.muted = false;
             video.volume = 1.0;
+            setIsMuted(false);
+            if (video.currentTime > 0 && video.currentTime < 2.5) {
+              video.currentTime = 0;
+              if (bgVideo) bgVideo.currentTime = 0;
+            }
             video.play().catch(() => {});
           }
           events.forEach((evt) => window.removeEventListener(evt, onInteraction));
@@ -109,8 +141,54 @@ export const CinematicIntro: React.FC = () => {
         events.forEach((evt) => {
           window.addEventListener(evt, onInteraction, { passive: true, once: true });
         });
+
+      } catch (mutedErr) {
+        // Step 3: Autoplay fully blocked (low power mode / strict policy) -> show interactive luxury Play button
+        console.warn('Autoplay restricted completely by browser:', mutedErr);
+        setIsAutoplayBlocked(true);
+        setIsPlaying(false);
       }
-    };
+    }
+  }, []);
+
+  // Manual trigger when user clicks "Play Intro" button
+  const handleManualPlay = useCallback(async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = mainVideoRef.current;
+    const bgVideo = bgVideoRef.current;
+    if (!video) return;
+
+    video.muted = false;
+    video.volume = 1.0;
+    video.currentTime = 0;
+
+    try {
+      await video.play();
+      setIsMuted(false);
+      setIsPlaying(true);
+      setIsAutoplayBlocked(false);
+      if (bgVideo) {
+        bgVideo.currentTime = 0;
+        bgVideo.play().catch(() => {});
+      }
+    } catch (err) {
+      console.error('Playback failed on user gesture:', err);
+      // Fallback: dismiss to homepage if even user gesture fails
+      dismissIntro();
+    }
+  }, [dismissIntro]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    // Prevent document scrolling during cinematic intro
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    // 14-second fail-safe timeout (video is ~10s)
+    const safetyTimeout = setTimeout(() => {
+      dismissIntro();
+    }, 14000);
 
     startPlayback();
 
@@ -118,7 +196,7 @@ export const CinematicIntro: React.FC = () => {
       clearTimeout(safetyTimeout);
       document.body.style.overflow = originalOverflow;
     };
-  }, [isVisible, dismissIntro]);
+  }, [isVisible, dismissIntro, startPlayback]);
 
   if (!isVisible) return null;
 
@@ -127,17 +205,36 @@ export const CinematicIntro: React.FC = () => {
       role="dialog"
       aria-modal="true"
       aria-label="Sri Balaji Brand Introduction"
-      onClick={triggerUnmute}
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#070204] select-none transition-opacity duration-600 ease-out overflow-hidden cursor-pointer ${
+      onClick={() => {
+        // Clicking anywhere un-mutes and plays with sound
+        const video = mainVideoRef.current;
+        if (video && video.muted) {
+          toggleSound();
+        }
+      }}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#120820] select-none transition-opacity duration-700 ease-out overflow-hidden ${
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      {/* Luxury ambient glows */}
-      <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-red-900/15 rounded-full blur-3xl pointer-events-none" />
+      {/* SECTION 3: SOFTLY BLURRED AMBIENT VIDEO BACKGROUND FOR EDGE-TO-EDGE LUXURY PRESENTATION */}
+      <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none opacity-30 select-none">
+        <video
+          ref={bgVideoRef}
+          src="/videos/sri-balaji-intro.mp4"
+          aria-hidden="true"
+          tabIndex={-1}
+          muted
+          playsInline
+          className="w-full h-full object-cover filter blur-3xl scale-110 brightness-90"
+        />
+      </div>
 
-      {/* TOP-RIGHT: Clean Skip Intro Button (No Sound Buttons) */}
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 pointer-events-auto">
+      {/* Royal subtle ambient lighting */}
+      <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-gold/15 rounded-full blur-3xl pointer-events-none z-15" />
+      <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-imperial-soft/20 rounded-full blur-3xl pointer-events-none z-15" />
+
+      {/* SECTION 4: PREMIUM "SKIP INTRO →" BUTTON */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-40 pointer-events-auto">
         <button
           type="button"
           onClick={(e) => {
@@ -145,25 +242,80 @@ export const CinematicIntro: React.FC = () => {
             dismissIntro();
           }}
           aria-label="Skip Intro and proceed to website"
-          className="group flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-amber-400/30 hover:border-amber-400 text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-xl transition-all transform hover:scale-105 active:scale-95 min-h-[44px] min-w-[44px]"
+          className="group flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-imperial-dark/80 hover:bg-imperial-dark backdrop-blur-md border border-gold/40 hover:border-gold text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-royal transition-all transform hover:scale-105 active:scale-95 min-h-[44px] min-w-[44px]"
         >
           <span>Skip Intro</span>
-          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold group-hover:translate-x-1 transition-transform" />
         </button>
       </div>
 
-      {/* FULL-SCREEN RESPONSIVE VIDEO PLAYER (EDGES NEVER CUT) */}
+      {/* SECTION 5: SUBTLE SOUND-ON / SOUND-OFF PILL CONTROL */}
+      {!isAutoplayBlocked && (
+        <div className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 z-40 pointer-events-auto">
+          <button
+            type="button"
+            onClick={toggleSound}
+            aria-label={isMuted ? 'Enable Sound' : 'Mute Sound'}
+            className={`flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-full backdrop-blur-md text-xs sm:text-sm font-bold tracking-wide transition-all shadow-royal min-h-[44px] min-w-[44px] ${
+              isMuted
+                ? 'bg-imperial-dark/85 text-gold-light border border-gold/60 animate-pulse hover:border-gold'
+                : 'bg-black/60 text-white/90 border border-white/20 hover:border-gold/40'
+            }`}
+          >
+            {isMuted ? (
+              <>
+                <VolumeX className="w-4 h-4 text-gold shrink-0" />
+                <span className="text-white font-semibold">Sound Off • <strong className="text-gold font-bold">Tap to Listen</strong></span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="w-4 h-4 text-emerald-soft shrink-0" />
+                <span className="text-white/90 font-medium">Sound On</span>
+                {/* Subtle sound wave indicator */}
+                <span className="flex items-end gap-0.5 h-3">
+                  <span className="w-0.5 h-1.5 bg-gold rounded-full animate-pulse" />
+                  <span className="w-0.5 h-3 bg-gold rounded-full animate-pulse [animation-delay:0.2s]" />
+                  <span className="w-0.5 h-2 bg-gold rounded-full animate-pulse [animation-delay:0.4s]" />
+                </span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
+
+      {/* SECTION 5: ATTRACTIVE "PLAY INTRO" BUTTON IF AUTOPLAY IS STRICTLY BLOCKED */}
+      {isAutoplayBlocked && (
+        <div className="absolute inset-0 z-40 flex flex-col items-center justify-center p-4 bg-black/50 backdrop-blur-sm pointer-events-auto">
+          <div className="text-center max-w-md space-y-4 animate-in fade-in zoom-in-95 duration-300">
+            <button
+              type="button"
+              onClick={handleManualPlay}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gold hover:bg-gold-rich text-imperial font-black text-sm uppercase tracking-wider shadow-gold hover:shadow-royal transform hover:scale-105 active:scale-95 transition-all"
+            >
+              <Play className="w-5 h-5 fill-imperial" />
+              <span>Play Intro Experience</span>
+            </button>
+            <p className="text-xs text-ivory/80 tracking-wide">
+              Tap to start the cinematic brand advertisement with original audio.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* SECTION 2 & 3: MAIN FULL-SCREEN RESPONSIVE VIDEO PLAYER (16:9 CENTERED, NEVER CROPPED) */}
       <div className="relative z-20 w-full h-full flex items-center justify-center overflow-hidden p-0 m-0">
         <video
           ref={mainVideoRef}
           src="/videos/sri-balaji-intro.mp4"
           poster="/videos/sri-balaji-intro-poster.jpg"
           playsInline
-          autoPlay
-          preload="auto"
+          preload="metadata"
           onEnded={() => dismissIntro()}
-          onError={() => dismissIntro()}
-          className="w-full h-full max-w-full max-h-full object-contain"
+          onError={() => {
+            console.error('Video error encountered; gracefully falling back to homepage.');
+            dismissIntro();
+          }}
+          className="w-full h-full max-w-full max-h-full object-contain drop-shadow-2xl"
         />
       </div>
     </div>

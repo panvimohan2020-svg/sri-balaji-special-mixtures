@@ -13,9 +13,15 @@ class ProductVariant(Base):
     weight_in_grams = Column(Integer, nullable=False, default=250)
     retail_price = Column(Numeric(10, 2), nullable=True)
     wholesale_price = Column(Numeric(10, 2), nullable=True)
-    stock_quantity = Column(Integer, default=100)
+    stock_quantity = Column(Integer, default=0)
     is_in_stock = Column(Boolean, default=True)
     sku = Column(String(64), unique=True, nullable=True)
 
-    product = relationship("Product", back_populates="variants")
+    # Phase 2 Inventory Attributes
+    track_inventory = Column(Boolean, default=False)
+    min_stock_threshold = Column(Integer, default=5)
+    is_opening_stock_set = Column(Boolean, default=False)
 
+    product = relationship("Product", back_populates="variants")
+    stock_movements = relationship("StockMovement", back_populates="variant", cascade="all, delete-orphan", order_by="StockMovement.created_at.desc()")
+    low_stock_alerts = relationship("LowStockAlert", back_populates="variant", cascade="all, delete-orphan", order_by="LowStockAlert.created_at.desc()")

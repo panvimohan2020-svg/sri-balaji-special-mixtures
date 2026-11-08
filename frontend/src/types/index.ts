@@ -50,6 +50,9 @@ export interface Product {
   minimum_order_qty: number;
   is_available: boolean;
   is_featured: boolean;
+  product_label?: string; // e.g. "New Launch"
+  collection?: string; // e.g. "Diwali Special 2026"
+  tagline?: string; // e.g. "Taste the Tradition."
   variants: ProductVariant[];
   images: ProductImage[];
   created_at?: string;

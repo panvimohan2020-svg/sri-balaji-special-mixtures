@@ -17,6 +17,16 @@ class VariantCreate(VariantBase):
     pass
 
 
+class VariantUpdate(BaseModel):
+    weight_label: Optional[str] = None
+    weight_in_grams: Optional[int] = None
+    retail_price: Optional[float] = None
+    wholesale_price: Optional[float] = None
+    stock_quantity: Optional[int] = None
+    is_in_stock: Optional[bool] = None
+    sku: Optional[str] = None
+
+
 class VariantResponse(VariantBase):
     id: str
     product_id: str

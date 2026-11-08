@@ -19,8 +19,10 @@ import { ProductCard } from '../components/common/ProductCard';
 import { useCartStore } from '../store/useCartStore';
 import { useWishlistStore } from '../store/useWishlistStore';
 import { useRecentlyViewedStore } from '../store/useRecentlyViewedStore';
+import { useTranslation } from '../store/useLanguageStore';
 
 export const CatalogPage: React.FC = () => {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category') || 'all';
   const filterParam = searchParams.get('filter') || 'all';
@@ -110,7 +112,9 @@ export const CatalogPage: React.FC = () => {
         const matchesName = product.name.toLowerCase().includes(q);
         const matchesDesc = product.description.toLowerCase().includes(q);
         const matchesIng = product.ingredients?.toLowerCase().includes(q);
-        if (!matchesName && !matchesDesc && !matchesIng) return false;
+        const matchesLabel = product.product_label?.toLowerCase().includes(q);
+        const matchesCol = product.collection?.toLowerCase().includes(q);
+        if (!matchesName && !matchesDesc && !matchesIng && !matchesLabel && !matchesCol) return false;
       }
 
       // Taste profile match
@@ -167,34 +171,37 @@ export const CatalogPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       
       {/* Header & Mode Switch */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-ivory-border">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gold/20">
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-chilli block">
-            Authentic Odisha &amp; South Indian Flavours
+          <span className="font-script text-gold-deep text-2xl sm:text-3xl block mb-0.5">
+            Authentic Snack Heritage
           </span>
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-plum-900 mt-1">
-            Crispy Savouries &amp; Mixtures Catalogue
+          <span className="text-xs font-sans font-bold uppercase tracking-widest text-gold-deep block">
+            {t('hero.badge', 'South Odisha & Paralakhemundi Savouries')}
+          </span>
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-imperial mt-1">
+            {t('catalog.title', 'Crispy Savouries & Mixtures Catalogue')}
           </h1>
-          <p className="text-xs sm:text-sm text-cocoa-muted mt-1">
-            Handcrafted with 30 years of spice consistency. Available in retail packs and bulk wholesale boxes.
+          <p className="font-serif text-xs sm:text-sm text-cocoa-muted mt-1 italic">
+            {t('catalog.subtitle', 'Handcrafted with 30 years of spice consistency. Available in retail packs and bulk wholesale boxes.')}
           </p>
         </div>
 
         {/* Pricing Mode Toggle Card */}
-        <div className="inline-flex items-center gap-3 p-2.5 rounded-2xl bg-ivory-warm border border-ivory-border shadow-xs">
+        <div className="inline-flex items-center gap-3 p-2.5 rounded-2xl bg-white border border-gold/30 shadow-soft">
           <div className="flex flex-col text-left pl-2">
-            <span className="text-[10px] uppercase font-bold text-cocoa-muted">Active Pricing Tier</span>
-            <span className="text-xs font-extrabold text-plum-900">
+            <span className="text-[10px] font-sans uppercase font-bold text-cocoa-muted">Active Pricing Tier</span>
+            <span className="text-xs font-sans font-extrabold text-imperial">
               {isWholesaleMode ? 'Wholesale Pricing (B2B)' : 'Retail Family Pricing'}
             </span>
           </div>
           <button
             type="button"
             onClick={toggleWholesaleMode}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-xs ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-sans font-bold transition-all shadow-xs ${
               isWholesaleMode
-                ? 'bg-plum-900 text-turmeric shadow-plum'
-                : 'bg-white text-cocoa border border-ivory-border hover:bg-peach-50'
+                ? 'bg-gold text-imperial font-black border border-gold shadow-gold'
+                : 'bg-imperial text-gold border border-gold/40 hover:bg-imperial-dark'
             }`}
           >
             <Store className="w-3.5 h-3.5" />
@@ -217,8 +224,8 @@ export const CatalogPage: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by snack name, ingredients, or taste..."
-              className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white border border-ivory-border text-xs sm:text-sm text-cocoa placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-chilli focus:border-transparent shadow-xs"
+              placeholder={t('catalog.searchPlaceholder', 'Search by snack name, ingredients, or taste...')}
+              className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white border border-ivory-border text-xs sm:text-sm text-cocoa placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent shadow-xs"
             />
             {searchQuery && (
               <button
@@ -239,12 +246,12 @@ export const CatalogPage: React.FC = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-ivory-border text-xs sm:text-sm font-semibold text-cocoa focus:outline-none focus:ring-2 focus:ring-chilli shadow-xs appearance-none cursor-pointer"
+                className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-ivory-border text-xs sm:text-sm font-semibold text-cocoa focus:outline-none focus:ring-2 focus:ring-gold shadow-xs appearance-none cursor-pointer"
               >
-                <option value="featured">Sort: Featured &amp; Bestsellers</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="name-asc">Alphabetical: A to Z</option>
+                <option value="featured">{t('catalog.sortFeatured', 'Featured & Bestsellers')}</option>
+                <option value="price-asc">{t('catalog.sortPriceAsc', 'Price: Low to High')}</option>
+                <option value="price-desc">{t('catalog.sortPriceDesc', 'Price: High to Low')}</option>
+                <option value="name-asc">{t('catalog.sortName', 'Alphabetical: A to Z')}</option>
               </select>
             </div>
           </div>
@@ -256,12 +263,12 @@ export const CatalogPage: React.FC = () => {
               onClick={handleToggleWishlistFilter}
               className={`w-full h-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold transition-all border shadow-xs ${
                 onlyWishlist
-                  ? 'bg-chilli text-white border-chilli shadow-chilli'
-                  : 'bg-white text-cocoa border-ivory-border hover:bg-peach-50'
+                  ? 'bg-gold text-imperial border-gold shadow-gold font-black'
+                  : 'bg-white text-cocoa border-ivory-border hover:bg-cream'
               }`}
             >
-              <Heart className={`w-4 h-4 ${onlyWishlist ? 'fill-white' : 'text-chilli'}`} />
-              <span>Wishlist ({getWishlistCount()})</span>
+              <Heart className={`w-4 h-4 ${onlyWishlist ? 'fill-imperial' : 'text-gold-deep'}`} />
+              <span>{t('catalog.onlyWishlist', 'Wishlist')} ({getWishlistCount()})</span>
             </button>
           </div>
 
@@ -274,11 +281,11 @@ export const CatalogPage: React.FC = () => {
             onClick={() => handleCategoryChange('all')}
             className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
               selectedCategory === 'all'
-                ? 'bg-plum-900 text-white border-plum-900 shadow-xs'
-                : 'bg-white text-cocoa border-ivory-border hover:bg-peach-50'
+                ? 'bg-imperial text-gold border-imperial font-black shadow-royal'
+                : 'bg-white text-cocoa border-ivory-border hover:bg-cream'
             }`}
           >
-            All Products ({initialProducts.length})
+            {t('catalog.filterAll', 'All Products')} ({initialProducts.length})
           </button>
 
           {initialCategories.map((cat) => {
@@ -290,8 +297,8 @@ export const CatalogPage: React.FC = () => {
                 onClick={() => handleCategoryChange(cat.slug)}
                 className={`whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
                   isSelected
-                    ? 'bg-plum-900 text-white border-plum-900 shadow-xs'
-                    : 'bg-white text-cocoa border-ivory-border hover:bg-peach-50'
+                    ? 'bg-imperial text-gold border-imperial font-black shadow-royal'
+                    : 'bg-white text-cocoa border-ivory-border hover:bg-cream'
                 }`}
               >
                 {cat.name}
@@ -308,28 +315,28 @@ export const CatalogPage: React.FC = () => {
             </span>
 
             {selectedCategory !== 'all' && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-plum-100 text-plum-900 font-semibold border border-plum-200">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-gold-light/40 text-imperial font-bold border border-gold/30">
                 Category: {initialCategories.find(c => c.slug === selectedCategory)?.name || selectedCategory}
                 <button type="button" onClick={() => handleCategoryChange('all')}>
-                  <X className="w-3 h-3 hover:text-chilli" />
+                  <X className="w-3 h-3 hover:text-gold-deep" />
                 </button>
               </span>
             )}
 
             {onlyWishlist && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-peach-100 text-chilli-800 font-semibold border border-peach-300">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-gold-light/40 text-imperial font-bold border border-gold/30">
                 Saved in Wishlist
                 <button type="button" onClick={handleToggleWishlistFilter}>
-                  <X className="w-3 h-3 hover:text-chilli" />
+                  <X className="w-3 h-3 hover:text-gold-deep" />
                 </button>
               </span>
             )}
 
             {searchQuery.trim() && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-turmeric-100 text-cocoa-dark font-semibold border border-turmeric-300">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-cream text-imperial font-semibold border border-gold/30">
                 Search: &ldquo;{searchQuery}&rdquo;
                 <button type="button" onClick={() => setSearchQuery('')}>
-                  <X className="w-3 h-3 hover:text-chilli" />
+                  <X className="w-3 h-3 hover:text-gold-deep" />
                 </button>
               </span>
             )}
@@ -337,7 +344,7 @@ export const CatalogPage: React.FC = () => {
             <button
               type="button"
               onClick={resetAllFilters}
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-chilli hover:text-chilli-700 font-bold ml-auto"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-gold-deep hover:text-gold font-bold ml-auto"
             >
               <RotateCcw className="w-3 h-3" />
               <span>Reset All</span>
@@ -351,16 +358,16 @@ export const CatalogPage: React.FC = () => {
       <div>
         <div className="flex items-center justify-between mb-4">
           <span className="text-xs font-bold text-cocoa-muted">
-            Showing <strong className="text-plum-900">{filteredProducts.length}</strong> savouries
+            Showing <strong className="text-imperial">{filteredProducts.length}</strong> savouries
           </span>
         </div>
 
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-20 px-4 rounded-3xl bg-ivory-warm border-2 border-dashed border-ivory-border">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-peach-100 border border-peach-200 flex items-center justify-center text-chilli">
+          <div className="text-center py-20 px-4 rounded-3xl bg-ivory border-2 border-dashed border-gold/30">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gold-light/40 border border-gold/30 flex items-center justify-center text-gold-deep">
               <SlidersHorizontal className="w-8 h-8" />
             </div>
-            <h3 className="font-display font-bold text-xl text-plum-900 mb-1">
+            <h3 className="font-display font-bold text-xl text-imperial mb-1">
               No matching savouries found
             </h3>
             <p className="text-xs text-cocoa-muted max-w-md mx-auto mb-6">
@@ -369,7 +376,7 @@ export const CatalogPage: React.FC = () => {
             <button
               type="button"
               onClick={resetAllFilters}
-              className="px-5 py-2.5 rounded-xl bg-chilli text-white text-xs font-bold uppercase tracking-wider hover:bg-chilli-600 transition-colors shadow-chilli"
+              className="px-5 py-2.5 rounded-xl bg-gold hover:bg-gold-rich text-imperial text-xs font-black uppercase tracking-wider transition-colors shadow-gold"
             >
               Clear All Filters
             </button>
@@ -387,8 +394,8 @@ export const CatalogPage: React.FC = () => {
       {recentlyViewedProducts.length > 0 && (
         <section className="pt-12 border-t border-ivory-border">
           <div className="flex items-center gap-2 mb-6">
-            <Clock className="w-4 h-4 text-chilli" />
-            <h3 className="font-display font-bold text-xl text-plum-900">
+            <Clock className="w-4 h-4 text-gold-deep" />
+            <h3 className="font-display font-bold text-xl text-imperial">
               Recently Viewed Snacks
             </h3>
           </div>
@@ -397,9 +404,9 @@ export const CatalogPage: React.FC = () => {
               <Link
                 key={rp.id}
                 to={`/product/${rp.slug}`}
-                className="group p-3 rounded-2xl bg-white border border-ivory-border hover:shadow-soft transition-all text-center"
+                className="group p-3 rounded-2xl bg-white border border-ivory-border hover:border-gold hover:shadow-soft transition-all text-center"
               >
-                <div className="aspect-square rounded-xl bg-ivory-warm p-2 mb-2 overflow-hidden flex items-center justify-center">
+                <div className="aspect-square rounded-xl bg-ivory p-2 mb-2 overflow-hidden flex items-center justify-center">
                   <img
                     src={rp.images?.[0]?.image_url || '/images/products/onion-mixture.png'}
                     alt={rp.name}
@@ -407,10 +414,10 @@ export const CatalogPage: React.FC = () => {
                     loading="lazy"
                   />
                 </div>
-                <h4 className="font-display font-bold text-xs text-plum-900 line-clamp-1 group-hover:text-chilli transition-colors">
+                <h4 className="font-display font-bold text-xs text-imperial line-clamp-1 group-hover:text-gold-deep transition-colors">
                   {rp.name}
                 </h4>
-                <span className="text-[10px] text-chilli font-bold block mt-0.5">
+                <span className="text-[10px] text-imperial font-black block mt-0.5">
                   ₹{rp.variants[0]?.retail_price || 60}
                 </span>
               </Link>

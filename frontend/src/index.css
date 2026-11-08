@@ -1,22 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600;1,700&family=Great+Vibes&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Oriya:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* SRI BALAJI – ROYAL IMPERIAL DESIGN SYSTEM TOKENS */
+  --color-primary: #28143F;
+  --color-primary-dark: #190D2B;
+  --color-primary-light: #392052;
+  --color-primary-soft: #51336B;
+  --color-gold: #F4C45E;
+  --color-gold-dark: #D6A52D;
+  --color-gold-light: #FFE7A3;
+  --color-gold-deep: #A97819;
+  --color-emerald: #126044;
+  --color-emerald-dark: #0B4433;
+  --color-emerald-soft: #72A88A;
+  --color-ivory: #FFF8EB;
+  --color-cream: #F5EBD8;
+  --color-text: #392C28;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
-    background-color: #FFFDF5;
-    color: #2D1B12;
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background-color: #FFF8EB;
+    color: #392C28;
+    font-family: 'Manrope', 'Plus Jakarta Sans', system-ui, sans-serif;
   }
 
   body {
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    background-color: #FFF8EB;
+    color: #392C28;
+    font-family: 'Manrope', 'Plus Jakarta Sans', system-ui, sans-serif;
   }
 
   /* Modern Dialog standards per modern-web-guidance */
@@ -27,26 +48,26 @@
   dialog::backdrop {
     overflow: hidden;
     overscroll-behavior: contain;
-    background-color: rgba(4, 31, 20, 0.75);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background-color: rgba(25, 13, 43, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 }
 
-/* Custom subtle scrollbar with warm turmeric and emerald trim */
+/* Custom subtle scrollbar with Royal Imperial Purple and Radiant Saffron Gold trim */
 ::-webkit-scrollbar {
   width: 9px;
   height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #FFF9E6;
+  background: #FFF8EB;
 }
 ::-webkit-scrollbar-thumb {
-  background: #F59E0B;
+  background: #D6A52D;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D97706;
+  background: #A97819;
 }
 
 /* PWA App Shell Touch Action optimizations */
@@ -69,34 +90,34 @@
   background-image: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0,
-    rgba(255, 255, 255, 0.3) 50%,
+    rgba(244, 196, 94, 0.4) 50%,
     rgba(255, 255, 255, 0) 100%
   );
   animation: shimmer 2.5s infinite;
 }
 
 /* ========================================================================= */
-/* BACKGROUND ANIMATIONS: SUNLIT AURORAS & FLOATING SPICES/CRUNCH PARTICLES  */
+/* ROYAL IMPERIAL BACKGROUND ANIMATIONS: AURORAS & GOLD PARTICLES           */
 /* ========================================================================= */
 
-@keyframes sunGlowBreathe {
+@keyframes imperialAuraBreathe {
   0%, 100% {
     transform: scale(1) translate3d(0, 0, 0);
-    opacity: 0.85;
+    opacity: 0.8;
   }
   50% {
-    transform: scale(1.12) translate3d(15px, -20px, 0);
+    transform: scale(1.15) translate3d(20px, -25px, 0);
     opacity: 1;
   }
 }
 
-@keyframes emeraldMistDrift {
+@keyframes goldMistDrift {
   0%, 100% {
     transform: scale(1) translate3d(0, 0, 0);
-    opacity: 0.75;
+    opacity: 0.7;
   }
   50% {
-    transform: scale(1.08) translate3d(-20px, 15px, 0);
+    transform: scale(1.1) translate3d(-25px, 20px, 0);
     opacity: 0.95;
   }
 }
@@ -139,12 +160,12 @@
 
 @keyframes starTwinkle {
   0%, 100% {
-    opacity: 0.3;
+    opacity: 0.35;
     transform: scale(0.85) rotate(0deg);
   }
   50% {
     opacity: 1;
-    transform: scale(1.2) rotate(45deg);
+    transform: scale(1.25) rotate(45deg);
   }
 }
 
@@ -161,12 +182,12 @@
 
 /* Background Animation Utility Classes */
 .animate-sun-glow {
-  animation: sunGlowBreathe 14s ease-in-out infinite;
+  animation: imperialAuraBreathe 14s ease-in-out infinite;
   will-change: transform, opacity;
 }
 
 .animate-emerald-mist {
-  animation: emeraldMistDrift 16s ease-in-out infinite;
+  animation: goldMistDrift 16s ease-in-out infinite;
   will-change: transform, opacity;
 }
 
@@ -215,3 +236,74 @@
     transform: none !important;
   }
 }
+
+/* ==========================================================
+   ROYAL IMPERIAL & TRADITIONAL-MODERN DESIGN SYSTEM UTILITIES
+   ========================================================== */
+
+/* Gold foil text shimmer */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFE7A3 0%, #F4C45E 50%, #D6A52D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Royal ornamental flourish divider */
+.royal-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+.royal-divider::before,
+.royal-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 196, 94, 0.4), transparent);
+}
+.royal-divider-diamond {
+  color: #F4C45E;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* Royal button presets */
+.btn-royal-gold {
+  background: linear-gradient(135deg, #F4C45E 0%, #E5B242 50%, #D6A52D 100%);
+  color: #28143F;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  box-shadow: 0 6px 20px -3px rgba(214, 165, 45, 0.4);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-royal-gold:hover {
+  background: linear-gradient(135deg, #FFE7A3 0%, #F4C45E 50%, #E5B242 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -2px rgba(214, 165, 45, 0.55);
+}
+
+.btn-royal-purple {
+  background: linear-gradient(135deg, #28143F 0%, #190D2B 100%);
+  color: #F4C45E;
+  border: 1.5px solid rgba(244, 196, 94, 0.4);
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  box-shadow: 0 6px 20px -3px rgba(25, 13, 43, 0.45);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-royal-purple:hover {
+  background: linear-gradient(135deg, #392052 0%, #28143F 100%);
+  border-color: #F4C45E;
+  color: #FFE7A3;
+  transform: translateY(-2px);
+}
+
+/* Subtle traditional gold pattern overlay */
+.bg-mandala-pattern {
+  background-image: radial-gradient(rgba(244, 196, 94, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+

@@ -3,7 +3,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.settings import BusinessSetting
-from app.api.v1.endpoints.auth import get_current_user
+from app.core.rbac import (
+    require_roles,
+    log_admin_action,
+    ROLE_SUPERADMIN
+)
+from app.models.user import User
 
 router = APIRouter()
 
@@ -20,7 +25,7 @@ def update_setting(
     key: str,
     payload: Dict[str, str],
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user: User = Depends(require_roles([ROLE_SUPERADMIN]))
 ):
     """Admin-only endpoint to update a configuration key."""
     value = payload.get("value")
@@ -28,6 +33,7 @@ def update_setting(
         raise HTTPException(status_code=400, detail="Missing 'value' in payload")
 
     setting = db.query(BusinessSetting).filter(BusinessSetting.key == key).first()
+    old_val = setting.value if setting else "None"
     if not setting:
         setting = BusinessSetting(key=key, value=value)
         db.add(setting)
@@ -35,5 +41,14 @@ def update_setting(
         setting.value = value
 
     db.commit()
-    return {"key": key, "value": value}
 
+    log_admin_action(
+        db,
+        admin_email=current_user.email,
+        action="SETTING_UPDATED",
+        entity="BusinessSetting",
+        entity_id=key,
+        details=f"Setting '{key}' updated from '{old_val}' to '{value}'"
+    )
+
+    return {"key": key, "value": value}

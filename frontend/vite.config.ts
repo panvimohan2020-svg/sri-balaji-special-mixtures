@@ -13,8 +13,8 @@ export default defineConfig({
         name: 'Sri Balaji – Premium Wholesale Snacks',
         short_name: 'Sri Balaji',
         description: 'Authentic crispy mixtures, chips, and wholesale snacks digital platform.',
-        theme_color: '#8B1E1E',
-        background_color: '#FFFDF9',
+        theme_color: '#28143F',
+        background_color: '#FFF8EB',
         display: 'standalone',
         orientation: 'portrait-primary',
         icons: [

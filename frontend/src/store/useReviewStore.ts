@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { apiService } from '../services/api';
 
 export interface CustomerReview {
   id: string;
@@ -79,6 +80,25 @@ export const useReviewStore = create<ReviewState>()(
         set((state) => ({
           reviews: [newReview, ...state.reviews],
         }));
+
+        // Asynchronously persist to backend database with verified order matching
+        apiService.submitFeedback({
+          author_name: authorClean,
+          city: cityClean || 'Paralakhemundi',
+          rating,
+          title: titleClean,
+          comment: commentClean,
+          category: 'GENERAL',
+          order_number: reviewData.orderNumber?.trim(),
+          product_id: reviewData.productId && reviewData.productId !== 'general' ? reviewData.productId : undefined,
+          photo_url: reviewData.photoUrl
+        }).then((res) => {
+          if (res.is_verified_purchase) {
+            set((st) => ({
+              reviews: st.reviews.map((r) => r.id === newReview.id ? { ...r, verifiedPurchase: true } : r)
+            }));
+          }
+        }).catch(() => {});
 
         return { success: true };
       },

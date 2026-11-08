@@ -192,6 +192,20 @@ def reseed():
                 minimum_order_qty=1,
                 is_featured=False
             ),
+            Product(
+                id="prod-10",
+                category_id="cat-3",
+                name="Kastha Gatiya",
+                slug="kastha-gatiya",
+                description="Special festive Diwali-26 launch by Sri Balaji Special Mixtures! Handcrafted melt-in-the-mouth crispy Kastha Gatiya (కాస్తా గటియా) prepared with premium gram flour, carom seeds (ajwain), and authentic traditional spices. 100% pure vegetarian, fresh, and free of preservatives. Taste the Tradition!",
+                food_classification="VEGETARIAN",
+                spice_level="MEDIUM",
+                taste_profiles="Crispy,Festive,Traditional",
+                ingredients="Premium Bengal gram flour (Besan), Refined edible vegetable oil, Carom seeds (Ajwain), Black pepper hint, Rock salt, Traditional spices.",
+                allergen_info="100% Pure Vegetarian. Hygienically prepared with zero chemical preservatives.",
+                minimum_order_qty=2,
+                is_featured=True
+            ),
         ]
         db.add_all(products)
         db.commit()
@@ -229,6 +243,11 @@ def reseed():
             # prod-9: Wholesale Bulk Pack
             ProductVariant(product_id="prod-9", weight_label="3kg Wholesale Bag", weight_in_grams=3000, retail_price=720, wholesale_price=540, sku="SBWB-3KG"),
             ProductVariant(product_id="prod-9", weight_label="5kg Commercial Carton", weight_in_grams=5000, retail_price=1150, wholesale_price=880, sku="SBWB-5KG"),
+            # prod-10: Kastha Gatiya (Diwali-26 Launch)
+            ProductVariant(product_id="prod-10", weight_label="250g", weight_in_grams=250, retail_price=60, wholesale_price=48, sku="SBKG-250G"),
+            ProductVariant(product_id="prod-10", weight_label="500g", weight_in_grams=500, retail_price=120, wholesale_price=95, sku="SBKG-500G"),
+            ProductVariant(product_id="prod-10", weight_label="1kg", weight_in_grams=1000, retail_price=240, wholesale_price=185, sku="SBKG-1KG"),
+            ProductVariant(product_id="prod-10", weight_label="5kg Bulk Carton", weight_in_grams=5000, retail_price=1150, wholesale_price=900, sku="SBKG-5KG"),
         ]
         db.add_all(variants)
         db.commit()
@@ -244,6 +263,9 @@ def reseed():
             ProductImage(product_id="prod-7", image_url="/images/products/gujarat-mix-chivda.png", is_primary=True),
             ProductImage(product_id="prod-8", image_url="/images/brand/seven-flavors-lineup.png", is_primary=True),
             ProductImage(product_id="prod-9", image_url="/images/brand/wholesale-counter.png", is_primary=True),
+            ProductImage(product_id="prod-10", image_url="/images/products/kastha-gatiya.png", is_primary=True),
+            ProductImage(product_id="prod-10", image_url="/images/products/kastha-gatiya-promo.png", is_primary=False),
+            ProductImage(product_id="prod-10", image_url="/images/products/kastha-gatiya-pack.png", is_primary=False),
         ]
         db.add_all(images)
         db.commit()

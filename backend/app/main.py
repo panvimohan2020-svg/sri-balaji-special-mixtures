@@ -1,4 +1,6 @@
 import os
+import secrets
+from datetime import datetime, timezone, timedelta
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,17 +11,25 @@ from app.core.database import Base, engine, SessionLocal
 from app.api.v1.api import api_router
 from app.core.security import get_password_hash
 from app.models.user import User
+from app.models.admin_security import OwnerSetupState, OwnerInvitation
 from app.models.category import Category
 from app.models.product import Product, ProductImage
 from app.models.variant import ProductVariant
 from app.models.settings import BusinessSetting
+from app.models.order import Order, OrderItem, OrderStatusHistory, WholesaleEnquiry
+from app.models.inventory import StockMovement, LowStockAlert
+from app.models.customer import Customer, CustomerAddress, CustomerNotification
+from app.models.payment import PaymentTransaction
+from app.models.dealer import DealerProfile
+from app.models.quotation import WholesaleQuotation, QuotationItem
+from app.models.logistics import ShipmentRecord, ServiceablePincode
 
 
 def init_db():
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
-        # 1. Superuser
+        # 1. Superuser Bootstrap (Temporary dev baseline until owner activation)
         admin = db.query(User).filter(User.email == settings.FIRST_SUPERUSER_EMAIL).first()
         if not admin:
             admin = User(
@@ -30,6 +40,19 @@ def init_db():
                 is_active=True
             )
             db.add(admin)
+
+        # 1b. Initial Business Owner Handover State
+        owner_state = db.query(OwnerSetupState).first()
+        if not owner_state:
+            token = secrets.token_urlsafe(32)
+            owner_state = OwnerSetupState(
+                owner_email=settings.BUSINESS_OWNER_EMAIL,
+                activation_token=token,
+                is_activated=False,
+                expires_at=datetime.now(timezone.utc) + timedelta(days=30)
+            )
+            db.add(owner_state)
+            db.commit()
 
         # 2. Business Settings
         default_settings = {
@@ -63,6 +86,16 @@ def init_db():
         if db.query(Category).count() == 0:
             import seed_data
             seed_data.reseed()
+
+        # 4. Seed initial Serviceable Pincodes if empty
+        if db.query(ServiceablePincode).count() == 0:
+            try:
+                from scripts.migrate_and_seed_coverage import COVERAGE_DATA
+                for item in COVERAGE_DATA:
+                    db.add(ServiceablePincode(**item))
+                db.commit()
+            except Exception as e:
+                print(f"[WARN] Failed to auto-seed pincodes: {e}")
     finally:
         db.close()
 
@@ -85,7 +118,8 @@ app = FastAPI(
 # CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permits local development, PWA, and production domains
+    allow_origins=settings.cors_origins,
+    allow_origin_regex=r"^https?://([a-zA-Z0-9-]+\.)*(vercel\.app|netlify\.app|onrender\.com|railway\.app|sribalaji.*|localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

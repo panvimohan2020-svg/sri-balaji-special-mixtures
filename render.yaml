@@ -2,8 +2,10 @@ services:
   - type: web
     name: sri-balaji-api
     runtime: python
-    buildCommand: pip install -r requirements.txt bcrypt pydantic-settings
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -11,11 +13,21 @@ services:
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
+      - key: ENVIRONMENT
+        value: production
+      - key: PUBLIC_FRONTEND_URL
+        value: https://sribalajispecialmixtures.in
       - key: BACKEND_CORS_ORIGINS
-        value: "*"
+        value: "https://sribalajispecialmixtures.in,http://localhost:5173"
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "1440"
+    disk:
+      name: uploads-data
+      mountPath: /app/uploads
+      sizeGB: 1
 
 databases:
   - name: sri-balaji-db
     databaseName: sribalaji
     user: sribalaji
-
+    plan: free

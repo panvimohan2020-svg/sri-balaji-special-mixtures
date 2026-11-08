@@ -17,13 +17,13 @@ export const FloatingWhatsAppButton: React.FC = () => {
     >
       {/* Tooltip on Desktop / Hover */}
       <div 
-        className={`hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-plum-900/95 backdrop-blur-md text-white text-xs font-semibold shadow-plum border border-turmeric/30 transition-all duration-300 pointer-events-none transform ${
+        className={`hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-imperial/95 backdrop-blur-md text-white text-xs font-semibold shadow-royal border border-gold/40 transition-all duration-300 pointer-events-none transform ${
           isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2'
         }`}
       >
-        <span className="w-2 h-2 rounded-full bg-turmeric animate-pulse" />
+        <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
         <div>
-          <span className="block font-bold text-turmeric">Wholesale Desk Active</span>
+          <span className="block font-bold text-gold">Wholesale Desk Active</span>
           <span className="text-[11px] text-ivory/80">Direct Line: +91 98617 89602</span>
         </div>
       </div>
@@ -34,7 +34,7 @@ export const FloatingWhatsAppButton: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with Sri Balaji wholesale team on WhatsApp (Opens in new window)"
-        className="relative group w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white flex items-center justify-center shadow-elevated hover:shadow-glow transition-all duration-300 transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-400/50"
+        className="relative group w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white flex items-center justify-center shadow-royal hover:shadow-gold transition-all duration-300 transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald/50"
       >
         {/* Subtle pulsating radar ring */}
         <span className="absolute -inset-1 rounded-full bg-[#25D366]/40 animate-ping -z-10" />
@@ -42,7 +42,7 @@ export const FloatingWhatsAppButton: React.FC = () => {
         <WhatsAppIcon className="w-7 h-7 text-white" variant="white" />
 
         {/* Small verified badge pip */}
-        <span className="absolute -top-1 -right-1 w-4 h-4 bg-turmeric text-plum-950 font-black text-[9px] rounded-full flex items-center justify-center border-2 border-white shadow-xs">
+        <span className="absolute -top-1 -right-1 w-4 h-4 bg-gold text-imperial font-black text-[9px] rounded-full flex items-center justify-center border-2 border-white shadow-xs">
           ✓
         </span>
       </a>

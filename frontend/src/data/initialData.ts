@@ -50,10 +50,10 @@ export const initialCategories: Category[] = [
   },
   {
     id: "cat-3",
-    name: "Traditional Snacks",
+    name: "Traditional Savouries & Snacks",
     slug: "traditional-snacks",
-    description: "Classic South Indian and Odisha savouries including Kar Kar Murrukulu, Crispy Rings Chegodilu, and Ribbon Pakoda.",
-    image_url: "/images/products/kar-kar-murrukulu.png",
+    description: "Classic South Indian and Odisha savouries including Kastha Gatiya, Kar Kar Murrukulu, Crispy Rings Chegodilu, and Ribbon Pakoda.",
+    image_url: "/images/products/kastha-gatiya.png",
     display_order: 3,
     is_active: true
   },
@@ -295,6 +295,36 @@ export const initialProducts: Product[] = [
     ],
     images: [
       { id: "img-9-1", product_id: "prod-9", image_url: "/images/brand/wholesale-counter.png", is_primary: true, display_order: 1 }
+    ]
+  },
+  {
+    id: "prod-10",
+    category_id: "cat-3",
+    name: "Kastha Gatiya",
+    slug: "kastha-gatiya",
+    description: "Special festive Diwali-26 launch by Sri Balaji Special Mixtures! Handcrafted, melt-in-the-mouth crispy Kastha Gatiya (కాస్తా గటియా), prepared with premium gram flour, carom seeds (ajwain), and authentic traditional spices. 100% pure vegetarian, fresh, and free from preservatives. Taste the Tradition!",
+    food_classification: "VEGETARIAN",
+    spice_level: "MEDIUM",
+    taste_profiles: ["Crispy", "Festive", "Traditional"],
+    ingredients: "Premium Bengal gram flour (Besan), Refined edible vegetable oil, Carom seeds (Ajwain), Black pepper hint, Rock salt, Traditional spices.",
+    allergen_info: "100% Pure Vegetarian. Hygienically prepared with zero chemical preservatives.",
+    packaging_info: "Special festive airtight moisture-barrier sealed food-grade pouch preserving crispness for 90 days.",
+    minimum_order_qty: 2,
+    is_available: true,
+    is_featured: true,
+    product_label: "NEW LAUNCH",
+    collection: "Diwali Special 2026",
+    tagline: "Taste the Tradition... Festive Delight...",
+    variants: [
+      { id: "v-10-1", product_id: "prod-10", weight_label: "250g", weight_in_grams: 250, retail_price: 60, wholesale_price: 48, stock_quantity: 500, is_in_stock: true, sku: "SBKG-250G" },
+      { id: "v-10-2", product_id: "prod-10", weight_label: "500g", weight_in_grams: 500, retail_price: 120, wholesale_price: 95, stock_quantity: 350, is_in_stock: true, sku: "SBKG-500G" },
+      { id: "v-10-3", product_id: "prod-10", weight_label: "1kg", weight_in_grams: 1000, retail_price: 240, wholesale_price: 185, stock_quantity: 200, is_in_stock: true, sku: "SBKG-1KG" },
+      { id: "v-10-4", product_id: "prod-10", weight_label: "5kg Bulk Carton", weight_in_grams: 5000, retail_price: 1150, wholesale_price: 900, stock_quantity: 75, is_in_stock: true, sku: "SBKG-5KG" }
+    ],
+    images: [
+      { id: "img-10-1", product_id: "prod-10", image_url: "/images/products/kastha-gatiya.png", is_primary: true, display_order: 1 },
+      { id: "img-10-2", product_id: "prod-10", image_url: "/images/products/kastha-gatiya-promo.png", is_primary: false, display_order: 2 },
+      { id: "img-10-3", product_id: "prod-10", image_url: "/images/products/kastha-gatiya-pack.png", is_primary: false, display_order: 3 }
     ]
   }
 ];

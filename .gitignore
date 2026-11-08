@@ -20,6 +20,8 @@ ENV/
 # Database & Uploads
 *.db
 *.sqlite3
+*.bak
+backend/backups/
 backend/uploads/*
 !backend/uploads/.gitkeep
 

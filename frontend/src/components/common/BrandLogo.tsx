@@ -20,10 +20,18 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
     : '/images/brand/sri-balaji-logo-horizontal.svg';
 
   const sizeStyles = {
-    sm: isCrest ? 'h-10 w-auto' : 'h-8 sm:h-9 w-auto max-w-[200px]',
-    md: isCrest ? 'h-14 w-auto' : 'h-11 sm:h-12 w-auto max-w-[240px]',
-    lg: isCrest ? 'h-20 w-auto' : 'h-14 sm:h-16 w-auto max-w-[280px]',
-    xl: isCrest ? 'h-28 w-auto' : 'h-18 sm:h-20 w-auto max-w-[340px]',
+    sm: isCrest 
+      ? 'h-10 sm:h-12 w-auto' 
+      : 'h-9 sm:h-10 lg:h-11 w-auto max-w-[200px]',
+    md: isCrest 
+      ? 'h-16 sm:h-18 lg:h-20 w-auto' 
+      : 'h-12 sm:h-13 lg:h-[54px] xl:h-[58px] w-auto max-w-[250px] sm:max-w-[285px] lg:max-w-[320px] xl:max-w-[340px]',
+    lg: isCrest 
+      ? 'h-22 sm:h-26 lg:h-28 w-auto' 
+      : 'h-16 sm:h-20 lg:h-24 w-auto max-w-[340px] sm:max-w-[400px]',
+    xl: isCrest 
+      ? 'h-32 sm:h-36 w-auto' 
+      : 'h-24 sm:h-28 lg:h-32 w-auto max-w-[460px]',
   };
 
   return (
@@ -31,7 +39,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
       <img
         src={logoSrc}
         alt="Sri Balaji Special Mixtures – Taste the Tradition"
-        className={`${sizeStyles[size]} object-contain drop-shadow-sm transition-transform hover:scale-[1.02] duration-300`}
+        className={`${sizeStyles[size]} object-contain filter drop-shadow-md transition-transform hover:scale-[1.02] duration-300`}
         loading="eager"
       />
     </div>
