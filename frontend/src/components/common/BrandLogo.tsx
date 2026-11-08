@@ -8,40 +8,28 @@ interface BrandLogoProps {
 }
 
 export const BrandLogo: React.FC<BrandLogoProps> = ({
-  variant = 'compact',
   size = 'md',
   className = '',
-  showSubtitle = true,
 }) => {
-  // Use official redesigned vector brand assets
-  const isCrest = variant === 'crest' || variant === 'with-badge';
-  const logoSrc = isCrest
-    ? '/images/brand/sri-balaji-brand-logo.svg'
-    : '/images/brand/sri-balaji-logo-horizontal.svg';
+  // Official Sri Balaji Brand Logo Asset (circular emblem with 30 years heritage medal)
+  const logoSrc = '/images/brand/sri-balaji-official-logo.jpg';
 
   const sizeStyles = {
-    sm: isCrest 
-      ? 'h-10 sm:h-12 w-auto' 
-      : 'h-9 sm:h-10 lg:h-11 w-auto max-w-[200px]',
-    md: isCrest 
-      ? 'h-16 sm:h-18 lg:h-20 w-auto' 
-      : 'h-12 sm:h-13 lg:h-[54px] xl:h-[58px] w-auto max-w-[250px] sm:max-w-[285px] lg:max-w-[320px] xl:max-w-[340px]',
-    lg: isCrest 
-      ? 'h-22 sm:h-26 lg:h-28 w-auto' 
-      : 'h-16 sm:h-20 lg:h-24 w-auto max-w-[340px] sm:max-w-[400px]',
-    xl: isCrest 
-      ? 'h-32 sm:h-36 w-auto' 
-      : 'h-24 sm:h-28 lg:h-32 w-auto max-w-[460px]',
+    sm: 'h-9 w-9 sm:h-10 sm:w-10 max-h-10 max-w-10',
+    md: 'h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 xl:h-[68px] xl:w-[68px] max-h-[68px] max-w-[68px]',
+    lg: 'h-20 w-20 sm:h-24 sm:w-24 lg:h-28 lg:w-28 max-h-28 max-w-28',
+    xl: 'h-28 w-28 sm:h-36 sm:w-36 lg:h-44 lg:w-44 max-h-44 max-w-44',
   };
 
   return (
-    <div className={`flex items-center select-none ${className}`}>
+    <div className={`flex items-center justify-center shrink-0 select-none ${className}`}>
       <img
         src={logoSrc}
-        alt="Sri Balaji Special Mixtures – Taste the Tradition"
-        className={`${sizeStyles[size]} object-contain filter drop-shadow-md transition-transform hover:scale-[1.02] duration-300`}
+        alt="Sri Balaji Special Mixtures – Fresh • Crispy • Tasty – Trusted Since 30 Years"
+        className={`${sizeStyles[size]} object-contain object-center rounded-xl shadow-xs border border-gold/40 hover:border-gold/70 transition-transform hover:scale-[1.02] duration-300`}
         loading="eager"
       />
     </div>
   );
 };
+
