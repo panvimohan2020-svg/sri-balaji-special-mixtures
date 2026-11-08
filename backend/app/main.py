@@ -96,6 +96,13 @@ def init_db():
                 db.commit()
             except Exception as e:
                 print(f"[WARN] Failed to auto-seed pincodes: {e}")
+
+        # 4b. Ensure all 30 Odisha districts & expanded regional hubs are synchronized
+        try:
+            from scripts.expand_regional_coverage import expand_coverage
+            expand_coverage()
+        except Exception as e:
+            print(f"[WARN] Coverage expansion check: {e}")
     finally:
         db.close()
 

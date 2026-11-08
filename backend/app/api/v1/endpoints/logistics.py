@@ -298,6 +298,136 @@ def search_pincodes_and_locations(
     }
 
 
+@router.get("/autocomplete")
+def autocomplete_locations(
+    q: Optional[str] = Query(None, description="Search term for suggestions"),
+    db: Session = Depends(get_db)
+):
+    """
+    Public Endpoint: Rapid autocomplete suggestions for customer delivery search.
+    Returns matched location name, PIN code, district, state, and serviceability status.
+    """
+    search_term = (q or "").strip()
+    if len(search_term) < 1:
+        return []
+
+    search_pattern = f"%{search_term}%"
+    records = db.query(ServiceablePincode).filter(
+        ServiceablePincode.is_active == True,
+        or_(
+            ServiceablePincode.pincode.ilike(search_pattern),
+            ServiceablePincode.city.ilike(search_pattern),
+            ServiceablePincode.district.ilike(search_pattern),
+            ServiceablePincode.localities.ilike(search_pattern)
+        )
+    ).limit(10).all()
+
+    suggestions = []
+    for r in records:
+        status_code = (r.serviceability_status or "REGULAR").upper()
+        # Find which specific locality/village matched if any
+        matched_locality = None
+        if r.localities and search_term.lower() in r.localities.lower():
+            for loc in parse_list(r.localities):
+                if search_term.lower() in loc.lower():
+                    matched_locality = loc
+                    break
+
+        display_label = f"{r.city}, {r.district}, {r.state} – {r.pincode}"
+        if matched_locality and matched_locality.lower() != r.city.lower():
+            display_label = f"{matched_locality} ({r.city}), {r.district} – {r.pincode}"
+
+        suggestions.append({
+            "pincode": r.pincode,
+            "city": r.city,
+            "district": r.district,
+            "state": r.state,
+            "matched_locality": matched_locality,
+            "display_label": display_label,
+            "serviceability_status": status_code,
+            "status_label": STATUS_LABELS.get(status_code, "Custom Transit Available"),
+            "is_serviceable": status_code == "REGULAR"
+        })
+
+    return suggestions
+
+
+@router.get("/districts/odisha")
+def get_odisha_districts_overview(db: Session = Depends(get_db)):
+    """
+    Public Endpoint: Returns all 30 official Odisha districts with actual verified delivery availability.
+    Includes Angul, Balangir, Kendujhar, Deogarh, Malkangiri, etc. with primary hub and status.
+    """
+    records = db.query(ServiceablePincode).filter(
+        ServiceablePincode.is_active == True,
+        ServiceablePincode.state == "Odisha"
+    ).all()
+
+    grouped: Dict[str, List[Any]] = {}
+    for r in records:
+        d = r.district
+        if not d:
+            continue
+        if d not in grouped:
+            grouped[d] = []
+        grouped[d].append(r)
+
+    OFFICIAL_30_ODISHA = [
+        "Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack",
+        "Deogarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur",
+        "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Khordha",
+        "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada",
+        "Puri", "Rayagada", "Sambalpur", "Subarnapur", "Sundargarh"
+    ]
+
+    district_results = []
+    for dist_name in OFFICIAL_30_ODISHA:
+        recs = grouped.get(dist_name, [])
+        if recs:
+            # Sort with regular delivery first, then town hub
+            sorted_recs = sorted(recs, key=lambda x: (x.serviceability_status != "REGULAR", len(x.pincode)))
+            primary = sorted_recs[0]
+            status_code = (primary.serviceability_status or "REGULAR").upper()
+            status_label = STATUS_LABELS.get(status_code, "Custom Transit")
+            transit_label = primary.transit_duration_label or f"{primary.min_delivery_days}-{primary.max_delivery_days} Days"
+            modes = parse_list(primary.transport_modes) or ["State Roadlines", "Bus Cargo"]
+            charges = primary.delivery_charges_text or f"₹{primary.standard_shipping_rate} flat / carton"
+            loc_list = [{"city": r.city, "pincode": r.pincode, "status": r.serviceability_status} for r in recs]
+            district_results.append({
+                "district_name": dist_name,
+                "hub_city": primary.city,
+                "primary_pincode": primary.pincode,
+                "serviceability_status": status_code,
+                "status_label": status_label,
+                "is_serviceable": status_code == "REGULAR",
+                "transit_duration_label": transit_label,
+                "transport_modes": modes,
+                "delivery_charges_text": charges,
+                "location_count": len(loc_list),
+                "locations": loc_list
+            })
+        else:
+            district_results.append({
+                "district_name": dist_name,
+                "hub_city": f"{dist_name} Town",
+                "primary_pincode": "",
+                "serviceability_status": "PENDING_VERIFICATION",
+                "status_label": "Route Verification Required",
+                "is_serviceable": False,
+                "transit_duration_label": "2-4 Days (Upon Booking)",
+                "transport_modes": ["State Roadlines", "Bus Cargo"],
+                "delivery_charges_text": "Custom Freight Quote",
+                "location_count": 0,
+                "locations": []
+            })
+
+    return {
+        "state": "Odisha",
+        "total_districts": len(district_results),
+        "districts": district_results
+    }
+
+
 @router.get("/coverage/hierarchy")
 def get_coverage_hierarchy(db: Session = Depends(get_db)):
     """

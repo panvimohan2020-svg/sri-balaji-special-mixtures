@@ -24,6 +24,182 @@ export interface StaticCoverageRecord {
 
 export const REGIONAL_COVERAGE_RECORDS: StaticCoverageRecord[] = [
   {
+    "pincode": "759122",
+    "city": "Angul",
+    "district": "Angul",
+    "state": "Odisha",
+    "zone_name": "Central Odisha Industrial Corridor",
+    "serviceability_status": "REGULAR",
+    "localities": [
+      "Angul Town",
+      "Amalapada",
+      "Mishrapada",
+      "Collectorate Area",
+      "Bazar Road",
+      "Banarpal",
+      "Nalco Nagar"
+    ],
+    "transport_modes": [
+      "State Roadlines",
+      "Bus Cargo"
+    ],
+    "transit_duration_label": "2-3 Days",
+    "min_delivery_days": 2,
+    "max_delivery_days": 3,
+    "standard_shipping_rate": 50.0,
+    "delivery_charges_text": "₹50 flat / carton",
+    "delivery_conditions": "Scheduled bus parcel and state roadlines dispatch from South Odisha hub.",
+    "cod_available": true,
+    "daily_transit_available": true,
+    "notes": "District headquarters for Angul."
+  },
+  {
+    "pincode": "761208",
+    "city": "Serango",
+    "district": "Gajapati",
+    "state": "Odisha",
+    "zone_name": "Gajapati Regional Route",
+    "serviceability_status": "REGULAR",
+    "localities": [
+      "Serango Bazar",
+      "Gumma Road",
+      "Christian Sahi",
+      "Ajayagada",
+      "Hill Market",
+      "Serango Mandal"
+    ],
+    "transport_modes": [
+      "Regional Carrier Tempo",
+      "Bus Cargo"
+    ],
+    "transit_duration_label": "1-2 Days",
+    "min_delivery_days": 1,
+    "max_delivery_days": 2,
+    "standard_shipping_rate": 40.0,
+    "delivery_charges_text": "₹40 flat / carton",
+    "delivery_conditions": "Daily factory delivery van/tempo link from Paralakhemundi (15 km).",
+    "cod_available": true,
+    "daily_transit_available": true,
+    "notes": "Serango hill area route."
+  },
+  {
+    "pincode": "761210",
+    "city": "Gurandi",
+    "district": "Gajapati",
+    "state": "Odisha",
+    "zone_name": "Gajapati Regional Route",
+    "serviceability_status": "REGULAR",
+    "localities": [
+      "Gurandi Bazar",
+      "Gosani Block",
+      "High School Road",
+      "Krushnapur",
+      "Uppalada Road",
+      "Gurandi Mandal"
+    ],
+    "transport_modes": [
+      "Regional Carrier Tempo",
+      "Bus Cargo"
+    ],
+    "transit_duration_label": "Same Day - 1 Day",
+    "min_delivery_days": 1,
+    "max_delivery_days": 1,
+    "standard_shipping_rate": 35.0,
+    "delivery_charges_text": "₹35 flat / carton",
+    "delivery_conditions": "Direct local factory van delivery twice daily from Paralakhemundi.",
+    "cod_available": true,
+    "daily_transit_available": true,
+    "notes": "Gurandi Gosani block route."
+  },
+  {
+    "pincode": "532204",
+    "city": "Nandigam",
+    "district": "Srikakulam",
+    "state": "Andhra Pradesh",
+    "zone_name": "AP Border Route",
+    "serviceability_status": "REGULAR",
+    "localities": [
+      "Nandigam Junction",
+      "Main Road",
+      "Palasa-Tekkali Highway",
+      "Kaviti Road",
+      "Nandigam Mandal"
+    ],
+    "transport_modes": [
+      "State Roadlines",
+      "Bus Cargo"
+    ],
+    "transit_duration_label": "1-2 Days",
+    "min_delivery_days": 1,
+    "max_delivery_days": 2,
+    "standard_shipping_rate": 45.0,
+    "delivery_charges_text": "₹45 flat / carton",
+    "delivery_conditions": "Daily bus cargo and transport vans via NH-16 corridor.",
+    "cod_available": true,
+    "daily_transit_available": true,
+    "notes": "Nandigam AP border corridor."
+  },
+  {
+    "pincode": "532312",
+    "city": "Ichchapuram",
+    "district": "Srikakulam",
+    "state": "Andhra Pradesh",
+    "zone_name": "AP Border Route",
+    "serviceability_status": "REGULAR",
+    "localities": [
+      "Ichchapuram Town",
+      "RTC Bus Stand",
+      "Border Checkpost",
+      "Main Bazar",
+      "Bellupada",
+      "Ichchapuram Mandal"
+    ],
+    "transport_modes": [
+      "State Roadlines",
+      "Bus Cargo"
+    ],
+    "transit_duration_label": "1-2 Days",
+    "min_delivery_days": 1,
+    "max_delivery_days": 2,
+    "standard_shipping_rate": 45.0,
+    "delivery_charges_text": "₹45 flat / carton",
+    "delivery_conditions": "Daily roadline transit connecting Berhampur and Srikakulam border.",
+    "cod_available": true,
+    "daily_transit_available": true,
+    "notes": "Ichchapuram Andhra-Odisha gateway."
+  },
+  {
+    "pincode": "761020",
+    "city": "Chhatrapur",
+    "district": "Ganjam",
+    "state": "Odisha",
+    "zone_name": "Ganjam Coastal Route",
+    "serviceability_status": "REGULAR",
+    "localities": [
+      "Chhatrapur Collectorate Area",
+      "Main Bazar",
+      "Court Road",
+      "Station Road",
+      "Potagarh",
+      "Chhatrapur Block"
+    ],
+    "transport_modes": [
+      "State Roadlines",
+      "Bus Cargo",
+      "Regional Carrier Tempo"
+    ],
+    "transit_duration_label": "1-2 Days",
+    "min_delivery_days": 1,
+    "max_delivery_days": 2,
+    "standard_shipping_rate": 40.0,
+    "delivery_charges_text": "₹40 flat / carton",
+    "delivery_conditions": "Direct daily road transit via Berhampur NH-16 corridor.",
+    "cod_available": true,
+    "daily_transit_available": true,
+    "notes": "Ganjam district headquarters."
+  },
+
+  {
     "pincode": "761200",
     "city": "Paralakhemundi",
     "district": "Gajapati",
@@ -1527,7 +1703,7 @@ export const REGIONAL_COVERAGE_RECORDS: StaticCoverageRecord[] = [
   {
     "pincode": "767001",
     "city": "Bolangir",
-    "district": "Bolangir",
+    "district": "Balangir",
     "state": "Odisha",
     "zone_name": "Western Odisha Hub",
     "serviceability_status": "REGULAR",
@@ -1772,7 +1948,7 @@ export const REGIONAL_COVERAGE_RECORDS: StaticCoverageRecord[] = [
   {
     "pincode": "758001",
     "city": "Keonjhar",
-    "district": "Keonjhar",
+    "district": "Kendujhar",
     "state": "Odisha",
     "zone_name": "North Mining Corridor",
     "serviceability_status": "REGULAR",
@@ -2614,4 +2790,514 @@ export function getFallbackHierarchy(): CoverageHierarchyResponse {
     supported_transport_methods: ['Regional Carrier Tempo', 'State Roadlines', 'Bus Cargo', 'Private Transport Agencies'],
     states,
   };
+}
+
+
+export interface OdishaDistrictOverview {
+  district_name: string;
+  hub_city: string;
+  primary_pincode: string;
+  serviceability_status: 'REGULAR' | 'CUSTOM_TRANSIT' | 'PENDING_VERIFICATION' | 'UNAVAILABLE';
+  status_label: string;
+  is_serviceable: boolean;
+  transit_duration_label: string;
+  transport_modes: string[];
+  delivery_charges_text: string;
+  location_count: number;
+  highlight?: string;
+}
+
+export const ODISHA_30_DISTRICTS_DATA: OdishaDistrictOverview[] = [
+  {
+    district_name: 'Gajapati',
+    hub_city: 'Paralakhemundi Central Hub',
+    primary_pincode: '761200',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: 'Same Day – 1 Day',
+    transport_modes: ['Regional Carrier Tempo', 'Bus Cargo', 'State Roadlines'],
+    delivery_charges_text: '₹30 flat / carton (Factory Direct)',
+    location_count: 9,
+    highlight: 'Central Manufacturing Unit & Daily Direct Van Route'
+  },
+  {
+    district_name: 'Ganjam',
+    hub_city: 'Berhampur & Chhatrapur',
+    primary_pincode: '760001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '1–2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo', 'Regional Carrier Tempo'],
+    delivery_charges_text: '₹35–₹40 flat / carton',
+    location_count: 17,
+    highlight: 'Daily Commercial Corridor Hub'
+  },
+  {
+    district_name: 'Rayagada',
+    hub_city: 'Rayagada & Gunupur',
+    primary_pincode: '765001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '1–2 Days',
+    transport_modes: ['Bus Cargo', 'State Roadlines', 'Regional Tempo'],
+    delivery_charges_text: '₹40–₹45 flat / carton',
+    location_count: 10,
+    highlight: 'Direct South Odisha Line (Gunupur Hub)'
+  },
+  {
+    district_name: 'Khordha',
+    hub_city: 'Bhubaneswar Capital Hub',
+    primary_pincode: '751001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '1–2 Days',
+    transport_modes: ['Overnight Bus Parcel', 'State Roadlines'],
+    delivery_charges_text: '₹40 flat / carton',
+    location_count: 2,
+    highlight: 'State Capital Daily Express Parcel'
+  },
+  {
+    district_name: 'Cuttack',
+    hub_city: 'Cuttack Commercial Hub',
+    primary_pincode: '753001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '1–2 Days',
+    transport_modes: ['Overnight Bus Parcel', 'State Roadlines'],
+    delivery_charges_text: '₹40 flat / carton',
+    location_count: 2,
+    highlight: 'Malgodown Wholesale Distributor Corridor'
+  },
+  {
+    district_name: 'Puri',
+    hub_city: 'Puri Pilgrim City',
+    primary_pincode: '752001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['Bus Cargo', 'State Roadlines'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Grand Road & Coastal Wholesale Network'
+  },
+  {
+    district_name: 'Angul',
+    hub_city: 'Angul Industrial City',
+    primary_pincode: '759122',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹50 flat / carton',
+    location_count: 1,
+    highlight: 'Central Odisha Industrial Corridor'
+  },
+  {
+    district_name: 'Balangir',
+    hub_city: 'Balangir Town',
+    primary_pincode: '767001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Western Odisha Wholesale Link'
+  },
+  {
+    district_name: 'Balasore',
+    hub_city: 'Balasore Town',
+    primary_pincode: '756001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹50 flat / carton',
+    location_count: 1,
+    highlight: 'North Odisha Coastal Hub'
+  },
+  {
+    district_name: 'Bargarh',
+    hub_city: 'Bargarh Town',
+    primary_pincode: '768028',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Western Rice & Wholesale Belt'
+  },
+  {
+    district_name: 'Bhadrak',
+    hub_city: 'Bhadrak Town',
+    primary_pincode: '756100',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹50 flat / carton',
+    location_count: 1,
+    highlight: 'NH-16 Coastal Corridor'
+  },
+  {
+    district_name: 'Boudh',
+    hub_city: 'Boudh Town',
+    primary_pincode: '762014',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹50 flat / carton',
+    location_count: 1,
+    highlight: 'Mahanadi Valley Transport Route'
+  },
+  {
+    district_name: 'Deogarh',
+    hub_city: 'Deogarh Town',
+    primary_pincode: '768108',
+    serviceability_status: 'PENDING_VERIFICATION',
+    status_label: 'Route Verification Required',
+    is_serviceable: false,
+    transit_duration_label: '3–4 Days (Upon Booking)',
+    transport_modes: ['State Roadlines', 'Private Cargo'],
+    delivery_charges_text: 'Custom Freight Quote',
+    location_count: 1,
+    highlight: 'Route Coverage Requires Prior Dispatch Confirmation'
+  },
+  {
+    district_name: 'Dhenkanal',
+    hub_city: 'Dhenkanal Town',
+    primary_pincode: '759001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Central Corridor Delivery'
+  },
+  {
+    district_name: 'Jagatsinghpur',
+    hub_city: 'Jagatsinghpur Town',
+    primary_pincode: '754103',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Coastal Trading Link'
+  },
+  {
+    district_name: 'Jajpur',
+    hub_city: 'Jajpur Town',
+    primary_pincode: '755001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Biraja Kshetra & Kalinganagar Link'
+  },
+  {
+    district_name: 'Jharsuguda',
+    hub_city: 'Jharsuguda Industrial Hub',
+    primary_pincode: '768201',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹50 flat / carton',
+    location_count: 1,
+    highlight: 'Western Odisha Transport Interchange'
+  },
+  {
+    district_name: 'Kalahandi',
+    hub_city: 'Bhawanipatna',
+    primary_pincode: '766001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'South-West Odisha Wholesale Route'
+  },
+  {
+    district_name: 'Kandhamal',
+    hub_city: 'Phulbani & Baliguda',
+    primary_pincode: '762001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 6,
+    highlight: 'Highland Market Dispatch via Bhanjanagar'
+  },
+  {
+    district_name: 'Kendrapara',
+    hub_city: 'Kendrapara Town',
+    primary_pincode: '754211',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Coastal Distribution Network'
+  },
+  {
+    district_name: 'Kendujhar',
+    hub_city: 'Kendujhar (Keonjhar)',
+    primary_pincode: '758001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹50 flat / carton',
+    location_count: 1,
+    highlight: 'Mineral Belt & Hill Town Markets'
+  },
+  {
+    district_name: 'Koraput',
+    hub_city: 'Jeypore & Koraput',
+    primary_pincode: '764020',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '1–2 Days',
+    transport_modes: ['Regional Carrier Tempo', 'State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 7,
+    highlight: 'Daily Direct Link via Rayagada NH'
+  },
+  {
+    district_name: 'Malkangiri',
+    hub_city: 'Malkangiri Town',
+    primary_pincode: '764045',
+    serviceability_status: 'CUSTOM_TRANSIT',
+    status_label: 'Custom Transit Available',
+    is_serviceable: false,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['Bus Cargo', 'Private Transport Agencies'],
+    delivery_charges_text: 'Custom Freight Quote',
+    location_count: 1,
+    highlight: 'Arranged via Jeypore Transport Link (Contact Desk)'
+  },
+  {
+    district_name: 'Mayurbhanj',
+    hub_city: 'Baripada Town',
+    primary_pincode: '757001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹50 flat / carton',
+    location_count: 1,
+    highlight: 'North-East Odisha Dispatch'
+  },
+  {
+    district_name: 'Nabarangpur',
+    hub_city: 'Nabarangpur Town',
+    primary_pincode: '764059',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'South-West Agriculture Belt'
+  },
+  {
+    district_name: 'Nayagarh',
+    hub_city: 'Nayagarh Town',
+    primary_pincode: '752069',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Central Corridor Highway Route'
+  },
+  {
+    district_name: 'Nuapada',
+    hub_city: 'Nuapada Town',
+    primary_pincode: '766105',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹50 flat / carton',
+    location_count: 1,
+    highlight: 'Western Border Dispatch'
+  },
+  {
+    district_name: 'Sambalpur',
+    hub_city: 'Sambalpur Commercial Hub',
+    primary_pincode: '768001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Western Odisha Commercial Headquarters'
+  },
+  {
+    district_name: 'Subarnapur',
+    hub_city: 'Sonepur Town',
+    primary_pincode: '767017',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹45 flat / carton',
+    location_count: 1,
+    highlight: 'Subarnapur Textile & Sweet Town Link'
+  },
+  {
+    district_name: 'Sundargarh',
+    hub_city: 'Rourkela Steel City',
+    primary_pincode: '769001',
+    serviceability_status: 'REGULAR',
+    status_label: 'Regular Delivery Available',
+    is_serviceable: true,
+    transit_duration_label: '2–3 Days',
+    transport_modes: ['State Roadlines', 'Bus Cargo'],
+    delivery_charges_text: '₹50 flat / carton',
+    location_count: 1,
+    highlight: 'Steel City Rourkela Daily Parcel Link'
+  }
+];
+
+export interface PopularLocationGroup {
+  groupName: string;
+  groupKey: 'nearby_odisha' | 'andhra_pradesh' | 'regional_towns';
+  description: string;
+  locations: {
+    label: string;
+    pin: string;
+    tag: string;
+    status: 'REGULAR' | 'CUSTOM_TRANSIT' | 'PENDING_VERIFICATION';
+  }[];
+}
+
+export const REGIONAL_LOCATION_GROUPS: PopularLocationGroup[] = [
+  {
+    groupName: 'Nearby Odisha (Gajapati Corridor)',
+    groupKey: 'nearby_odisha',
+    description: 'Central factory van & daily tempo routes dispatched from Paralakhemundi',
+    locations: [
+      { label: 'Paralakhemundi', pin: '761200', tag: 'Central Factory Hub', status: 'REGULAR' },
+      { label: 'Kasinagar', pin: '761201', tag: 'Bansadhara Belt', status: 'REGULAR' },
+      { label: 'Ranipeta', pin: '761200', tag: 'Local Van Route', status: 'REGULAR' },
+      { label: 'Gumma', pin: '761207', tag: 'Hill Market', status: 'REGULAR' },
+      { label: 'Mohana', pin: '761206', tag: 'Tibetan Valley', status: 'REGULAR' },
+      { label: 'R. Udayagiri', pin: '761205', tag: 'Block Hub', status: 'REGULAR' },
+      { label: 'Adava', pin: '761206', tag: 'Daily Van Line', status: 'REGULAR' },
+      { label: 'Serango', pin: '761208', tag: 'Direct Tempo', status: 'REGULAR' },
+      { label: 'Chandragiri', pin: '761206', tag: 'Highland Junction', status: 'REGULAR' },
+      { label: 'Gurandi', pin: '761210', tag: 'Gosani Corridor', status: 'REGULAR' },
+      { label: 'Garabandha', pin: '761211', tag: 'Border Village', status: 'REGULAR' },
+    ]
+  },
+  {
+    groupName: 'Andhra Pradesh Border Towns',
+    groupKey: 'andhra_pradesh',
+    description: 'Daily inter-state bus cargo, commercial roadlines, and factory dispatch tempos',
+    locations: [
+      { label: 'Pathapatnam', pin: '532201', tag: 'Twin Town (2 km)', status: 'REGULAR' },
+      { label: 'Palasa', pin: '532221', tag: 'Cashew Hub Junction', status: 'REGULAR' },
+      { label: 'Kasibugga', pin: '532222', tag: 'NH-16 Commercial', status: 'REGULAR' },
+      { label: 'Tekkali', pin: '532202', tag: 'Mandal Hub', status: 'REGULAR' },
+      { label: 'Srikakulam', pin: '532001', tag: 'District City', status: 'REGULAR' },
+      { label: 'Amadalavalasa', pin: '532185', tag: 'Railway Junction', status: 'REGULAR' },
+      { label: 'Nandigam', pin: '532204', tag: 'NH-16 Corridor', status: 'REGULAR' },
+      { label: 'Sompeta', pin: '532284', tag: 'Coastal Market', status: 'REGULAR' },
+      { label: 'Ichchapuram', pin: '532312', tag: 'Border Gateway', status: 'REGULAR' },
+    ]
+  },
+  {
+    groupName: 'Other Regional Towns (Odisha Hubs)',
+    groupKey: 'regional_towns',
+    description: 'State roadlines, overnight bus parcel, and full carton freight wholesale delivery',
+    locations: [
+      { label: 'Gunupur', pin: '765017', tag: 'Bansadhara Line', status: 'REGULAR' },
+      { label: 'Berhampur', pin: '760001', tag: 'Silk City Hub', status: 'REGULAR' },
+      { label: 'Digapahandi', pin: '761012', tag: 'Ganjam Interior', status: 'REGULAR' },
+      { label: 'Chhatrapur', pin: '761020', tag: 'Ganjam HQ', status: 'REGULAR' },
+      { label: 'Gopalpur', pin: '761002', tag: 'Coastal Port Town', status: 'REGULAR' },
+      { label: 'Rayagada', pin: '765001', tag: 'Industrial Hub', status: 'REGULAR' },
+      { label: 'Bhubaneswar', pin: '751001', tag: 'State Capital Hub', status: 'REGULAR' },
+      { label: 'Cuttack', pin: '753001', tag: 'Commercial Market', status: 'REGULAR' },
+    ]
+  }
+];
+
+export function getFallbackAutocomplete(query: string): any[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  const results: any[] = [];
+  const seenPins = new Set<string>();
+
+  for (const r of REGIONAL_COVERAGE_RECORDS) {
+    const inPin = r.pincode.toLowerCase().includes(q);
+    const inCity = r.city.toLowerCase().includes(q);
+    const inDistrict = r.district.toLowerCase().includes(q);
+    const matchedLoc = r.localities.find((loc) => loc.toLowerCase().includes(q));
+
+    if (inPin || inCity || inDistrict || matchedLoc) {
+      if (seenPins.has(r.pincode)) continue;
+      seenPins.add(r.pincode);
+
+      let display = `${r.city}, ${r.district}, ${r.state} – ${r.pincode}`;
+      if (matchedLoc && matchedLoc.toLowerCase() !== r.city.toLowerCase()) {
+        display = `${matchedLoc} (${r.city}), ${r.district} – ${r.pincode}`;
+      }
+
+      results.push({
+        pincode: r.pincode,
+        city: r.city,
+        district: r.district,
+        state: r.state,
+        matched_locality: matchedLoc,
+        display_label: display,
+        serviceability_status: r.serviceability_status,
+        status_label: STATUS_LABELS[r.serviceability_status] || 'Regular Delivery Available',
+        is_serviceable: r.serviceability_status === 'REGULAR',
+      });
+      if (results.length >= 8) break;
+    }
+  }
+  return results;
 }

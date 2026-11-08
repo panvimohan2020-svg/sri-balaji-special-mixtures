@@ -3,8 +3,13 @@ import { initialProducts, initialCategories, initialBusinessSettings } from '../
 import {
   getFallbackPincodeServiceability,
   searchFallbackLocations,
-  getFallbackHierarchy
+  getFallbackHierarchy,
+  getFallbackAutocomplete,
+  ODISHA_30_DISTRICTS_DATA,
+  OdishaDistrictOverview
 } from '../data/regionalCoverageData';
+
+export type { OdishaDistrictOverview };
 
 const VITE_API_URL = ((import.meta as any).env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') || '';
 const API_BASE = VITE_API_URL ? `${VITE_API_URL}/api/v1` : '/api/v1';
@@ -1293,6 +1298,55 @@ export const apiService = {
     }
 
     return searchFallbackLocations(cleanQuery);
+  },
+
+  async getAutocompleteLocations(query: string): Promise<any[]> {
+    const cleanQuery = query.trim();
+    if (!cleanQuery) return [];
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
+      const res = await fetch(`${API_BASE}/logistics/autocomplete?q=${encodeURIComponent(cleanQuery)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          return data;
+        }
+      }
+    } catch {
+      // Graceful fallback
+    }
+
+    return getFallbackAutocomplete(cleanQuery);
+  },
+
+  async getOdishaDistrictsOverview(): Promise<OdishaDistrictOverview[]> {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${API_BASE}/logistics/districts/odisha`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
+        const data = await res.json();
+        if (data && Array.isArray(data.districts) && data.districts.length > 0) {
+          return data.districts;
+        }
+      }
+    } catch {
+      // Graceful fallback
+    }
+
+    return ODISHA_30_DISTRICTS_DATA;
   },
 
   async getCoverageHierarchy(): Promise<CoverageHierarchyResponse> {
