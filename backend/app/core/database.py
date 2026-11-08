@@ -3,10 +3,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 
-# Normalize SQLAlchemy Database URL (Render, Supabase, Heroku postgres:// -> postgresql://)
+# Normalize SQLAlchemy Database URL (Render, Supabase, Heroku postgres:// -> postgresql+psycopg2://)
 db_url = settings.DATABASE_URL
 if db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql://", 1)
+    db_url = db_url.replace("postgres://", "postgresql+psycopg2://", 1)
+elif db_url.startswith("postgresql://") and not db_url.startswith("postgresql+"):
+    db_url = db_url.replace("postgresql://", "postgresql+psycopg2://", 1)
 
 # Handle SQLite vs PostgreSQL connection flags
 connect_args = {}

@@ -15,6 +15,8 @@ services:
         generateValue: true
       - key: ENVIRONMENT
         value: production
+      - key: PYTHON_VERSION
+        value: 3.11.9
       - key: PUBLIC_FRONTEND_URL
         value: https://sribalajispecialmixtures.in
       - key: BACKEND_CORS_ORIGINS
