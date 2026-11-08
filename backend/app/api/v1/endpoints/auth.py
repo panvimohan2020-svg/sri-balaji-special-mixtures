@@ -94,6 +94,13 @@ class OwnerActivateRequest(BaseModel):
     password: str
 
 
+class OwnerInviteAPIRequest(BaseModel):
+    owner_name: str
+    owner_email: str
+    base_url: Optional[str] = None
+    hours_valid: Optional[int] = 72
+
+
 def mask_email(email: str) -> str:
     if "@" not in email:
         return email
@@ -353,6 +360,53 @@ def activate_owner_account(
             "role": owner_user.role,
             "is_active": owner_user.is_active
         }
+    }
+
+
+@router.post("/owner/generate-invitation")
+def api_generate_owner_invitation(
+    body: OwnerInviteAPIRequest,
+    current_user: User = Depends(require_roles([ROLE_SUPERADMIN])),
+    db: Session = Depends(get_db)
+):
+    """
+    Authenticated Endpoint (Super Admin only):
+    Generates a cryptographic single-use invitation for a business owner on this database.
+    """
+    owner_name = body.owner_name.strip()
+    owner_email = body.owner_email.strip().lower()
+    if not owner_name:
+        raise HTTPException(status_code=400, detail="Owner full name is required.")
+    if not owner_email or "@" not in owner_email:
+        raise HTTPException(status_code=400, detail="Valid owner email is required.")
+
+    raw_token = secrets.token_urlsafe(32)
+    token_hash = hashlib.sha256(raw_token.encode("utf-8")).hexdigest()
+    now_utc = datetime.now(timezone.utc)
+    expires_at = now_utc + timedelta(hours=body.hours_valid or 72)
+
+    inv = OwnerInvitation(
+        owner_name=owner_name,
+        owner_email=owner_email,
+        token_hash=token_hash,
+        is_used=False,
+        created_at=now_utc,
+        expires_at=expires_at
+    )
+    db.add(inv)
+    db.commit()
+    db.refresh(inv)
+
+    base = (body.base_url or settings.PUBLIC_FRONTEND_URL or "https://sri-balaji-special-mixtures.vercel.app").rstrip('/')
+    reg_link = f"{base}/admin/owner-activation?token={raw_token}"
+
+    return {
+        "owner_name": inv.owner_name,
+        "owner_email": inv.owner_email,
+        "raw_token": raw_token,
+        "registration_link": reg_link,
+        "expires_at": inv.expires_at.isoformat(),
+        "hours_valid": body.hours_valid or 72
     }
 
 

@@ -151,12 +151,53 @@ def list_invitations():
         db.close()
 
 
+def generate_invitation_remote(api_url: str, owner_name: str, owner_email: str, base_url: str, admin_pwd: str = "BalajiAdmin2026!", hours_valid: int = 72) -> dict:
+    import requests
+    api_url = api_url.rstrip('/')
+    # 1. Login to get token
+    login_res = requests.post(
+        f"{api_url}/api/v1/auth/token",
+        data={"username": "admin@sribalaji.com", "password": admin_pwd},
+        timeout=30
+    )
+    if login_res.status_code != 200:
+        raise RuntimeError(f"Authentication failed with live API at {api_url}: {login_res.text}")
+    token = login_res.json()["access_token"]
+
+    # 2. Call generate invitation endpoint
+    gen_res = requests.post(
+        f"{api_url}/api/v1/auth/owner/generate-invitation",
+        json={
+            "owner_name": owner_name,
+            "owner_email": owner_email,
+            "base_url": base_url,
+            "hours_valid": hours_valid
+        },
+        headers={"Authorization": f"Bearer {token}"},
+        timeout=30
+    )
+    if gen_res.status_code != 200:
+        raise RuntimeError(f"Failed to generate invitation on live API: {gen_res.text}")
+    
+    data = gen_res.json()
+    return {
+        "owner_name": data["owner_name"],
+        "owner_email": data["owner_email"],
+        "raw_token": data["raw_token"],
+        "registration_link": data["registration_link"],
+        "expires_at": datetime.fromisoformat(data["expires_at"].replace("Z", "+00:00")),
+        "hours_valid": hours_valid
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description="Sri Balaji Business Owner Invitation Generator")
     parser.add_argument("--name", type=str, help="Full name of the business owner (e.g. 'Sri Adari Krishna Rao')")
     parser.add_argument("--email", type=str, help="Actual email address of the business owner")
     parser.add_argument("--hours", type=int, default=72, help="Invitation validity window in hours (default: 72)")
     parser.add_argument("--url", type=str, help="Override public website URL (default: PUBLIC_FRONTEND_URL from env)")
+    parser.add_argument("--api", type=str, help="Target remote API URL (e.g. 'https://sri-balaji-special-mixtures.onrender.com')")
+    parser.add_argument("--admin-password", type=str, default="BalajiAdmin2026!", help="Super Admin password for remote API")
     parser.add_argument("--list", action="store_true", help="List all current invitations and active Super Admin accounts")
     
     args = parser.parse_args()
@@ -198,12 +239,22 @@ def main():
         sys.exit(1)
 
     try:
-        result = generate_invitation(
-            owner_name=owner_name,
-            owner_email=owner_email,
-            base_url=base_url,
-            hours_valid=args.hours
-        )
+        if args.api:
+            result = generate_invitation_remote(
+                api_url=args.api,
+                owner_name=owner_name,
+                owner_email=owner_email,
+                base_url=base_url,
+                admin_pwd=args.admin_password,
+                hours_valid=args.hours
+            )
+        else:
+            result = generate_invitation(
+                owner_name=owner_name,
+                owner_email=owner_email,
+                base_url=base_url,
+                hours_valid=args.hours
+            )
     except Exception as exc:
         print(f"\n[!] Failed to generate owner invitation: {exc}")
         sys.exit(1)
