@@ -26,3 +26,4 @@ print('Robots status:', r_robots.status_code)
 
 r_sitemap = requests.get(f'{url}/sitemap.xml', timeout=30)
 print('Sitemap status:', r_sitemap.status_code)
+

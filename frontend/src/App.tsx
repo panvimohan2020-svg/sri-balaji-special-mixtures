@@ -8,7 +8,6 @@ import { BackToTopButton } from './components/common/BackToTopButton';
 import { ToastContainer } from './components/common/ToastContainer';
 import { AnimatedBackground } from './components/common/AnimatedBackground';
 import { CinematicIntro } from './components/common/CinematicIntro';
-import { AISnackAssistant } from './components/common/AISnackAssistant';
 import { HomePage } from './pages/HomePage';
 import { CatalogPage } from './pages/CatalogPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
@@ -151,7 +150,6 @@ export const App: React.FC = () => {
         <Footer />
         <MobileBottomNav />
         <FloatingWhatsAppButton />
-        <AISnackAssistant />
         <BackToTopButton />
         <ToastContainer />
         <PWAInstallBanner />
