@@ -69,9 +69,11 @@ export const RegionalDeliveryCoverage: React.FC<RegionalDeliveryCoverageProps> =
   const executeSearch = async (query: string) => {
     const cleanQuery = query.trim();
     if (!cleanQuery) return;
+    if (isSearching) return; // Prevent duplicate requests
 
     setIsSearching(true);
     setHasSearched(true);
+    setSelectedResult(null); // Clear previous result
     setSearchResults([]);
 
     try {
@@ -89,20 +91,20 @@ export const RegionalDeliveryCoverage: React.FC<RegionalDeliveryCoverageProps> =
         } else {
           // Fallback if not found in database
           setSelectedResult({
-            pincode: '------',
+            pincode: cleanQuery,
             is_serviceable: false,
             serviceability_status: 'UNAVAILABLE',
             status_label: 'Currently Unavailable',
             city: cleanQuery,
-            district: 'Not in Direct Route',
+            district: 'Outside Scheduled Routes',
             state: 'Regional Route',
-            min_delivery_days: 3,
-            max_delivery_days: 5,
+            min_delivery_days: 2,
+            max_delivery_days: 4,
             standard_shipping_rate: 0,
             delivery_charges_text: 'Custom Freight Quote',
             cod_available: false,
             daily_transit_available: false,
-            message: `No automated scheduled route found for "${cleanQuery}". Direct custom road transit and bulk cartons can be arranged manually via our wholesale desk at +91 98617 89602.`,
+            message: `Delivery is currently unavailable on automated scheduled routes for "${cleanQuery}". Direct custom road transit and bulk wholesale cartons can be arranged manually via our WhatsApp desk at +91 98617 89602.`,
             whatsapp_url: `https://wa.me/919861789602?text=${encodeURIComponent(`🚚 *DELIVERY ENQUIRY – SRI BALAJI*\nLocation: ${cleanQuery}\nPlease advise transport availability and wholesale freight quote.`)}`
           });
         }
@@ -112,11 +114,12 @@ export const RegionalDeliveryCoverage: React.FC<RegionalDeliveryCoverageProps> =
         pincode: cleanQuery,
         is_serviceable: false,
         serviceability_status: 'PENDING_VERIFICATION',
-        status_label: 'Serviceability Pending',
+        status_label: 'Route Verification Required',
         min_delivery_days: 2,
         max_delivery_days: 4,
         standard_shipping_rate: 0,
         cod_available: false,
+        daily_transit_available: false,
         message: 'Could not connect to live routing network. Please call wholesale desk at +91 98617 89602.'
       });
     } finally {
@@ -240,50 +243,50 @@ export const RegionalDeliveryCoverage: React.FC<RegionalDeliveryCoverageProps> =
       </div>
 
       {/* SEARCH BAR & PIN INPUT */}
-      <div className="bg-white rounded-3xl border border-ivory-border shadow-soft p-5 sm:p-8 space-y-6">
+      <div className="bg-[#FFFDF9] rounded-3xl border-2 border-[#D6A52D]/40 shadow-soft p-5 sm:p-8 space-y-6">
         <div className="space-y-1">
-          <h3 className="font-serif font-black text-xl text-imperial flex items-center gap-2">
-            <Search className="w-5 h-5 text-gold-deep" />
-            <span>Search Delivery by PIN Code, Village, Town, or District</span>
+          <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-[#28143F] flex items-center gap-2">
+            <Search className="w-5 h-5 text-[#D6A52D]" />
+            <span>Check Delivery Availability</span>
           </h3>
-          <p className="text-xs text-cocoa-muted">
-            Search with any 6-digit PIN code (e.g., <strong>761200</strong>, <strong>765022</strong>, <strong>532201</strong>) or type a village / town name like <em>Ranipeta, Kasinagar, Palasa, Tekkali, Gunupur, Berhampur</em>.
+          <p className="text-sm text-[#3B2D27] font-semibold leading-relaxed">
+            Enter your PIN code, village, town, or district to check whether your location is covered by our delivery network.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <MapPin className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-cocoa-muted" />
+            <MapPin className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#D6A52D]" />
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              placeholder="Enter PIN Code, Village, Town, or District..."
-              className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-ivory-border bg-ivory focus:border-gold focus:ring-2 focus:ring-gold/30 outline-none text-sm font-medium text-imperial transition-all shadow-inner"
+              placeholder="Enter PIN code, village, town, or district..."
+              className="w-full pl-12 pr-4 py-3.5 sm:py-4 rounded-2xl border-2 border-[#D6A52D]/60 bg-white focus:border-[#28143F] focus:ring-2 focus:ring-[#D6A52D]/30 outline-none text-sm sm:text-base font-bold text-[#28143F] placeholder:text-[#7C6A5A] transition-all shadow-inner"
             />
           </div>
           <button
             type="submit"
             disabled={isSearching || !searchInput.trim()}
-            className="px-8 py-3.5 rounded-2xl bg-imperial hover:bg-imperial-secondary text-gold font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-royal disabled:opacity-50 cursor-pointer"
+            className="px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#28143F] via-[#351B54] to-[#1E0D30] text-[#F4C45E] font-sans font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-royal disabled:opacity-50 cursor-pointer"
           >
-            {isSearching ? <span className="animate-spin text-base">⏳</span> : <Search className="w-4 h-4" />}
+            {isSearching ? <span className="animate-spin text-base">⏳</span> : <Search className="w-4 h-4 text-[#F4C45E]" />}
             <span>Check Route</span>
           </button>
         </form>
 
         {/* Popular Quick Chips */}
-        <div className="pt-1 flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-[11px] font-bold text-cocoa-muted uppercase tracking-wider">Quick Check:</span>
+        <div className="pt-2 border-t border-[#D6A52D]/20 flex flex-wrap items-center gap-2 text-xs">
+          <span className="text-xs font-black text-[#28143F] uppercase tracking-wider">Popular Locations:</span>
           {[
-            { label: 'Paralakhemundi (761200)', q: '761200' },
-            { label: 'Pathapatnam AP (532201)', q: '532201' },
-            { label: 'Palasa / Kasibugga (532221)', q: '532221' },
-            { label: 'Gunupur Main (765017)', q: '765017' },
-            { label: 'Gunupur Rural (765022)', q: '765022' },
-            { label: 'Berhampur (760001)', q: '760001' },
-            { label: 'Srikakulam Town (532001)', q: '532001' },
-            { label: 'Bhubaneswar (751001)', q: '751001' },
+            { label: 'Paralakhemundi', q: '761200' },
+            { label: 'Pathapatnam', q: '532201' },
+            { label: 'Palasa / Kasibugga', q: '532221' },
+            { label: 'Gunupur Main', q: '765017' },
+            { label: 'Gunupur Rural', q: '765022' },
+            { label: 'Berhampur', q: '760001' },
+            { label: 'Srikakulam Town', q: '532001' },
+            { label: 'Bhubaneswar', q: '751001' },
           ].map((chip) => (
             <button
               key={chip.q}
@@ -292,9 +295,12 @@ export const RegionalDeliveryCoverage: React.FC<RegionalDeliveryCoverageProps> =
                 setSearchInput(chip.q);
                 executeSearch(chip.q);
               }}
-              className="px-3 py-1 rounded-xl bg-ivory border border-ivory-border hover:border-gold/60 text-imperial hover:text-gold-deep font-mono font-bold text-[11px] transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border-2 border-[#D6A52D]/40 hover:border-[#28143F] text-[#28143F] hover:text-[#28143F] font-bold text-xs transition-colors cursor-pointer shadow-2xs"
             >
-              {chip.label}
+              <span>{chip.label}</span>
+              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#28143F]/10 text-[#28143F] font-black">
+                {chip.q}
+              </span>
             </button>
           ))}
         </div>

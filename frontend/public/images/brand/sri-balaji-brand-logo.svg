@@ -1,96 +1,373 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
   <defs>
-    <!-- Radiant Saffron Gold Gradient -->
-    <linearGradient id="sbGoldSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Royal Gold Shimmer Gradients -->
+    <linearGradient id="goldSheen" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFFDF0" />
-      <stop offset="25%" stop-color="#F4C45E" />
-      <stop offset="70%" stop-color="#D6A52D" />
+      <stop offset="20%" stop-color="#FCE182" />
+      <stop offset="45%" stop-color="#E2B43A" />
+      <stop offset="70%" stop-color="#B8860B" />
+      <stop offset="90%" stop-color="#E5BE4A" />
       <stop offset="100%" stop-color="#936706" />
     </linearGradient>
 
-    <!-- Warm Cream Cartouche Gradient -->
-    <linearGradient id="sbCrestCream" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFDF7" />
-      <stop offset="50%" stop-color="#FFF8EB" />
-      <stop offset="100%" stop-color="#FFF0D4" />
+    <linearGradient id="goldBorderGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#AA8222" />
+      <stop offset="25%" stop-color="#FBE07A" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="75%" stop-color="#FFF3C4" />
+      <stop offset="100%" stop-color="#8C6615" />
     </linearGradient>
 
-    <!-- Soft Drop Shadow -->
-    <filter id="sbCrestShadow" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#09030E" flood-opacity="0.25" />
+    <!-- Deep Emerald Green Velvet Shield Gradient -->
+    <radialGradient id="emeraldShieldBg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#155D3F" />
+      <stop offset="50%" stop-color="#0E422C" />
+      <stop offset="85%" stop-color="#082A1B" />
+      <stop offset="100%" stop-color="#04160E" />
+    </radialGradient>
+
+    <!-- Rich Scarlet Crimson Ribbon Gradient -->
+    <linearGradient id="scarletRibbon" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#881313" />
+      <stop offset="20%" stop-color="#C5221F" />
+      <stop offset="50%" stop-color="#E53935" />
+      <stop offset="80%" stop-color="#C5221F" />
+      <stop offset="100%" stop-color="#881313" />
+    </linearGradient>
+
+    <!-- Ribbon Fold Shadow -->
+    <linearGradient id="ribbonDarkFold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#550B0B" />
+      <stop offset="100%" stop-color="#3A0505" />
+    </linearGradient>
+
+    <!-- Deep Drop Shadows -->
+    <filter id="regalShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#030D08" flood-opacity="0.55" />
+    </filter>
+
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#FCE182" flood-opacity="0.5" />
+    </filter>
+
+    <filter id="textBevel" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#000000" flood-opacity="0.65" />
     </filter>
   </defs>
 
-  <g filter="url(#sbCrestShadow)" transform="translate(250, 240)">
-    <!-- Top Crown / Kalash Finial -->
-    <g transform="translate(0, -170)">
-      <line x1="-50" y1="0" x2="50" y2="0" stroke="#D6A52D" stroke-width="2" />
-      <circle cx="-25" cy="0" r="4" fill="#D6A52D" />
-      <circle cx="25" cy="0" r="4" fill="#D6A52D" />
-      <polygon points="0,-16 6,-4 18,-4 8,4 12,16 0,8 -12,16 -8,4 -18,-4 -6,-4" fill="url(#sbGoldSheen)" />
+  <!-- BACKGROUND DECORATIVE GLOW -->
+  <circle cx="300" cy="290" r="240" fill="url(#goldSheen)" opacity="0.08" filter="blur(25px)" />
+
+  <g filter="url(#regalShadow)">
+    
+    <!-- ========================================== -->
+    <!-- 1. GOLDEN LAUREL WREATH (EMBRACING SHIELD) -->
+    <!-- ========================================== -->
+    <g fill="url(#goldSheen)" stroke="#8C6615" stroke-width="0.75" filter="url(#goldGlow)">
+      <!-- Left Laurel Branch -->
+      <!-- Leaf clusters scaling up the left side -->
+      <path d="M 125 390 C 110 375, 105 345, 118 335 C 128 348, 130 375, 125 390 Z" />
+      <path d="M 100 370 C 85 355, 82 328, 98 318 C 106 332, 108 358, 100 370 Z" />
+      <path d="M 110 325 C 92 312, 88 280, 102 268 C 112 282, 115 310, 110 325 Z" />
+      <path d="M 85 305 C 70 290, 68 260, 84 250 C 92 264, 94 290, 85 305 Z" />
+      <path d="M 98 250 C 82 235, 78 202, 94 192 C 104 206, 105 235, 98 250 Z" />
+      <path d="M 76 230 C 62 215, 60 185, 76 175 C 84 188, 86 215, 76 230 Z" />
+      <path d="M 94 175 C 80 158, 82 128, 98 120 C 106 135, 105 162, 94 175 Z" />
+      <path d="M 80 155 C 68 140, 72 115, 88 108 C 94 122, 92 145, 80 155 Z" />
+      <path d="M 110 115 C 100 98, 110 75, 126 72 C 130 88, 124 108, 110 115 Z" />
+      <path d="M 138 78 C 132 60, 148 45, 164 46 C 164 62, 154 75, 138 78 Z" />
+
+      <!-- Left Berries / Dots -->
+      <circle cx="118" cy="350" r="4.5" />
+      <circle cx="102" cy="285" r="4.5" />
+      <circle cx="92" cy="210" r="4.5" />
+      <circle cx="102" cy="145" r="4.5" />
+      <circle cx="132" cy="95" r="4.5" />
+
+      <!-- Right Laurel Branch (Symmetrical Mirror) -->
+      <path d="M 475 390 C 490 375, 495 345, 482 335 C 472 348, 470 375, 475 390 Z" />
+      <path d="M 500 370 C 515 355, 518 328, 502 318 C 494 332, 492 358, 500 370 Z" />
+      <path d="M 490 325 C 508 312, 512 280, 498 268 C 488 282, 485 310, 490 325 Z" />
+      <path d="M 515 305 C 530 290, 532 260, 516 250 C 508 264, 506 290, 515 305 Z" />
+      <path d="M 502 250 C 518 235, 522 202, 506 192 C 496 206, 495 235, 502 250 Z" />
+      <path d="M 524 230 C 538 215, 540 185, 524 175 C 516 188, 514 215, 524 230 Z" />
+      <path d="M 506 175 C 520 158, 518 128, 502 120 C 494 135, 495 162, 506 175 Z" />
+      <path d="M 520 155 C 532 140, 528 115, 512 108 C 506 122, 508 145, 520 155 Z" />
+      <path d="M 490 115 C 500 98, 490 75, 474 72 C 470 88, 476 108, 490 115 Z" />
+      <path d="M 462 78 C 468 60, 452 45, 436 46 C 436 62, 446 75, 462 78 Z" />
+
+      <!-- Right Berries / Dots -->
+      <circle cx="482" cy="350" r="4.5" />
+      <circle cx="498" cy="285" r="4.5" />
+      <circle cx="508" cy="210" r="4.5" />
+      <circle cx="498" cy="145" r="4.5" />
+      <circle cx="468" cy="95" r="4.5" />
     </g>
 
-    <!-- 1. Main Baroque Arched Cartouche Badge -->
-    <rect x="-190" y="-150" width="380" height="300" rx="36" fill="url(#sbCrestCream)" stroke="#D6A52D" stroke-width="4.5" />
-    <rect x="-180" y="-140" width="360" height="280" rx="28" fill="none" stroke="#F4C45E" stroke-width="1.8" opacity="0.65" />
 
-    <!-- Corner Accents -->
-    <text x="-165" y="-120" font-size="14" fill="#D9531E">❖</text>
-    <text x="165" y="-120" font-size="14" fill="#D9531E" text-anchor="end">❖</text>
-    <text x="-165" y="130" font-size="14" fill="#D9531E">❖</text>
-    <text x="165" y="130" font-size="14" fill="#D9531E" text-anchor="end">❖</text>
+    <!-- ========================================== -->
+    <!-- 2. NOBLE EMERALD CREST SHIELD             -->
+    <!-- ========================================== -->
+    <!-- Outer Gold Rim -->
+    <path d="M 300 48
+             C 410 48, 470 95, 475 200
+             C 480 320, 395 425, 300 485
+             C 205 425, 120 320, 125 200
+             C 130 95, 190 48, 300 48 Z"
+          fill="url(#emeraldShieldBg)"
+          stroke="url(#goldBorderGrad)"
+          stroke-width="9" />
 
-    <!-- 2. Layer 1: "Sri" (Cursive / Script in Dark Forest Green) -->
-    <g transform="translate(0, -65)">
-      <text x="-50" y="-3" text-anchor="middle" font-size="16" fill="#D6A52D">✦</text>
-      <text x="0" y="0"
-            text-anchor="middle"
-            font-family="'Great Vibes', 'Brush Script MT', cursive"
-            font-size="54"
-            fill="#0B3B24"
-            font-weight="normal">
-        Sri
-      </text>
-      <text x="50" y="-3" text-anchor="middle" font-size="16" fill="#D6A52D">✦</text>
+    <!-- Inner Ornate Inset Filigree Border -->
+    <path d="M 300 64
+             C 392 64, 448 104, 452 198
+             C 456 302, 382 396, 300 454
+             C 218 396, 144 302, 148 198
+             C 152 104, 208 64, 300 64 Z"
+          fill="none"
+          stroke="url(#goldSheen)"
+          stroke-width="2.5"
+          stroke-dasharray="8,5" />
+
+    <path d="M 300 74
+             C 382 74, 434 110, 438 196
+             C 441 288, 372 376, 300 432
+             C 228 376, 159 288, 162 196
+             C 166 110, 218 74, 300 74 Z"
+          fill="none"
+          stroke="url(#goldSheen)"
+          stroke-width="1.2"
+          opacity="0.8" />
+
+
+    <!-- ========================================== -->
+    <!-- 3. SACRED AUSPICIOUS CROWN (KALAŚA / DIYA) -->
+    <!-- ========================================== -->
+    <g transform="translate(300, 105)" filter="url(#goldGlow)">
+      <!-- Central Diya Flame -->
+      <path d="M 0 -36 C -15 -14, -12 6, 0 16 C 12 6, 15 -14, 0 -36 Z" fill="url(#goldSheen)" />
+      <!-- Radiant Petals -->
+      <path d="M -16 6 C -32 -6, -34 16, -18 20 C -12 20, -10 12, -16 6 Z" fill="url(#goldSheen)" />
+      <path d="M 16 6 C 32 -6, 34 16, 18 20 C 12 20, 10 12, 16 6 Z" fill="url(#goldSheen)" />
+      <!-- Top Jewel Dots -->
+      <circle cx="0" cy="-40" r="4.5" fill="#FFFDF0" />
+      <circle cx="-28" cy="4" r="3" fill="#FCE182" />
+      <circle cx="28" cy="4" r="3" fill="#FCE182" />
+      <!-- Pedestal / Base -->
+      <path d="M -24 22 L 24 22 C 18 28, -18 28, -24 22 Z" fill="url(#goldSheen)" />
     </g>
 
-    <!-- 3. Layer 2: "BALAJI" (Largest, Bold Artistic Typography in Deep Dark Green) -->
-    <text x="0" y="5"
+
+    <!-- ========================================== -->
+    <!-- 4. "✦ Sri ✦" SCRIPT TYPOGRAPHY            -->
+    <!-- ========================================== -->
+    <!-- Star Flourishes -->
+    <g fill="url(#goldSheen)" filter="url(#goldGlow)">
+      <!-- Left 4-point Star -->
+      <path d="M 205 174 Q 212 174 212 167 Q 212 174 219 174 Q 212 174 212 181 Q 212 174 205 174 Z" />
+      <!-- Right 4-point Star -->
+      <path d="M 381 174 Q 388 174 388 167 Q 388 174 395 174 Q 388 174 388 181 Q 388 174 381 174 Z" />
+    </g>
+
+    <text x="300" y="185"
           text-anchor="middle"
-          font-family="'Rozha One', 'Cinzel', 'Playfair Display', Georgia, serif"
+          font-family="'Playfair Display', 'Cinzel Decorative', Georgia, serif"
+          font-weight="700"
+          font-style="italic"
+          font-size="44"
+          letter-spacing="6"
+          fill="url(#goldSheen)"
+          filter="url(#textBevel)">
+      Sri
+    </text>
+
+
+    <!-- ========================================== -->
+    <!-- 5. "BALAJI" MONUMENTAL GOLD WORDMARK       -->
+    <!-- ========================================== -->
+    <!-- Deep Drop Shadow under BALAJI -->
+    <text x="300" y="267"
+          text-anchor="middle"
+          font-family="'Cinzel', 'Playfair Display', Georgia, serif"
           font-weight="900"
-          font-size="54"
-          letter-spacing="5"
-          fill="#072B18">
+          font-size="82"
+          letter-spacing="6"
+          fill="#03140C"
+          opacity="0.85">
       BALAJI
     </text>
 
-    <!-- 4. Layer 3: "SPECIAL MIXTURE" (Smaller Uppercase in Dark Green with Spacing) -->
-    <text x="0" y="42"
+    <!-- Beveled Outline -->
+    <text x="300" y="264"
           text-anchor="middle"
-          font-family="'Manrope', 'Plus Jakarta Sans', system-ui, sans-serif"
+          font-family="'Cinzel', 'Playfair Display', Georgia, serif"
           font-weight="900"
-          font-size="17"
-          letter-spacing="5.5"
-          fill="#0B3B24">
-      SPECIAL MIXTURE
+          font-size="82"
+          letter-spacing="6"
+          fill="none"
+          stroke="#473204"
+          stroke-width="5">
+      BALAJI
     </text>
 
-    <!-- Divider Bar -->
-    <line x1="-120" y1="62" x2="120" y2="62" stroke="#D6A52D" stroke-width="1.8" stroke-opacity="0.75" />
+    <!-- Main Golden Face -->
+    <text x="300" y="264"
+          text-anchor="middle"
+          font-family="'Cinzel', 'Playfair Display', Georgia, serif"
+          font-weight="900"
+          font-size="82"
+          letter-spacing="6"
+          fill="url(#goldSheen)"
+          filter="url(#goldGlow)">
+      BALAJI
+    </text>
 
-    <!-- 5. Tagline: "FRESH - CRISPY - TASTY" Ribbon -->
-    <g transform="translate(0, 95)">
-      <rect x="-145" y="-18" width="290" height="34" rx="17" fill="#FFFDF8" stroke="#D6A52D" stroke-width="1.8" />
-      <text x="0" y="5"
+
+    <!-- ========================================== -->
+    <!-- 6. "SPECIAL MIXTURES" PLAQUE              -->
+    <!-- ========================================== -->
+    <g transform="translate(300, 310)">
+      <!-- Dark Inset Plaque Base -->
+      <rect x="-170" y="-18" width="340" height="36" rx="18"
+            fill="#051C13"
+            stroke="url(#goldSheen)"
+            stroke-width="2.5" />
+      
+      <!-- Subtle Inner Inset Line -->
+      <rect x="-165" y="-14" width="330" height="28" rx="14"
+            fill="none"
+            stroke="url(#goldSheen)"
+            stroke-width="1"
+            opacity="0.6" />
+
+      <!-- Side Diamonds -->
+      <polygon points="-148,0 -144,-4 -140,0 -144,4" fill="url(#goldSheen)" />
+      <polygon points="148,0 144,-4 140,0 144,4" fill="url(#goldSheen)" />
+
+      <!-- Text -->
+      <text x="0" y="7"
             text-anchor="middle"
-            font-family="'Manrope', 'Plus Jakarta Sans', system-ui, sans-serif"
-            font-weight="800"
-            font-size="13"
-            letter-spacing="2.8"
-            fill="#0B3B24">
-        FRESH <tspan fill="#D6A52D" font-weight="900">•</tspan> CRISPY <tspan fill="#D6A52D" font-weight="900">•</tspan> TASTY
+            font-family="'Cinzel', 'Plus Jakarta Sans', sans-serif"
+            font-weight="900"
+            font-size="18"
+            letter-spacing="4.5"
+            fill="url(#goldSheen)">
+        SPECIAL MIXTURES
       </text>
     </g>
+
+
+    <!-- ========================================== -->
+    <!-- 7. SCARLET RED RIBBON BANNER              -->
+    <!-- "FRESH • CRISPY • TASTY"                   -->
+    <!-- ========================================== -->
+    <g transform="translate(300, 375)">
+      <!-- Left Ribbon Swallowtail Fold -->
+      <polygon points="-210,-2 -235,-22 -230,16 -205,10" fill="url(#scarletRibbon)" stroke="url(#goldSheen)" stroke-width="1.5" />
+      <polygon points="-205,10 -220,18 -185,14" fill="url(#ribbonDarkFold)" />
+
+      <!-- Right Ribbon Swallowtail Fold -->
+      <polygon points="210,-2 235,-22 230,16 205,10" fill="url(#scarletRibbon)" stroke="url(#goldSheen)" stroke-width="1.5" />
+      <polygon points="205,10 220,18 185,14" fill="url(#ribbonDarkFold)" />
+
+      <!-- Main Banner Body (Curved Ribbon) -->
+      <path d="M -200 -16
+               Q 0 -26 200 -16
+               L 195 20
+               Q 0 10 -195 20 Z"
+            fill="url(#scarletRibbon)"
+            stroke="url(#goldSheen)"
+            stroke-width="2.5"
+            filter="url(#textBevel)" />
+
+      <!-- Top/Bottom Fine Gold Rim Lines on Ribbon -->
+      <path d="M -192 -12 Q 0 -22 192 -12" fill="none" stroke="url(#goldSheen)" stroke-width="1" opacity="0.8" />
+      <path d="M -188 15 Q 0 5 188 15" fill="none" stroke="url(#goldSheen)" stroke-width="1" opacity="0.8" />
+
+      <!-- Side Star Embellishments -->
+      <polygon points="-160,2 -157,-3 -152,-1 -156,3 -154,8 -159,5 -164,7 -162,2 -166,-2 -161,-2" fill="#FFFDF0" />
+      <polygon points="160,2 157,-3 152,-1 156,3 154,8 159,5 164,7 162,2 166,-2 161,-2" fill="#FFFDF0" />
+
+      <!-- Text: FRESH • CRISPY • TASTY -->
+      <text x="0" y="6"
+            text-anchor="middle"
+            font-family="'Cinzel', 'Plus Jakarta Sans', sans-serif"
+            font-weight="900"
+            font-size="16.5"
+            letter-spacing="3.5"
+            fill="#FFFDF0"
+            stroke="#550B0B"
+            stroke-width="0.75"
+            filter="url(#textBevel)">
+        FRESH • CRISPY • TASTY
+      </text>
+    </g>
+
+
+    <!-- ========================================== -->
+    <!-- 8. HERITAGE MEDAL SEAL                     -->
+    <!-- "30+ YEARS OF EXPERIENCE"                  -->
+    <!-- ========================================== -->
+    <g transform="translate(300, 475)">
+      <!-- Outer Round Medal Badge -->
+      <circle cx="0" cy="0" r="54" fill="#062215" stroke="url(#goldBorderGrad)" stroke-width="4.5" />
+      <circle cx="0" cy="0" r="47" fill="none" stroke="url(#goldSheen)" stroke-width="1.5" stroke-dasharray="4,3" />
+
+      <!-- Tiny Laurel Arc inside Medal -->
+      <path d="M -36 10 C -44 -10, -32 -32, 0 -38 C 32 -32, 44 -10, 36 10" fill="none" stroke="url(#goldSheen)" stroke-width="2" />
+
+      <!-- "30+" Highlight -->
+      <text x="0" y="-8"
+            text-anchor="middle"
+            font-family="'Cinzel', 'Playfair Display', serif"
+            font-weight="900"
+            font-size="30"
+            letter-spacing="1"
+            fill="url(#goldSheen)">
+        30+
+      </text>
+
+      <!-- "YEARS OF EXPERIENCE" -->
+      <text x="0" y="8"
+            text-anchor="middle"
+            font-family="'Plus Jakarta Sans', sans-serif"
+            font-weight="900"
+            font-size="7.5"
+            letter-spacing="1.5"
+            fill="#FFFDF0">
+        YEARS OF
+      </text>
+      <text x="0" y="19"
+            text-anchor="middle"
+            font-family="'Plus Jakarta Sans', sans-serif"
+            font-weight="900"
+            font-size="7.5"
+            letter-spacing="1.5"
+            fill="#FFFDF0">
+        EXPERIENCE
+      </text>
+
+      <!-- Three Stars -->
+      <g fill="url(#goldSheen)" transform="translate(0, 31)">
+        <polygon points="0,-4 1.5,-0.5 5,-0.5 2,1.5 3.2,5 0,3 -3.2,5 -2,1.5 -5,-0.5 -1.5,-0.5" />
+        <polygon points="-12,-4 -10.5,-0.5 -7,-0.5 -10,1.5 -8.8,5 -12,3 -15.2,5 -14,1.5 -17,-0.5 -13.5,-0.5" />
+        <polygon points="12,-4 13.5,-0.5 17,-0.5 14,1.5 15.2,5 12,3 8.8,5 10,1.5 7,-0.5 10.5,-0.5" />
+      </g>
+    </g>
+
+
+    <!-- ========================================== -->
+    <!-- 9. INDIAN PURE VEG BADGE (TOP RIGHT)       -->
+    <!-- ========================================== -->
+    <g transform="translate(485, 55)">
+      <!-- Outer White Rounded Box with Green Border -->
+      <rect x="0" y="0" width="36" height="36" rx="6" fill="#FFFFFF" stroke="#16A34A" stroke-width="2.5" />
+      <!-- Inner Green Dot -->
+      <circle cx="18" cy="18" r="7.5" fill="#16A34A" />
+      <text x="18" y="47" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="7.5" fill="#16A34A" letter-spacing="0.5">
+        PURE VEG
+      </text>
+    </g>
+
   </g>
 </svg>

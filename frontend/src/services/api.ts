@@ -1,5 +1,10 @@
 import type { Product, Category, BusinessSettings } from '../types';
 import { initialProducts, initialCategories, initialBusinessSettings } from '../data/initialData';
+import {
+  getFallbackPincodeServiceability,
+  searchFallbackLocations,
+  getFallbackHierarchy
+} from '../data/regionalCoverageData';
 
 const VITE_API_URL = ((import.meta as any).env?.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') || '';
 const API_BASE = VITE_API_URL ? `${VITE_API_URL}/api/v1` : '/api/v1';
@@ -1191,39 +1196,126 @@ export const apiService = {
 
   // --- Logistics & Shipping (Phase 4) ---
   async checkPincodeServiceability(pincode: string): Promise<PincodeCheckResult> {
-    const res = await fetch(`${API_BASE}/logistics/pincode/${encodeURIComponent(pincode.trim())}`);
-    if (!res.ok) {
+    const cleanPin = pincode.trim();
+    if (!/^\d{6}$/.test(cleanPin)) {
       return {
-        pincode,
+        pincode: cleanPin,
         is_serviceable: false,
-        min_delivery_days: 1,
-        max_delivery_days: 3,
+        serviceability_status: 'UNAVAILABLE',
+        status_label: 'Invalid PIN Code',
+        min_delivery_days: 0,
+        max_delivery_days: 0,
         standard_shipping_rate: 0,
         cod_available: false,
-        message: 'Could not verify PIN code serviceability.'
+        is_postal_valid: false,
+        message: 'Please enter a valid 6-digit Indian PIN code (e.g., 761200, 532001, 760001).'
       };
     }
-    return await res.json();
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${API_BASE}/logistics/pincode/${encodeURIComponent(cleanPin)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
+        return await res.json();
+      }
+    } catch {
+      // Graceful fallback to verified PostgreSQL synced dataset
+    }
+
+    const fallback = getFallbackPincodeServiceability(cleanPin);
+    if (fallback) {
+      return fallback;
+    }
+
+    return {
+      pincode: cleanPin,
+      is_serviceable: false,
+      serviceability_status: 'UNAVAILABLE',
+      status_label: 'Currently Unavailable',
+      city: 'Regional Destination',
+      district: 'Regional Route',
+      state: 'Odisha / Andhra Pradesh',
+      min_delivery_days: 2,
+      max_delivery_days: 4,
+      standard_shipping_rate: 0,
+      delivery_charges_text: 'Custom Freight Quote',
+      cod_available: false,
+      daily_transit_available: false,
+      is_postal_valid: true,
+      message: `PIN code ${cleanPin} is currently outside our regular daily route network. Custom road transit or parcel cargo can be arranged manually via our WhatsApp dispatch desk (+91 98617 89602).`,
+      whatsapp_url: `https://wa.me/919861789602?text=${encodeURIComponent(`🚚 *DELIVERY ENQUIRY – SRI BALAJI*\nPIN: ${cleanPin}\nPlease advise transport availability and freight charges.`)}`
+    };
   },
 
   async listServiceablePincodes(): Promise<any[]> {
-    const res = await fetch(`${API_BASE}/logistics/pincodes`);
-    if (!res.ok) return [];
-    return await res.json();
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${API_BASE}/logistics/pincodes`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
+        return await res.json();
+      }
+    } catch {
+      // Fallback
+    }
+    return [];
   },
 
   async searchLogisticsLocations(query: string): Promise<{ query: string; count: number; results: any[] }> {
-    const res = await fetch(`${API_BASE}/logistics/search?q=${encodeURIComponent(query.trim())}`);
-    if (!res.ok) return { query, count: 0, results: [] };
-    return await res.json();
+    const cleanQuery = query.trim();
+    if (!cleanQuery) return { query: '', count: 0, results: [] };
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${API_BASE}/logistics/search?q=${encodeURIComponent(cleanQuery)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
+        const data = await res.json();
+        if (data && Array.isArray(data.results) && data.results.length > 0) {
+          return data;
+        }
+      }
+    } catch {
+      // Graceful fallback
+    }
+
+    return searchFallbackLocations(cleanQuery);
   },
 
   async getCoverageHierarchy(): Promise<CoverageHierarchyResponse> {
-    const res = await fetch(`${API_BASE}/logistics/coverage/hierarchy`);
-    if (!res.ok) {
-      return { total_records: 0, supported_transport_methods: [], states: [] };
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`${API_BASE}/logistics/coverage/hierarchy`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
+        const data = await res.json();
+        if (data && Array.isArray(data.states) && data.states.length > 0) {
+          return data;
+        }
+      }
+    } catch {
+      // Fallback
     }
-    return await res.json();
+
+    return getFallbackHierarchy();
   },
 
   async adminListPincodes(token: string, params?: { search?: string; state?: string; district?: string; status?: string; skip?: number; limit?: number }): Promise<{ total: number; records: any[] }> {
