@@ -24,6 +24,7 @@ import { InstagramIcon } from '../components/common/InstagramIcon';
 import { BrandLogo } from '../components/common/BrandLogo';
 import { initialCategories, initialProducts, initialBundles, initialBusinessSettings } from '../data/initialData';
 import { TasteDiscovery } from '../components/home/TasteDiscovery';
+import { RegionalDeliverySection } from '../components/home/RegionalDeliverySection';
 import { ProductCard } from '../components/common/ProductCard';
 import { ReviewsSection } from '../components/common/ReviewsSection';
 import { InstagramShowcase } from '../components/common/InstagramShowcase';
@@ -34,7 +35,6 @@ export const HomePage: React.FC = () => {
   const { t } = useTranslation();
   const featuredProducts = initialProducts.filter(p => p.is_featured);
   const heroProduct = initialProducts[0] || featuredProducts[0]; // Onion Mixture
-  const kasthaGatiya = initialProducts.find(p => p.slug === 'kastha-gatiya');
 
   const [campaigns, setCampaigns] = useState<MarketingCampaignItem[]>([]);
 
@@ -258,34 +258,8 @@ export const HomePage: React.FC = () => {
       {/* 4. TASTE DISCOVERY SECTION (DEEP IMPERIAL PURPLE SECTION) */}
       <TasteDiscovery products={initialProducts} />
 
-      {/* 5. POPULAR SAVOURIES (WARM IVORY SECTION) */}
-      <section className="py-16 sm:py-24 bg-ivory border-b border-gold/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-            <div>
-              <span className="font-script text-gold-deep text-2xl sm:text-3xl block mb-1">
-                Fresh Daily Batches
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-imperial tracking-tight">
-                Customer Favourites
-              </h2>
-            </div>
-            <Link
-              to="/catalog"
-              className="inline-flex items-center gap-1.5 text-xs font-sans font-bold text-gold-deep hover:text-gold transition-colors group"
-            >
-              <span>See All 10 Snack Varieties</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[kasthaGatiya, initialProducts[1], initialProducts[2], initialProducts[3]].filter(Boolean).map((p) => (
-              <ProductCard key={p!.id} product={p!} cardStyle="standard" />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* 5. REGIONAL ROAD TRANSPORT COVERAGE & LOGISTICS DISPATCH NETWORK */}
+      <RegionalDeliverySection />
 
       {/* 6. WHOLESALE B2B ADVANTAGE & KIRANA HUB (DEEP IMPERIAL PURPLE SECTION) */}
       <section className="py-20 bg-gradient-to-br from-imperial-dark via-imperial to-imperial-secondary text-white border-b-2 border-gold/30 shadow-royal relative overflow-hidden">
