@@ -183,6 +183,7 @@ export default {
         sans: ['"Manrope"', '"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
         serif: ['"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
         display: ['"Cinzel"', 'serif'],
+        brush: ['"Rozha One"', '"Cinzel"', 'serif'],
         script: ['"Great Vibes"', 'cursive'],
         oriya: ['"Noto Sans Oriya"', 'sans-serif'],
         telugu: ['"Noto Sans Telugu"', 'sans-serif'],
