@@ -52,7 +52,7 @@ export const WholesaleBrochureModal: React.FC<WholesaleBrochureModalProps> = ({ 
           {/* Document Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b-2 border-gold/40 pb-6">
             <div className="space-y-1">
-              <BrandLogo variant="crest" size="lg" showSubtitle={true} />
+              <BrandLogo variant="crest" size="lg" showSubtitle={true} theme="light" />
               <p className="text-xs text-cocoa-muted max-w-md pt-2">
                 Manufacturer of Premium Mixtures, Murrukulu &amp; Chips since 1995.
                 Gandhi School Road, Near Post Office, Paralakhemundi, Gajapati, Odisha – 761200.
