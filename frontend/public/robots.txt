@@ -5,5 +5,5 @@ Disallow: /admin/*
 Disallow: /account
 Disallow: /account/*
 
-Sitemap: https://sribalajispecialmixtures.in/sitemap.xml
+Sitemap: https://sri-balaji-special-mixtures.vercel.app/sitemap.xml
 
