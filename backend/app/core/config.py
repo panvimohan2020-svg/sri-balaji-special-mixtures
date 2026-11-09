@@ -17,8 +17,8 @@ try:
         FIRST_SUPERUSER_EMAIL: str = os.getenv("FIRST_SUPERUSER_EMAIL", "admin@sribalaji.com")
         FIRST_SUPERUSER_PASSWORD: str = os.getenv("FIRST_SUPERUSER_PASSWORD", "BalajiAdmin2026!")
 
-        BUSINESS_OWNER_EMAIL: str = os.getenv("BUSINESS_OWNER_EMAIL", "owner@sribalaji.com")
-        BUSINESS_OWNER_NAME: str = os.getenv("BUSINESS_OWNER_NAME", "Sri Adari Krishna Rao & Sri Adari Dilleshwar Rao")
+        BUSINESS_OWNER_EMAIL: str = os.getenv("BUSINESS_OWNER_EMAIL", "sribalajispecialmixtures@gmail.com")
+        BUSINESS_OWNER_NAME: str = os.getenv("BUSINESS_OWNER_NAME", "Adari Dilleshwar Rao")
 
         PUBLIC_FRONTEND_URL: str = os.getenv("PUBLIC_FRONTEND_URL", "http://localhost:5173")
         ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
@@ -67,8 +67,8 @@ except Exception:
         FIRST_SUPERUSER_EMAIL: str = os.getenv("FIRST_SUPERUSER_EMAIL", "admin@sribalaji.com")
         FIRST_SUPERUSER_PASSWORD: str = os.getenv("FIRST_SUPERUSER_PASSWORD", "BalajiAdmin2026!")
 
-        BUSINESS_OWNER_EMAIL: str = os.getenv("BUSINESS_OWNER_EMAIL", "owner@sribalaji.com")
-        BUSINESS_OWNER_NAME: str = os.getenv("BUSINESS_OWNER_NAME", "Sri Adari Krishna Rao & Sri Adari Dilleshwar Rao")
+        BUSINESS_OWNER_EMAIL: str = os.getenv("BUSINESS_OWNER_EMAIL", "sribalajispecialmixtures@gmail.com")
+        BUSINESS_OWNER_NAME: str = os.getenv("BUSINESS_OWNER_NAME", "Adari Dilleshwar Rao")
 
         PUBLIC_FRONTEND_URL: str = os.getenv("PUBLIC_FRONTEND_URL", "http://localhost:5173")
         ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")

@@ -3,12 +3,14 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from jose import jwt, JWTError
 
 from app.core.config import settings
 from app.core.database import get_db
 from app.core.security import get_password_hash, verify_password, ALGORITHM
 from app.models.customer import Customer, CustomerAddress, CustomerNotification
+from app.models.admin_security import OwnerInvitation, OwnerSetupState
 from app.models.order import Order
 from app.schemas.customer import (
     CustomerRegisterRequest,
@@ -95,11 +97,28 @@ def register_customer(data: CustomerRegisterRequest, db: Session = Depends(get_d
     if existing:
         raise HTTPException(status_code=400, detail="Account with this phone number already exists. Please log in.")
 
+    # Guard: Reserve business owner and administrative emails for the Staff & Admin Portal
+    clean_email = data.email.strip().lower() if data.email else None
+    if clean_email:
+        reserved_owner_emails = {
+            "sribalajispecialmixtures@gmail.com",
+            settings.BUSINESS_OWNER_EMAIL.strip().lower(),
+            settings.FIRST_SUPERUSER_EMAIL.strip().lower()
+        }
+        is_owner_invite = db.query(OwnerInvitation).filter(func.lower(OwnerInvitation.owner_email) == clean_email).first()
+        is_admin_user = db.query(User).filter(func.lower(User.email) == clean_email).first()
+        is_owner_state = db.query(OwnerSetupState).filter(func.lower(OwnerSetupState.owner_email) == clean_email).first()
+        if clean_email in reserved_owner_emails or is_owner_invite or is_admin_user or is_owner_state:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="This email address is reserved exclusively for the Staff & Admin Portal and cannot be registered as a retail customer account."
+            )
+
     hashed_pw = get_password_hash(data.password) if data.password else None
     customer = Customer(
         phone_number=phone,
         full_name=data.full_name.strip(),
-        email=data.email.strip() if data.email else None,
+        email=clean_email,
         hashed_password=hashed_pw,
         is_verified=True,
         is_active=True
@@ -171,7 +190,22 @@ def update_profile(
     if data.full_name is not None:
         current_customer.full_name = data.full_name.strip()
     if data.email is not None:
-        current_customer.email = data.email.strip()
+        clean_email = data.email.strip().lower() if data.email else None
+        if clean_email:
+            reserved_owner_emails = {
+                "sribalajispecialmixtures@gmail.com",
+                settings.BUSINESS_OWNER_EMAIL.strip().lower(),
+                settings.FIRST_SUPERUSER_EMAIL.strip().lower()
+            }
+            is_owner_invite = db.query(OwnerInvitation).filter(func.lower(OwnerInvitation.owner_email) == clean_email).first()
+            is_admin_user = db.query(User).filter(func.lower(User.email) == clean_email).first()
+            is_owner_state = db.query(OwnerSetupState).filter(func.lower(OwnerSetupState.owner_email) == clean_email).first()
+            if clean_email in reserved_owner_emails or is_owner_invite or is_admin_user or is_owner_state:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="This email address is reserved exclusively for the Staff & Admin Portal."
+                )
+        current_customer.email = clean_email
     db.commit()
     db.refresh(current_customer)
     return current_customer

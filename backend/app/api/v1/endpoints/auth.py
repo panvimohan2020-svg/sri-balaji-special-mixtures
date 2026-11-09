@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 
 from app.core.config import settings
 from app.core.database import get_db
@@ -132,7 +132,32 @@ def get_owner_setup_status(db: Session = Depends(get_db)):
     owner_invites = db.query(OwnerInvitation).all()
     legacy_state = db.query(OwnerSetupState).first()
     
-    is_activated = len(active_owners) > 0
+    official_email = settings.BUSINESS_OWNER_EMAIL.strip().lower()
+    official_owner_user = db.query(User).filter(
+        func.lower(User.email) == official_email,
+        User.role == ROLE_SUPERADMIN,
+        User.is_active == True
+    ).first()
+    
+    pending_official_invite = db.query(OwnerInvitation).filter(
+        func.lower(OwnerInvitation.owner_email) == official_email,
+        OwnerInvitation.is_used == False
+    ).order_by(OwnerInvitation.created_at.desc()).first()
+
+    display_email = None
+    if official_owner_user:
+        display_email = official_owner_user.email
+    elif pending_official_invite:
+        display_email = pending_official_invite.owner_email
+    elif active_owners:
+        display_email = active_owners[0].email
+    elif owner_invites:
+        display_email = owner_invites[0].owner_email
+    elif legacy_state:
+        display_email = legacy_state.owner_email
+
+    # If official owner invitation is pending, status is PENDING_ACTIVATION until activated
+    is_activated = official_owner_user is not None if pending_official_invite else (len(active_owners) > 0)
     activated_names = [u.full_name for u in active_owners]
     
     return {
@@ -141,8 +166,8 @@ def get_owner_setup_status(db: Session = Depends(get_db)):
         "active_superadmins_count": len(active_owners),
         "active_superadmins": activated_names,
         "total_invitations_issued": len(owner_invites),
-        "owner_email_masked": mask_email(active_owners[0].email) if active_owners else (mask_email(owner_invites[0].owner_email) if owner_invites else (mask_email(legacy_state.owner_email) if legacy_state else None)),
-        "activated_at": (legacy_state.activated_at.isoformat() if legacy_state and legacy_state.activated_at else None)
+        "owner_email_masked": mask_email(display_email) if display_email else None,
+        "activated_at": (official_owner_user.created_at.isoformat() if official_owner_user and hasattr(official_owner_user, 'created_at') and official_owner_user.created_at else (legacy_state.activated_at.isoformat() if legacy_state and legacy_state.activated_at else None))
     }
 
 
@@ -384,6 +409,12 @@ def api_generate_owner_invitation(
     token_hash = hashlib.sha256(raw_token.encode("utf-8")).hexdigest()
     now_utc = datetime.now(timezone.utc)
     expires_at = now_utc + timedelta(hours=body.hours_valid or 72)
+
+    # Invalidate any prior pending invitations for this specific email address
+    db.query(OwnerInvitation).filter(
+        OwnerInvitation.owner_email == owner_email,
+        OwnerInvitation.is_used == False
+    ).delete()
 
     inv = OwnerInvitation(
         owner_name=owner_name,
@@ -696,6 +727,21 @@ def invite_admin(
             detail=f"An administrator account for '{body.email}' already exists."
         )
 
+    # Guard: Reserved business owner emails can only be invited via owner invitation as SUPERADMIN
+    target_email = body.email.strip().lower()
+    reserved_owner_emails = {
+        "sribalajispecialmixtures@gmail.com",
+        settings.BUSINESS_OWNER_EMAIL.strip().lower(),
+    }
+    is_owner_invite = db.query(OwnerInvitation).filter(func.lower(OwnerInvitation.owner_email) == target_email).first()
+    is_owner_state = db.query(OwnerSetupState).filter(func.lower(OwnerSetupState.owner_email) == target_email).first()
+    if target_email in reserved_owner_emails or is_owner_invite or is_owner_state:
+        if req_role != ROLE_SUPERADMIN:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="This email address is reserved for the official business owner Super Admin invitation and cannot be registered as an ordinary staff role."
+            )
+
     # Cancel previous pending invites for this email
     db.query(AdminInvitation).filter(
         AdminInvitation.email == body.email.strip().lower(),
@@ -805,6 +851,18 @@ def accept_admin_invitation(
     existing = db.query(User).filter(User.email == invitation.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Account already exists for this email.")
+
+    # Guard: Reserved owner emails cannot be registered with ordinary staff roles
+    invitation_email = invitation.email.strip().lower()
+    reserved_owner_emails = {
+        "sribalajispecialmixtures@gmail.com",
+        settings.BUSINESS_OWNER_EMAIL.strip().lower(),
+    }
+    if invitation_email in reserved_owner_emails and invitation.role != ROLE_SUPERADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="This email address is reserved for the official business owner Super Admin account and cannot be registered as an ordinary staff role."
+        )
 
     new_user = User(
         email=invitation.email,

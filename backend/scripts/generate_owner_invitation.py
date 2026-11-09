@@ -78,6 +78,12 @@ def generate_invitation(owner_name: str, owner_email: str, base_url: str, hours_
     # 4. Save to database
     db = SessionLocal()
     try:
+        # Invalidate any prior pending unused invitations for this owner email
+        db.query(OwnerInvitation).filter(
+            OwnerInvitation.owner_email == owner_email,
+            OwnerInvitation.is_used == False
+        ).delete()
+
         invitation = OwnerInvitation(
             owner_name=owner_name,
             owner_email=owner_email,
